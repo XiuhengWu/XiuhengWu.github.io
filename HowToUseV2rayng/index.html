@@ -75,10 +75,10 @@
     }
 
     .floating-div {
-        position: absolute;
-        top: 910px;
-        left: 190px;
-        background-color: #202020;
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background-color: rgb(80, 106, 207);
         color: white;
         padding: 16px;
         border-radius: 5px;
@@ -130,7 +130,7 @@
                 <strong>下载文件</strong> ，等待下载完成。（假如链接失效请通知作者）<br>
                 <img src="https://vip.123pan.cn/1814216664/image/android/img0.jpg">
             </li>
-            <li>安装下载的APK，<a href="#0" onclick="showMessage()">点击此处</a>
+            <li>安装下载的APK，<a href="#0" onclick="copyToClipboard()">点击此处</a>
                 复制全部节点配置信息，然后打开桌面上的v2rayNG。<br>
                 <img src="https://vip.123pan.cn/1814216664/image/android/img1.jpg">
             </li>
@@ -180,8 +180,8 @@
             <li>免费的节点可能只在一段时间内可用，如果希望连接更加稳定快速，推荐一个付费的VPN客户端：<a href="https://www.expressvpn.com/">Express VPN</a>。<br>
             </li>
         </ul>
-        <div id="message" class="floating-div">已复制全部节点配置信息</div>
     </div>
+    <div id="message" class="floating-div">已复制全部节点配置信息</div>
 </body>
 
 <script>
@@ -215,6 +215,6 @@
         setTimeout(function () {
             message.classList.remove("animation-display");
             message.classList.add("animation-hidden");
-        }, 2000);
+        }, 3000);
     }
 </script>
