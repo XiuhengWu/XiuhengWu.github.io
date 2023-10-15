@@ -1,0 +1,34 @@
+<style>
+    body {
+        background-color: #3f3f3f;
+    }
+
+    body * {
+        font-family: "Microsoft YaHei";
+        color: white;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+</style>
+
+<body>
+    <h2><a href="https://xiuhengwu.github.io/HowToUseV2rayng/#step2" style="font-size: 40px;">返回主页面</a></h2>
+    <p style="font-size: 30px;">如果浏览器版本较低，写入剪贴板的JS代码可能无法被正确执行。请 <strong>手动复制</strong> 下方服务器配置信息的base64编码</p>
+    <div id="display_area"
+        style="background-color: #1d1c1b; width: 95%; margin: 0 auto; font-size: 7px;word-break: break-all">
+        请稍等。。。
+    </div>
+</body>
+
+<script>
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', 'https://vip.123pan.cn/1814216664/image/android/servers.txt', true);
+    xhr.onreadystatechange = function () {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            var servers = xhr.responseText;
+            console.log(servers)
+            document.getElementById("display_area").innerHTML = servers;
+        }
+    };
+    xhr.send();
+</script>
