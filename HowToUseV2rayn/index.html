@@ -22,6 +22,29 @@
         box-shadow: 0 0 30px 10px #3f3f3f inset;
     }
 
+    .alert.info {
+        padding: 20px;
+        color: white;
+        opacity: 1;
+        transition: opacity 0.6s;
+        background-color: #202020;
+        border-radius: 10px;
+    }
+
+    .closebtn {
+        margin-left: 15px;
+        color: white;
+        font-weight: bold;
+        float: right;
+        font-size: 36px;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    .closebtn:hover {
+        color: gray;
+    }
+    
     .center {
         margin-top: -20%;
         margin-left: 5%;
@@ -64,8 +87,12 @@
                 作者：W.X.H.<br>
                 先决条件：运行 Windows 7 X64 以上的个人电脑<br>
                 教程操作难度：低<br>
-                最近一次的修改时间：2023年10月16日
+                最近一次的修改时间：2023年10月15日
         </div></em>
+        <div class="alert info">
+            <span class="closebtn">&times;</span>
+            v2ray也提供对Android设备的支持，<a href="https://xiuhengwu.github.io/HowToUseV2rayng/">点击了解在该平台的使用教程</a>。
+        </div>
         <h2>0. 确保位于正确环境</h2>
         <ol>
             <li>如果你在微信内部打开了该链接，请点击窗口标题栏的 <strong>Internet标识</strong> 以切换至系统默认浏览器。如果你未发现类似标识，请忽略此步。<br>
@@ -158,3 +185,15 @@
         </ul>
     </div>
 </body>
+
+<script>
+    var close = document.getElementsByClassName("closebtn");
+    var i;
+    for (i = 0; i < close.length; i++) {
+        close[i].onclick = function () {
+            var div = this.parentElement;
+            div.style.opacity = "0";
+            setTimeout(function () { div.style.display = "none"; }, 600);
+        }
+    }
+</script>
