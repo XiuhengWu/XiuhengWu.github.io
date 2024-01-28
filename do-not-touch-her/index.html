@@ -20,7 +20,9 @@
 			var audio_control = document.getElementById("audio_control");
 			var track_list = new Array("track0.mp3", "track1.mp3");
 			var current_index = 0; 
-alert(audio_control.ended)
+alert(audio_control.ended); 
+                                                        audio_control.src = track_list[current_index];
+                                                        audio_control.play();
 		if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
 					var accelerationWithoutGravity = event.acceleration;
