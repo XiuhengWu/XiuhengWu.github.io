@@ -29,7 +29,7 @@
 					document.getElementById("accelerationWithoutGravity").innerText = "x: " + x_acceleration + "m/s², " + "\ny: " + y_acceleration + "m/s², " + "\nz: " + z_acceleration + "m/s²";
 					if (x_acceleration > 1 || y_acceleration > 1 || z_acceleration - 9.9 > 1) {
 						statusbar.innerText = "Growlman is growling! 😠";
-						if (audio_control.ended) {
+						if (audio_control.ended || current_index == 0) {
 							audio_control.src = track_list[current_index];
 							audio_control.play();
 							current_index ++;
