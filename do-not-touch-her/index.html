@@ -2,7 +2,7 @@
 <html>
 	<header>
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
-		<meta name="viewport" content="width=device-width">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
 		<title>DON'T TOUCH HER</title>
 
 		<style>
@@ -12,9 +12,14 @@
 		</style>
 	</header>
 	<body>
-		<h1 id="status">Growlman is Stable. 😀</h1>
+		<h1 id="status">Initializing ...</h1>
 		<p>Acceleration: <span id="accelerationWithoutGravity"></span>
+		<audio id="audio_control" src="track0.mp3" preload="auto" style="display: none;"></audio>
 		<script>
+			var status = document.getElementById("status");
+			var audio_control = document.getElementById("audio_control");
+			var track_list = ["track0.mp3", "track1.mp3"];
+			var current_index = 0;
 			if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
 					var accelerationWithoutGravity = event.accelerationIncludingGravity;
@@ -22,9 +27,16 @@
 					var y_acceleration = accelerationWithoutGravity.y;
 					var z_acceleration = accelerationWithoutGravity.z;
 					document.getElementById("accelerationWithoutGravity").innerHTML = "x: " + accelerationWithoutGravity.x + "m/s², " + "y: " + accelerationWithoutGravity.y + "m/s², " + "z: " + accelerationWithoutGravity.z + "m/s²";
-					if (x_acceleration > 0.8 || y_acceleration > 0.8 || z_acceleration - 9.9 > 0.8) {
-						var status = document.getElementById("status");
+					if (x_acceleration > 1 || y_acceleration > 1 || z_acceleration - 9.9 > 1) {
 						status.innerText = "Growlman is growling! 😠";
+						if (audio_control.paused) {
+							audio_control.src = track_list[current_index];
+							audio_control.play();
+							current_index ++;
+						}
+					}
+					else {
+						status.innerText = "Growlman is Stable. 😀";
 					}
 				}, false);
 			} else {
