@@ -12,7 +12,7 @@
 		</style>
 	</header>
 	<body>
-		<p id="status">Initializing ...</p>
+		<h1 id="statusbar">Initializing ...</h1>
 		<p><strong>Acceleration:</strong> <br><span id="accelerationWithoutGravity"></span>
 		<audio id="audio_control" src="track0.mp3" preload="auto" style="display: none;"></audio>
 		<script>
@@ -21,7 +21,7 @@
 			var track_list = ["track0.mp3", "track1.mp3"];
 			var current_index = 0;
     status.innerText = "Growlman is growling! 😠";
-alert(status.innerText); 
+alert(statusbar.innerText); 
 			if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
 					var accelerationWithoutGravity = event.accelerationIncludingGravity;
