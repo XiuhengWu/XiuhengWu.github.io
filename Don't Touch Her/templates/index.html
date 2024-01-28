@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>DON'T TOUCH HER</title>
+
+		<style>
+			* {
+				font-family: 'Cascadia Code', Arial, sans-serif;
+			}
+		</style>
+	</header>
+	<body>
+		<h1>HTML5加速度传感器示例</h1>
+		<p>请在支持HTML5的移动端浏览器上打开此网页。</p>
+		<p>加速度（包含重力）：<span id="acceleration"></span>
+		</p>
+		<p>加速度（不包含重力）：<span id="accelerationWithoutGravity"></span>
+		</p>
+		<p>旋转速率：<span id="rotationRate"></span>
+		</p>
+		<p>间隔时间：<span id="interval"></span>
+		</p>
+		<script>
+			// 检测是否支持DeviceMotion事件
+			if (window.DeviceMotionEvent) { // 监听DeviceMotion事件
+				window.addEventListener('devicemotion', function (event) { // 获取加速度（包含重力）
+					var acceleration = event.acceleration;
+					// 获取加速度（不包含重力）
+					var accelerationWithoutGravity = event.accelerationIncludingGravity;
+					// 获取旋转速率
+					var rotationRate = event.rotationRate;
+					// 获取间隔时间
+					var interval = event.interval;
+					// 显示加速度（包含重力）
+					document.getElementById("acceleration").innerHTML = "x: " + acceleration.x + "m/s², " + "y: " + acceleration.y + "m/s², " + "z: " + acceleration.z + "m/s²";
+					// 显示加速度（不包含重力）
+					document.getElementById("accelerationWithoutGravity").innerHTML = "x: " + accelerationWithoutGravity.x + "m/s², " + "y: " + accelerationWithoutGravity.y + "m/s², " + "z: " + accelerationWithoutGravity.z + "m/s²";
+					// 显示旋转速率
+					document.getElementById("rotationRate").innerHTML = "alpha: " + rotationRate.alpha + "°/s, " + "beta: " + rotationRate.beta + "°/s, " + "gamma: " + rotationRate.gamma + "°/s";
+					// 显示间隔时间
+					document.getElementById("interval").innerHTML = interval + "ms";
+				}, false);
+			} else { // 不支持DeviceMotion事件
+				alert("您的设备不支持DeviceMotion事件");
+			}
+		</script>
+	</body>
+</html>
