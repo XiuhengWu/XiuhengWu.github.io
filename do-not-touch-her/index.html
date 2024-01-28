@@ -12,11 +12,7 @@
 		</style>
 	</header>
 	<body>
-		<h1>HTML5加速度传感器示例</h1>
-		<p>请在支持HTML5的移动端浏览器上打开此网页。</p>
-		<p>加速度（不包含重力）：<span id="accelerationWithoutGravity"></span>
-		</p>
-		<p>间隔时间：<span id="interval"></span>
+		<h1 id="status">Growlman is stable. &#128512;</h1>
 		</p>
 		<script>
 			if (window.DeviceMotionEvent) {
@@ -26,6 +22,10 @@
 					var y_acceleration = accelerationWithoutGravity.y;
 					var z_acceleration = accelerationWithoutGravity.z;
 					document.getElementById("accelerationWithoutGravity").innerHTML = "x: " + accelerationWithoutGravity.x + "m/s², " + "y: " + accelerationWithoutGravity.y + "m/s², " + "z: " + accelerationWithoutGravity.z + "m/s²";
+					if (x_acceleration > 0.8 || y_acceleration > 0.8 || z_acceleration - 9.9 > 0.8) {
+						var status = document.getElementById("status");
+						status.innerText = "Growlman is growling! 😠";
+					}
 				}, false);
 			} else {
 				alert("Your Device do not support DeviceMotion Event!");
