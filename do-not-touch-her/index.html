@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8">
+		<meta name="viewport" content="width=device-width">
+		<title>DON'T TOUCH HER</title>
+
+		<style>
+			* {
+				font-family: 'Cascadia Code', Arial, sans-serif;
+			}
+		</style>
+	</header>
+	<body>
+		<h1>HTML5加速度传感器示例</h1>
+		<p>请在支持HTML5的移动端浏览器上打开此网页。</p>
+		<p>加速度（不包含重力）：<span id="accelerationWithoutGravity"></span>
+		</p>
+		<p>间隔时间：<span id="interval"></span>
+		</p>
+		<script>
+			if (window.DeviceMotionEvent) {
+				window.addEventListener('devicemotion', function (event) {
+					var accelerationWithoutGravity = event.accelerationIncludingGravity;
+					var x_acceleration = accelerationWithoutGravity.x;
+					var y_acceleration = accelerationWithoutGravity.y;
+					var z_acceleration = accelerationWithoutGravity.z;
+					document.getElementById("accelerationWithoutGravity").innerHTML = "x: " + accelerationWithoutGravity.x + "m/s², " + "y: " + accelerationWithoutGravity.y + "m/s², " + "z: " + accelerationWithoutGravity.z + "m/s²";
+				}, false);
+			} else {
+				alert("Your Device do not support DeviceMotion Event!");
+			}
+		</script>
+	</body>
+</html>
