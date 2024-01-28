@@ -22,11 +22,11 @@
 			var current_index = 0;
 			if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
-					var accelerationWithoutGravity = event.accelerationIncludingGravity;
+					var accelerationWithoutGravity = event.accelerationWithoutGravity;
 					var x_acceleration = accelerationWithoutGravity.x;
 					var y_acceleration = accelerationWithoutGravity.y;
 					var z_acceleration = accelerationWithoutGravity.z;
-					document.getElementById("accelerationWithoutGravity").innerHTML = "x: " + accelerationWithoutGravity.x + "m/s², " + "y: " + accelerationWithoutGravity.y + "m/s², " + "z: " + accelerationWithoutGravity.z + "m/s²";
+					document.getElementById("accelerationWithoutGravity").innerText = "x: " + x_acceleration + "m/s², " + "\ny: " + y_acceleration + "m/s², " + "\nz: " + z_acceleration + "m/s²";
 					if (x_acceleration > 1 || y_acceleration > 1 || z_acceleration - 9.9 > 1) {
 						status.innerText = "Growlman is growling! 😠";
 						if (audio_control.paused) {
