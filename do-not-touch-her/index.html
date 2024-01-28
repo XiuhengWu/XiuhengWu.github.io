@@ -20,7 +20,7 @@
 			var audio_control = document.getElementById("audio_control");
 			var track_list = ["track0.mp3", "track1.mp3"];
 			var current_index = 0;
-    status.innerText = "Growlman is growling! 😠";
+    statusbar.innerText = "Growlman is growling! 😠";
 alert(statusbar.innerText); 
 			if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
@@ -30,7 +30,7 @@ alert(statusbar.innerText);
 					var z_acceleration = accelerationWithoutGravity.z;
 					document.getElementById("accelerationWithoutGravity").innerText = "x: " + x_acceleration + "m/s², " + "\ny: " + y_acceleration + "m/s², " + "\nz: " + z_acceleration + "m/s²";
 					if (x_acceleration > 1 || y_acceleration > 1 || z_acceleration - 9.9 > 1) {
-						status.innerText = "Growlman is growling! 😠";
+						statusbar.innerText = "Growlman is growling! 😠";
 						if (audio_control.paused) {
 							audio_control.src = track_list[current_index];
 							audio_control.play();
@@ -38,7 +38,7 @@ alert(statusbar.innerText);
 						}
 					}
 					else {
-						status.innerText = "Growlman is Stable. 😀";
+						statusbar.innerText = "Growlman is Stable. 😀";
 					}
 				}, false);
 			} else {
