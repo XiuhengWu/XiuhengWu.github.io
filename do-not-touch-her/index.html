@@ -22,7 +22,7 @@
 			var current_index = 0; 
 			if (window.DeviceMotionEvent) {
 				window.addEventListener('devicemotion', function (event) {
-					var accelerationWithoutGravity = event.accelerationIncludingGravity;
+					var accelerationWithoutGravity = event.acceleration;
 					var x_acceleration = accelerationWithoutGravity.x;
 					var y_acceleration = accelerationWithoutGravity.y;
 					var z_acceleration = accelerationWithoutGravity.z;
