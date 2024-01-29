@@ -4,13 +4,13 @@
 		<meta http-equiv="content-type" content="text/html; charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
 		<title>DON'T TOUCH HER</title>
-
 		<style>
 			* {
 				font-family: 'Cascadia Code', Arial, sans-serif;
 			}
 		</style>
 	</header>
+
 	<body>
 		<h1 id="statusbar">Initializing ...</h1>
 		<p>
@@ -18,6 +18,7 @@
 			<br><span id="accelerationWithoutGravity"></span>
 		</p>
 		<audio id="audio_control" src="track0.mp3" preload="auto" controls></audio>
+
 		<script>
 			var statusbar = document.getElementById("statusbar");
 			var audio_control = document.getElementById("audio_control");
@@ -38,7 +39,7 @@
 								audio_control.src = track_list[current_position];
 								audio_control.play();
 								if (current_position == track_list.length - 1) {
-									window.navigator.vibrate(2000);
+									window.navigator.vibrate(6000);
 								}
 								current_index++;
 							}
