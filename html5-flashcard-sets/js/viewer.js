@@ -18,7 +18,7 @@ for (i=0; i<to_view_list.length; i++) {
 }
 console.log(database_str)
 if (!database_str) {location.href = "index.html"}
-var database = database_str.trim().split("\n");
+var database = randArr(database_str.trim().split("\n"));
 
 var current_index = 0;
 AddAnimationInBatches(elements);
@@ -53,6 +53,16 @@ function AddAnimationInBatches(elements) {
             }, 1000);
         });
     });
+}
+
+function randArr(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        var iRand = parseInt(arr.length * Math.random());
+        var temp = arr[i];
+        arr[i] = arr[iRand];
+        arr[iRand] = temp;
+    }
+    return arr;
 }
 
 function ShowMenu() {
