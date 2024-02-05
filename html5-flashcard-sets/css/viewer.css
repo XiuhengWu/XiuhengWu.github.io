@@ -151,6 +151,7 @@ button span {
     justify-content: center;
     font-size: 100%;
 	text-wrap: wrap;
+	word-break: break-all;
     overflow-y: auto;
 }
 
@@ -165,6 +166,7 @@ button span {
     font-size: 100%;
     transform: rotateY(180deg);
 	text-wrap: wrap;
+	word-break: break-all;
     overflow-y: auto;
 }
 
