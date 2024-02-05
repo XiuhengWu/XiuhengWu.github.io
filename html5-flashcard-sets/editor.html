@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
+		<title>HTML5 Flashcard - Editor</title>
+		<link href="./css/editor.css" rel="stylesheet" type="text/css"/>
+	</header>
+	<body>
+		<h1 style="text-align: center;">HTML5 Flashcard</h1>
+		<div class="editor">
+			<div class="editor-header">
+				<p class="set-name">Title</p>
+				<button class="button-save" style="background-image: url(imgs/icon/file-save.svg);" onclick="Save()">&#8195; Save</button>
+			</div>
+			<div id="content" class="editor-content" contenteditable="true">
+			</div>
+		</div>
+	</body>
+	<script type="text/javascript" src="./js/editor.js"></script>
+</html>

@@ -1,0 +1,96 @@
+* {
+	font-family: 'Cascadia Code', Arial, sans-serif;
+}
+
+body {
+	background-image: linear-gradient(to bottom left, #fbe3d7, #b3eaff);
+	height: 100vh;
+}
+
+button,
+.dropdown-content a {
+	overflow: hidden;
+	cursor: pointer;
+	position: relative;
+}
+
+button span,
+.dropdown-content a span {
+	background-color: #fff;
+	border-radius: 50%;
+	pointer-events: none;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	animation: animate 1s ease-out infinite;
+}
+
+div:empty::before {
+    content: attr(data-placeholder);
+    color: grey;
+}
+
+@keyframes animate {
+	from {
+		width: 0;
+		height: 0;
+		opacity: 0.5;
+	}
+
+	to {
+		width: 100vmin;
+		height: 100vmin;
+		opacity: 0;
+	}
+}
+
+.editor {
+	height: 80%;
+	margin: 5% 10%;
+	background-color: #f9f9f9 ;
+	border-radius: 15px;
+}
+
+.editor-header{
+	height: 8%;
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.set-name {
+	width: 60%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+}
+
+.button-save {
+	border: none;
+	width: 35%;
+	height: 100%;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 10px;
+}
+
+.editor-content{
+	box-sizing: border-box;
+	overflow: auto;
+	height: 90%;
+	padding: 2ex;
+}
+
+.editor-content:focus{
+	outline: none;
+}
+
+.placeholder-text {
+	display: inline;
+	color: gray;
+	font-style: italic;
+}

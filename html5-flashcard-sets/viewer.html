@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
+		<title>HTML5 Flashcard - Viewer</title>
+		<link href="./css/viewer.css" rel="stylesheet" type="text/css"/>
+
+		<template>
+			<div class="card">
+				<div class="front">
+					FRONT
+				</div>
+				<div class="back">
+					BACK
+				</div>
+			</div>
+		</template>
+	</header>
+	<body>
+		<h1 style="text-align: center;">HTML5 Flashcard</h1>
+		<div style="display: flex;margin-left: calc(10% + 15px);margin-right: calc(10% + 15px);align-items: center;justify-content: space-between;">
+			<div style="display: flex;align-items: center;">
+				<div id="indicator"></div>
+				<p id="progress">1 of 2</p>
+			</div>
+			<div style="position: relative;" onmouseleave="HideMenu()">
+				<button id="font-adjuster" onclick="ShowMenu()">Font size ▼</button>
+				<div class="dropdown-content" id="dropdown-content">
+					<a onclick="document.getElementById('card_area').style.fontSize = '15px'; HideMenu()">15px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '20px'; HideMenu()">20px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '25px'; HideMenu()">25px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '30px'; HideMenu()">30px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '35px'; HideMenu()">35px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '40px'; HideMenu()">40px</a>
+					<a onclick="document.getElementById('card_area').style.fontSize = '45px'; HideMenu()">45px</a>
+				</div>
+			</div>
+		</div>
+		<div id="card_area"></div>
+		<div class="controls-container">
+			<button id="previous" class="control" onclick="PreviousCard()" disabled="true">Previous</button>
+			<button class="control" onclick="FlipCard()">Flip</button>
+			<button id="next" class="control" onclick="NextCard()">Next</button>
+		</div>
+	</body>
+	<script type="text/javascript" src="./js/viewer.js"></script>
+</html>

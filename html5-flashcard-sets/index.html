@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+	<header>
+		<meta http-equiv="content-type" content="text/html;charset=utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
+		<title>HTML5 Flashcard - Homepage</title>
+		<link href="./css/index.css" rel="stylesheet" type="text/css"/>
+
+		<template id="card_set">
+			<div class="card_set">
+				<div class="header">
+					<p class="display_name"></p>
+					<div class="radio-input">
+						<input type="checkbox" 
+							onchange="let current_set_name = this.parentElement.parentElement.querySelector('p').innerText;
+									this.checked ? localStorage.setItem('ToView', localStorage.getItem('ToView') + current_set_name + '*') : localStorage.setItem('ToView', localStorage.getItem('ToView').replace(current_set_name+'*', ''));
+									console.log(localStorage.getItem('ToView'));
+									localStorage.getItem('ToView')=='' ? ShowPrompt(true) : ShowPrompt(false)">
+						<div class="circle" onclick="this.parentElement.querySelector('input').click()"></div>
+					</div>
+				</div>
+				<div class="footer">
+					<button style='background-image: url(imgs/icon/rename.svg);' onclick="RenameBlock(this.parentElement.parentElement.querySelector('p'))">.</button>
+					<button style='background-image: url(imgs/icon/edit.svg);' onclick="EditBlock(this.parentElement.parentElement.querySelector('p').innerText)">.</button>
+					<button style='background-image: url(imgs/icon/delete.svg);' onclick="DeleteBlock(this.parentElement.parentElement)">.</button>
+				</div>
+			</div>
+		</template>
+
+		<dialog id="rename_dialog">
+			<div class="content" style="display: grid;grid-template-rows: auto auto;">
+				<div class="wave-group">
+					<input id="user_input" required="" type="text" class="input">
+					<span class="bar"></span>
+				</div>
+				<label id="error_info" style="font-size: small; color: red;padding-top: 5px;text-align: left;"></label>
+			</div>
+			<div class="dialog_footer">
+				<button id="ok">OK</button>
+				<button id="cancel">Cancel</button>
+			</div>
+		</dialog>
+
+	</header>
+	<body>
+		<script>
+			localStorage.setItem("ToView", "");
+			localStorage.setItem("ToEdit", "");
+		</script>
+		<h1 style="text-align: center;">HTML5 Flashcard</h1>
+		<div id="cardsets_area">
+			<div style="display: flex; margin-top: -3ex; justify-content: space-between; align-items: center;">
+				<h2>Flashcard sets</h2>
+				<div style="float:right; position: relative;" onclick="ShowMenu()" onmouseleave="HideMenu()">
+					<button class="new">Create ▼</button>
+					<div class="dropdown-content" style="min-width: 30ex" id="dropdown-content">
+						<a onclick="NewSet();">New empty flashcard set</a>
+						<a onclick="document.getElementById('file-input').click();HideMenu();">Import from local</a>
+						<a href="https://www.123pan.com/s/ArpbVv-4yhxh.html">View pre-configured flashcard sets</a>
+					</div>
+				</div>
+			</div>
+			<i id="place_holder" style="color: gray;">There are nothing to show here...</i>
+		</div>
+		<div class="body-footer">
+			<div id="prompt" class="prompt">
+				Select at least 1 set
+			</div>
+			<button id="go" onclick="Go()">GO</button>
+		</div>
+		<input type="file" id="file-input" accept=".txt" style="display:none" onchange="ReadFile()">
+	</body>
+	<script type="text/javascript" src="./js/index.js"></script>
+</html>
