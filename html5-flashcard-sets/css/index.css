@@ -1,5 +1,10 @@
+@font-face {
+	font-family: "import-cascadia_code";  
+	src: url("https://vip.123pan.cn/1814216664/image/font/CascadiaCodePL.ttf") format("truetype");
+}
+
 * {
-	font-family: 'Cascadia Code', Arial, sans-serif;
+	font-family: 'import-cascadia_code', Arial, sans-serif;
 }
 
 body {
