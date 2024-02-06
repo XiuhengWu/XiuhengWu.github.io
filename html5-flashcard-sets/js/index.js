@@ -1,12 +1,8 @@
 const elements = document.querySelectorAll("button, .dropdown-content a");
 var current_block_id = 0;
+var cardsets_area = document.getElementById("cardsets_area");
 AddAnimationInBatches(elements);
 LoadStoragedSets();
-
-if (!localStorage.getItem("ToVisit")) {
-    document.getElementById("go").style.disabled = true;
-    ShowPrompt(true);
-}
 
 function AddAnimationInBatches(elements) {
     elements.forEach((elem) => {
@@ -85,7 +81,6 @@ function ConfirmName(request_name) {
 function AddNewBlock(block_caption) {
     var temp = document.getElementById("card_set");
     var place_holder = document.getElementById("place_holder");
-    var cardsets_area = document.getElementById("cardsets_area");
     var card_set = temp.content.cloneNode(true);
     card_set.querySelector(".card_set > .header > .display_name").innerText = block_caption;
     card_set.id = "block" + current_block_id;

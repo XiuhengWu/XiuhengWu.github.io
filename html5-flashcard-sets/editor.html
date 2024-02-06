@@ -7,14 +7,14 @@
 		<link href="./css/editor.css" rel="stylesheet" type="text/css"/>
 	</header>
 	<body>
-		<h1 style="text-align: center;">HTML5 Flashcard (Beta)</h1>
+		<h1 style="text-align: center;cursor: pointer;" onclick="location.href = 'index.html'">HTML5 Flashcard (Beta)</h1>
 		<div class="editor">
 			<div class="editor-header">
 				<p class="set-name">Title</p>
 				<button class="button-save" style="background-image: url(imgs/icon/file-save.svg);" onclick="Save()">&#8195; Save</button>
 			</div>
-			<div id="content" class="editor-content" contenteditable="true">
-			</div>
+			<textarea id="content" class="editor-content" contenteditable="true" 
+				placeholder="Tips: Using line breaks to separate different cards, `*` to separate front and back&#10;&#10;For example:&#10;card1-front*card1-back&#10;card2-front*card2-back"></textarea>
 		</div>
 	</body>
 	<script type="text/javascript" src="./js/editor.js"></script>

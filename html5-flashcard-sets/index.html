@@ -1,6 +1,14 @@
 <!DOCTYPE html>
 <html>
 	<header>
+		<script>
+			if (window.name != "hasLoad") {
+				location.reload();
+				window.name = "hasLoad";
+			} else {
+				window.name = "";
+			}
+		</script>
 		<meta http-equiv="content-type" content="text/html;charset=utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.2, maximum-scale=5.0, user-scalable=yes">
 		<title>HTML5 Flashcard (Beta) - Homepage</title>
@@ -11,11 +19,10 @@
 				<div class="header">
 					<p class="display_name"></p>
 					<div class="radio-input">
-						<input type="checkbox" 
-							onchange="let current_set_name = this.parentElement.parentElement.querySelector('p').innerText;
-									this.checked ? localStorage.setItem('ToView', localStorage.getItem('ToView') + current_set_name + '*') : localStorage.setItem('ToView', localStorage.getItem('ToView').replace(current_set_name+'*', ''));
-									console.log(localStorage.getItem('ToView'));
-									localStorage.getItem('ToView')=='' ? ShowPrompt(true) : ShowPrompt(false)">
+						<input type="checkbox" onchange="let current_set_name = this.parentElement.parentElement.querySelector('p').innerText;
+																this.checked ? localStorage.setItem('ToView', localStorage.getItem('ToView') + current_set_name + '*') : localStorage.setItem('ToView', localStorage.getItem('ToView').replace(current_set_name+'*', ''));
+																console.log(localStorage.getItem('ToView'));
+																localStorage.getItem('ToView')=='' ? ShowPrompt(true) : ShowPrompt(false)">
 						<div class="circle" onclick="this.parentElement.querySelector('input').click()"></div>
 					</div>
 				</div>
@@ -47,7 +54,7 @@
 			localStorage.setItem("ToView", "");
 			localStorage.setItem("ToEdit", "");
 		</script>
-		<h1 style="text-align: center;">HTML5 Flashcard (Beta)</h1>
+		<h1 style="text-align: center;cursor: pointer;" onclick="location.href = 'index.html'">HTML5 Flashcard (Beta)</h1>
 		<div id="cardsets_area">
 			<div style="display: flex; margin-top: -3ex; justify-content: space-between; align-items: center;">
 				<h2>Flashcard sets</h2>
@@ -66,7 +73,7 @@
 			<div id="prompt" class="prompt">
 				Select at least 1 set
 			</div>
-			<button id="go" onclick="Go()">GO</button>
+			<button id="go" onclick="Go()" disabled>GO</button>
 		</div>
 		<input type="file" id="file-input" accept=".txt" style="display:none" onchange="ReadFile()">
 	</body>

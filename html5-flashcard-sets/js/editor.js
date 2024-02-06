@@ -12,7 +12,6 @@ if (localStorage.getItem("ToEdit") || localStorage.getItem(localStorage.getItem(
 } else {
     location.href("index.html");
 }
-AddPlaceHolderText("Tips: Using line breaks to separate different cards, `*` to separate front and back\n\nFor example:\ncard1-front*card1-back\ncard2-front*card2-back");
 set_name.innerText = localStorage.getItem("ToEdit").substring(12, localStorage.getItem("ToEdit").length);
 content.innerText = pre_set_text;
 
@@ -36,22 +35,6 @@ function AddAnimationInBatches(elements) {
                 ripples.remove();
             }, 1000);
         });
-    });
-}
-
-function AddPlaceHolderText(text) {
-    placeholder.className = "placeholder-text";
-    placeholder.innerText = text;
-    content.appendChild(placeholder);
-    content.addEventListener("focus", function() {
-        placeholder.style.display = "none";
-    });
-    content.addEventListener("blur", function() {
-        if (!content.innerText.trim()) {
-            content.innerText = "";
-            content.appendChild(placeholder);
-            placeholder.style.display = "inline";
-        }
     });
 }
 

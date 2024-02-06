@@ -9,9 +9,15 @@
 	font-family: 'Cascadia Code', Arial, sans-serif;
 }
 
-body {
+html {
+	position: relative;
 	background-image: linear-gradient(to bottom left, #fbe3d7, #b3eaff);
-	height: 100vh;
+	height: 100%;
+}
+
+body {
+	position: absolute;
+	top: 0;left: 0;bottom: 0;right: 0;
 }
 
 button {
