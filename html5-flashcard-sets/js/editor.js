@@ -13,7 +13,7 @@ if (localStorage.getItem("ToEdit") || localStorage.getItem(localStorage.getItem(
     location.href("index.html");
 }
 set_name.innerText = localStorage.getItem("ToEdit").substring(12, localStorage.getItem("ToEdit").length);
-content.innerText = pre_set_text;
+content.value = pre_set_text;
 
 
 /*
@@ -40,6 +40,6 @@ function AddAnimationInBatches(elements) {
 
 function Save() {
     window.onbeforeunload = null;
-    localStorage.setItem(localStorage.getItem("ToEdit"), content.innerText);
+    localStorage.setItem(localStorage.getItem("ToEdit"), content.value);
     location.href = "index.html";
 }
