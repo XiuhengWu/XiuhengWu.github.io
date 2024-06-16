@@ -116,7 +116,7 @@
                 ShowStatus('Push to TextDb', 'Seccessful  (status: ' + data.status + ', key: ' + data.data.key + ', req_id: ' + data.req_id + ')');
             })
             .catch((error) => {
-                ShowStatus('Push to TextDb', 'Error');
+                ShowStatus('Push to TextDb', 'Error: ' + error);
             });
     }
 
@@ -135,7 +135,7 @@
                 textarea.innerText = data
             })
             .catch((error) => {
-                ShowStatus('Pull from TextDb', 'Error');
+                ShowStatus('Pull from TextDb', 'Error: ' + error);
             });
     }
 
