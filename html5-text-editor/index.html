@@ -85,16 +85,16 @@
 
     function ShowStatus(operation, result) {
         const date = new Date();
-        const seperator1 = "-";
-        const seperator2 = ":";
+        const separator1 = "-";
+        const separator2 = ":";
         const year = date.getFullYear();
         const month = ('0' + (date.getMonth() + 1)).slice(-2);
         const date_ = ('0' + date.getDate()).slice(-2);
         const hour = ('0' + date.getHours()).slice(-2);
         const min = ('0' + date.getMinutes()).slice(-2);
         const sec = ('0' + date.getSeconds()).slice(-2);
-        var currentdate = year + seperator1 + month + seperator1 + date_ + " " + hour + seperator2 + min + seperator2 + sec;
-        statusbar.innerText = 'Time: ' + currentdate + '\nOperation: ' + operation + '\nResult: ' + result;
+        var current_date = year + separator1 + month + separator1 + date_ + " " + hour + separator2 + min + separator2 + sec;
+        statusbar.innerText = 'Time: ' + current_date + '\nOperation: ' + operation + '\nResult: ' + result;
     }
 
     function PushToTextdb() {
@@ -107,13 +107,13 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Cache-Control': 'no-cache'
+                // 'Cache-Control': 'no-cache'
             },
             body: new URLSearchParams(data)
         })
             .then(response => response.json())
             .then(data => {
-                ShowStatus('Push to TextDb', 'Seccessful  (status: ' + data.status + ', key: ' + data.data.key + ', req_id: ' + data.req_id + ')');
+                ShowStatus('Push to TextDb', 'Successful  (status: ' + data.status + ', key: ' + data.data.key + ', req_id: ' + data.req_id + ')');
             })
             .catch((error) => {
                 ShowStatus('Push to TextDb', 'Error: ' + error);
@@ -126,12 +126,12 @@
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                'Cache-Control': 'no-cache'
+                // 'Cache-Control': 'no-cache'
             },
         })
             .then(response => response.text())
             .then(data => {
-                ShowStatus('Pull from TextDb', 'Seccessful');
+                ShowStatus('Pull from TextDb', 'Successful');
                 textarea.innerText = data
             })
             .catch((error) => {
@@ -141,20 +141,20 @@
 
     function PushToStorage() {
         localStorage.setItem(key, textarea.innerText);
-        ShowStatus('Push to browser storage', 'Completet');
+        ShowStatus('Push to browser storage', 'Completed');
     }
 
     function PullFromStorage() {
         if (localStorage.getItem(key)) {
             textarea.innerText = localStorage.getItem(key);
         }
-        ShowStatus('Pull from browser storage', 'Completet');
+        ShowStatus('Pull from browser storage', 'Completed');
     }
 
     function CopyToClipboard() {
         textarea.select();
         document.execCommand('copy');
-        ShowStatus('Copy to clipboard', 'Completet');
+        ShowStatus('Copy to clipboard', 'Completed');
     }
 
     function Download() {
