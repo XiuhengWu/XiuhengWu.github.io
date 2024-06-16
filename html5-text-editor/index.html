@@ -105,9 +105,9 @@
         };
         fetch(url, {
             method: 'POST',
+            cache: 'no-store',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                cache: 'no-store'
             },
             body: new URLSearchParams(data)
         })
@@ -124,9 +124,9 @@
         var url = 'https://textdb.online/' + key;
         fetch(url, {
             method: 'GET',
+            cache: 'no-store',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                cache: 'no-store'
             },
         })
             .then(response => response.text())
