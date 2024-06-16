@@ -109,6 +109,7 @@
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Pragma': 'no-cache'
             },
             body: new URLSearchParams(data)
         })
@@ -128,6 +129,7 @@
             cache: 'no-store',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
+                'Pragma': 'no-cache'
             },
         })
             .then(response => response.text())
