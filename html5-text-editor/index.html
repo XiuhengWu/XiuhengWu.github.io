@@ -107,7 +107,7 @@
             method: 'POST',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                // 'Cache-Control': 'no-cache'
+                cache: 'no-store'
             },
             body: new URLSearchParams(data)
         })
@@ -126,7 +126,7 @@
             method: 'GET',
             headers: {
                 'Content-Type': 'application/x-www-form-urlencoded',
-                // 'Cache-Control': 'no-cache'
+                cache: 'no-store'
             },
         })
             .then(response => response.text())
