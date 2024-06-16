@@ -15,7 +15,7 @@
             justify-content: center;
             align-items: center;
         }
-        
+
         #status-bar {
             width: 90%;
             background-color: rgb(196, 196, 196);
@@ -50,7 +50,7 @@
         #editor {
             width: 90%;
             min-height: 400px;
-            border: 1px solid #ddd;
+            border: 4px solid #727272;
             padding: 10px;
             font-size: 16px;
             line-height: 1.2;
@@ -78,91 +78,92 @@
 </body>
 
 <script>
-		const key = 'd9gep1gxma6fi8hd5cqk'
-		const statusbar = document.getElementById('status-bar')
-		const textarea =       document.getElementById('editor');
+    const key = 'd9gep1gxma6fi8hd5cqk'
+    const statusbar = document.getElementById('status-bar')
+    const textarea = document.getElementById('editor');
 
-   function ShowStatus(operation, result) {
-    const date = new Date();
-    const seperator1 = "-";
-    const seperator2 = ":";
-    const year = date.getFullYear();
-    const month = ('0' + (date.getMonth()+1)).slice(-2);
-    const date_ = ('0' + date.getDate()).slice(-2);
-    const hour = ('0' + date.getHours()).slice(-2);
-    const min = ('0' + date.getMinutes()).slice(-2);
-    const sec = ('0' + date.getSeconds()).slice(-2);
-    var currentdate = year + seperator1 + month + seperator1 + date_ + " " + hour + seperator2 + min + seperator2 + sec;
-    statusbar.innerText = 'Time: ' + currentdate + '\nOperation: ' + operation + '\nResult: ' + result;
-  }
+    function ShowStatus(operation, result) {
+        const date = new Date();
+        const seperator1 = "-";
+        const seperator2 = ":";
+        const year = date.getFullYear();
+        const month = ('0' + (date.getMonth() + 1)).slice(-2);
+        const date_ = ('0' + date.getDate()).slice(-2);
+        const hour = ('0' + date.getHours()).slice(-2);
+        const min = ('0' + date.getMinutes()).slice(-2);
+        const sec = ('0' + date.getSeconds()).slice(-2);
+        var currentdate = year + seperator1 + month + seperator1 + date_ + " " + hour + seperator2 + min + seperator2 + sec;
+        statusbar.innerText = 'Time: ' + currentdate + '\nOperation: ' + operation + '\nResult: ' + result;
+    }
 
-		function PushToTextdb() {
-			var url = 'https://api.textdb.online/update/';
-			var data = {
-				key: key,
-				value: textarea.innerText
-			};
-			fetch(url, {
-				method: 'POST',
-				headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-				},
-				body: new URLSearchParams(data)
-			})
-			.then(response => response.json())
-			.then(data => {
-				ShowStatus('Push to TextDb', 'Seccessful  (status: ' + data.status + ', key: ' + data.data.key + ', req_id: ' + data.req_id + ')');
-			})
-			.catch((error) => {
-				ShowStatus('Push to TextDb', 'Error');
-			});
-		}
+    function PushToTextdb() {
+        var url = 'https://api.textdb.online/update/';
+        var data = {
+            key: key,
+            value: textarea.innerText
+        };
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            body: new URLSearchParams(data)
+        })
+            .then(response => response.json())
+            .then(data => {
+                ShowStatus('Push to TextDb', 'Seccessful  (status: ' + data.status + ', key: ' + data.data.key + ', req_id: ' + data.req_id + ')');
+            })
+            .catch((error) => {
+                ShowStatus('Push to TextDb', 'Error');
+            });
+    }
 
-   function PullFromTextdb() {
-       var url = 'https://textdb.online/' + key;
-			fetch(url, {
-				method: 'GET',
-				headers: {
-				'Content-Type': 'application/x-www-form-urlencoded'
-				},
-			})
-			.then(response => response.text())
-			.then(data => {
-				ShowStatus('Pull from TextDb', 'Seccessful');
-				textarea.innerText = data
-			})
-			.catch((error) => {
-				ShowStatus('Pull from TextDb', 'Error');
-			});
-   }
-   
-   function PushToStorage() {
-			localStorage.setItem(key, textarea.innerText);
-			ShowStatus('Push to browser storage', 'Completet');
-		}
-   
-		function PullFromStorage() {
-			if (localStorage.getItem(key)) {
-				textarea.innerText = localStorage.getItem(key);
-			}
-			ShowStatus('Pull from browser storage', 'Completet');
-		}
-		
-		function CopyToClipboard() { 
-		  textarea.select();
-		  document.execCommand('copy');
-		  ShowStatus('Copy to clipboard', 'Completet');
-		}
+    function PullFromTextdb() {
+        var url = 'https://textdb.online/' + key;
+        fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+        })
+            .then(response => response.text())
+            .then(data => {
+                ShowStatus('Pull from TextDb', 'Seccessful');
+                textarea.innerText = data
+            })
+            .catch((error) => {
+                ShowStatus('Pull from TextDb', 'Error');
+            });
+    }
 
-		function Download() {
-			const url = window.URL || window.webkitURL || window;
-			const blob = new Blob([textarea.innerText]);
-			const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
-			saveLink.href = url.createObjectURL(blob);
-			saveLink.download = "Text.txt";
-			saveLink.click();
-		}
+    function PushToStorage() {
+        localStorage.setItem(key, textarea.innerText);
+        ShowStatus('Push to browser storage', 'Completet');
+    }
 
-		// PullFromTextdb();
+    function PullFromStorage() {
+        if (localStorage.getItem(key)) {
+            textarea.innerText = localStorage.getItem(key);
+        }
+        ShowStatus('Pull from browser storage', 'Completet');
+    }
+
+    function CopyToClipboard() {
+        textarea.select();
+        document.execCommand('copy');
+        ShowStatus('Copy to clipboard', 'Completet');
+    }
+
+    function Download() {
+        const url = window.URL || window.webkitURL || window;
+        const blob = new Blob([textarea.innerText]);
+        const saveLink = document.createElementNS('http://www.w3.org/1999/xhtml', 'a');
+        saveLink.href = url.createObjectURL(blob);
+        saveLink.download = "Text.txt";
+        saveLink.click();
+    }
+
+    // PullFromTextdb();
 </script>
+
 </html>
