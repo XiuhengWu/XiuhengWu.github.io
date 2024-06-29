@@ -605,6 +605,7 @@
         var modals = document.getElementsByClassName("modal");
         for (let i = 0; i < modals.length; i++) {
             modals[0].style.display = "none";
+            metaTag.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
         const pageContent = document.getElementById('page-content');
         document.getElementsByTagName("body")[0].style.color = "transparent";
@@ -643,6 +644,7 @@
 
         setTimeout(() => {
             document.getElementsByClassName("nav-top")[0].style.display = "flex";
+            document.getElementsByClassName("nav-drill")[0].style.display = "flex";
             document.getElementsByTagName("body")[0].classList.remove("red-phenomenon");
             document.getElementsByTagName("body")[0].style.color = "unset";
             var helpDivs = document.getElementsByClassName("help");
@@ -652,7 +654,7 @@
         }, 30000);
     }
 
-    setInterval(() => {
+    setTimeout(() => {
         redPhenomenon();
     }, getRandomInt(60000, 90000));
 </script>
