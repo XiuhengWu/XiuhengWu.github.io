@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes" />
+	<title>关于 Level 4294 的内容</title>
+	<link rel="stylesheet" type="text/css" href="top-bar.css">
+	<style>
+		html {
+			background-color: #d7cf89;
+			scroll-padding-top: 70px;
+			scroll-behavior: smooth;
+		}
+
+		body {
+			margin: 0;
+			padding: 0;
+			background-image: radial-gradient(circle, rgb(86, 23, 23, 0.05) 50%, transparent 0);
+			background-size: 0.25em 0.25em;
+			background-repeat: repeat;
+		}
+
+		#page-content a:link,
+		#page-content a:visited {
+			color: rgb(90, 20, 20);
+		}
+
+		#page-content {
+			min-height: 100vh;
+			font-family: 'Lato', "Noto Sans SC", sans-serif;
+			margin: 0 1em;
+			padding-bottom: 5em;
+			font-size: 16px;
+		}
+
+		#page-content> :nth-last-child(1) {
+			margin-bottom: 0;
+		}
+
+		@media(min-width: 800px) {
+			#page-content {
+				margin: 0 auto;
+				width: 800px;
+			}
+		}
+
+		.borderblock {
+			background-color: rgb(90, 20, 20);
+			color: rgb(255, 255, 255);
+			padding: 0.01rem 1rem;
+			margin: 0.5rem 0 0.5rem 0.25rem;
+			box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
+			border: solid 0.3rem rgb(255, 185, 97);
+		}
+
+		#page-content>* {
+			animation-name: fadeIn;
+			animation-duration: 1s;
+			animation-iteration-count: 1;
+			animation-timing-function: ease-out;
+			animation-fill-mode: backwards;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+				transform: translate(0, 30px);
+			}
+
+			to {
+				opacity: 1;
+				transform: translate(0, 0);
+			}
+		}
+
+		#page-content {
+			--fade-in-delay: 0.1s;
+		}
+
+		#page-content> :nth-child(1) {
+			animation-delay: calc(1 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(2) {
+			animation-delay: calc(2 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(3) {
+			animation-delay: calc(3 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(4) {
+			animation-delay: calc(4 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(5) {
+			animation-delay: calc(5 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(n + 5) {
+			animation-delay: calc(6 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(6) {
+			animation-delay: calc(6 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(7) {
+			animation-delay: calc(7 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(8) {
+			animation-delay: calc(8 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(9) {
+			animation-delay: calc(9 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(10) {
+			animation-delay: calc(10 * var(--fade-in-delay));
+		}
+
+		#page-content> :nth-child(n+10) {
+			animation-delay: calc(11 * var(--fade-in-delay));
+		}
+	</style>
+</head>
+
+<body>
+	<header class="nav-top">
+		<a class="material-icons" style="margin-right: 15px;" href="index.html">arrow_back</a>
+		<a href="about.html">关于</a>
+		<span class="hamburger material-icons" id="ham">menu</span>
+	</header>
+	<nav class="nav-drill">
+		<ul id="nav-items">
+			<li class="nav-item">
+				<a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
+					<i class="material-icons">sort</i> 目录
+				</a>
+				<div class="collapsible-menu">
+					<ul id="catalog" style="margin: 0;"></ul>
+				</div>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
+					<i class="material-icons">format_size</i> 文本大小
+				</a>
+				<div class="collapsible-menu">
+					<ul style="margin: 0;">
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='13px'">13px</a></li>
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='14px'">14px</a></li>
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='15px'">15px</a></li>
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='16px'">16px</a></li>
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='17px'">17px</a></li>
+						<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='18px'">18px</a></li>
+								<li><a href="javascript:void(0);"
+								onclick="document.getElementById('page-content').style.fontSize='19px'">19px</a></li>
+					</ul>
+				</div>
+			</li>
+		</ul>
+	</nav>
+
+	<div id="page-content">
+		<a href="./index.html" style="font-size: 1.5rem;">&gt;&gt; 返回</a>
+		<h1 id='关于' style="padding-top: 50px;"">关于</h1>
+		<div class=" borderblock">
+			<p><strong>本篇文章纯属玩笑, 并无任何恶意。请不要为其中的内容较真, 或对号入座。</strong></p>
+	</div>
+	<h2 id="后室简介">后室简介</h2>
+	<p>后室（The Backrooms）的起源可以追溯到2019年5月，当时一位匿名用户在4chan上发布了一张照片，照片上是一间黄色的墙壁和地毯铺满的房间。之后，一位用户表示后室确实存在，后室的传说才开始广泛流传。</p>
+	<p>在最初设定中，后室是一个约为六亿平方英里的里世（可通过正常世界的“空间故障”切入），它被分割成大小不同的各个空间 --Levels（层级）。而这些 Levels 实际上是由可以给人带来压抑、诡异感的 <a
+			href="https://zh.m.wikipedia.org/zh-cn/%E9%96%BE%E9%99%90%E7%A9%BA%E9%96%93%E7%BE%8E%E5%AD%B8">阀限空间（Liminal
+			Space）</a> 组成。然而，随着作者数量的增加，越来越多的层级被加入，有些不影响整体思想的设定也逐渐被忽略。</p>
+	<p>目前有两个主流的后室网站，它们的基础设定和前十大层基本相同，但之后的发展便分道扬镳。对于简中用户，Wikidot的支持更加友好。</p>
+	<ul>
+		<li>
+			<p>Wikidot</p>
+			<ul>
+				<li><a href="http://backrooms-wiki-cn.wikidot.com/">Wikidot中文分部</a></li>
+				<li><a href="http://backrooms-wiki.wikidot.com/">Wikidot英文分部</a></li>
+			</ul>
+		</li>
+		<li>
+			<p>Fandom</p>
+			<ul>
+				<li><a href="https://backrooms.fandom.com/zh">Fandom中文分部</a></li>
+				<li><a href="https://backrooms.fandom.com/">Fandom英文分部</a></li>
+			</ul>
+		</li>
+	</ul>
+	<h2 id="这个页面">这个页面</h2>
+	<p>你现在看到的，是一个托管于 <a href="https://github.com/XiuhengWu/XiuhengWu.github.io/tree/main/backrooms-level4294"><em>Github
+				Pages</em> 的HTML页面</a>。目前而言，我不考虑将我的文章发布到任何后室网站，原因主要有以下几点:</p>
+	<ul>
+		<li>
+			<p>本文为了尽可能多地叙述我们学校的真实事件，相对于标准的层级档案过于冗长;</p>
+		</li>
+		<li>
+			<p>本文提到了很多只有在读生才深有体会的细节，对于其它人而言，这些地方看起来既奇怪又突兀;</p>
+		</li>
+		<li>
+			<p>本文包含了大量 <em>与我们学校</em> 密切相关的内容或图片，它们较为敏感，可能引发问题;</p>
+		</li>
+		<li>
+			<p>对于后室网站上的文章，作者只能简单地修改内联样式。然而，若直接把文章作为HTML页面托管，作者将拥有对所有CSS和JavaScript脚本的访问权，从而有可能打造更加个性化和有趣的页面。</p>
+		</li>
+	</ul>
+	</div>
+</body>
+<script src=" top-bar.js">
+</script>
+
+</html>
