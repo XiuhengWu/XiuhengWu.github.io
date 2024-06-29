@@ -51,7 +51,7 @@ body {
 }
 body.red-phenomenon {
 	background: unset;
-	background: url('./assets/red-phenomenon-background.webp') center/90%;
+	background: url('https://vip.123pan.cn/1814216664/image/backrooms-level4294/assets/red-phenomenon-background.webp') center/90%;
 	color: red;
 	--bright-accent: red;
 	--medium-accent: opacity;
@@ -334,7 +334,7 @@ code {
 	content: "";
 	float: center;
 	border: solid 2px #0000;
-	background: url('./assets/human-hydrant.webp') center no-repeat;
+	background: url('https://vip.123pan.cn/1814216664/image/backrooms-level4294/assets/human-hydrant.webp') center no-repeat;
 	background-size: auto 95%;
 	opacity: 0.9;
 	top: 0;
