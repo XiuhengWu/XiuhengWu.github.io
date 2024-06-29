@@ -39,7 +39,7 @@ a {
 .nav-drill {
 	display: flex;
 	position: fixed;
-	z-index: 100;
+	z-index: 50;
 	top: 0;
 	right: 0;
 	width: 250px;
