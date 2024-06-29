@@ -49,6 +49,21 @@ body {
 	background-size: 0.25em 0.25em;
 	background-repeat: repeat;
 }
+body.red-phenomenon {
+	background: unset;
+	background: url('./assets/red-phenomenon-background.webp') center/90%;
+	color: red;
+	--bright-accent: red;
+	--medium-accent: opacity;
+	--gray-monochrome: opacity;
+}
+
+.help {
+	background: grey;
+	font-size: 20px;
+	font-weight: bold;
+}
+
 #page-content {
 	min-height: 100vh;
 	font-family: var(--body-font);
