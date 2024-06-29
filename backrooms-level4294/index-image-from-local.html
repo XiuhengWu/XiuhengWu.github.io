@@ -176,7 +176,7 @@
                 </div>
                 厕所。默认情况下，所有隔间的门都被未知手段锁死<sup><del>来宾sk138hd3gn：没有被锁死的是<i>[数据丢失]</i>不要进入!!</del></sup>。如果你能打开它们，你就可以安全使用大多数隔间。然而，逗留过长时间是不被推荐的，否则地板将开始自发地渗出一种危险的酸性液体;
                 </p>
-                <div style="clear: both;"></div>                
+                <div style="clear: both;"></div>
             </div>
             <div id="生物危害实验室" class="content">
                 <strong>生物危害实验室</strong><br>
@@ -419,9 +419,9 @@
 
         <h1 id='实体'>实体</h1>
         <p><strong>Level 4294</strong> 中存在一些较为常见的实体，这通常包括但不限于 <em><a
-                href='https://backrooms-wiki-cn.wikidot.com/entity-31'>Entity 31 迷彩爬行者</a></em>、<em><a
-                href='https://backrooms-wiki-cn.wikidot.com/entity-3'>Entity 3 笑魇</a></em>、<em><a
-                href='https://backrooms-wiki-cn.wikidot.com/entity-5'>Entity 5 肢团</a></em> 和 <em><a
+                    href='https://backrooms-wiki-cn.wikidot.com/entity-31'>Entity 31 迷彩爬行者</a></em>、<em><a
+                    href='https://backrooms-wiki-cn.wikidot.com/entity-3'>Entity 3 笑魇</a></em>、<em><a
+                    href='https://backrooms-wiki-cn.wikidot.com/entity-5'>Entity 5 肢团</a></em> 和 <em><a
                     href='https://backrooms-wiki-cn.wikidot.com/entity-17'>Entity 17 爬菌</a></em>
             。此外，一些该层级的特有实体也经常被报告。它们包括：
         </p>
@@ -431,7 +431,8 @@
                 <button class="links" onclick="expandTabContent(this, '王丹老师')">王丹老师</button>
                 <button class="links" onclick="expandTabContent(this)">乔丹老师</button>
                 <button id="牛奶杆菌-button" class="links" onclick="expandTabContent(this)">牛奶杆菌</button>
-                <button id="小美-button" class="links" onclick="expandTabContent(this, '小美')">小美（Möi）<em>[已归档]</em></button>
+                <button id="小美-button" class="links"
+                    onclick="expandTabContent(this, '小美')">小美（Möi）<em>[已归档]</em></button>
                 <button class="links" onclick="expandTabContent(this, '李哲峰老师')">李哲峰老师 <em>[已归档]</em></button>
             </div>
             <div id="晨主任" class="content">
@@ -500,7 +501,8 @@
         </div>
         <p>2023年9月，M.E.G. 在该层级建立了一个前哨站 “学校学生”，这个哨站非常友好，他们开放交易，并旨在为落入 <strong>Level 4294</strong>
             的流浪者提供帮助。但仅仅2个月后，该哨站的成员都陆续因一种未知的病毒而死亡，哨站最终于11月23日覆灭。未经证实的主流观点认为：这些不幸的人所感染的病毒，来自于<a href="#laboratory-button"
-                onclick="expandTabContent(document.getElementById('laboratory-button'))"> <b>Level 4294</b> 的生物危害实验室</a>。</p>
+                onclick="expandTabContent(document.getElementById('laboratory-button'))"> <b>Level 4294</b>
+                的生物危害实验室</a>。</p>
         <p>&nbsp;</p>
         <h1 id='入口和出口'>入口和出口</h1>
         <ul>
@@ -531,8 +533,10 @@
                     <li><mark>[由于 Delta区 的高危险性，且实体 <i><a href="#小美-button"
                                     onclick="expandTabContent(document.getElementById('小美-button'), '小美')">小美</a></i>
                             在层级中消失，这个出口已被认定为失效]</mark><br>
-                        爬出位于位于操场护栏上的洞口可以把你带向 <strong>Level 1 移居地带</strong> 。自己找到通往这里的路非常困难，但你可以寻求实体 <i><a href="#小美-button"
-                                onclick="expandTabContent(document.getElementById('小美-button'), '小美')">小美</a></i> ，她会很乐意提供帮助。
+                        爬出位于位于操场护栏上的洞口可以把你带向 <strong>Level 1 移居地带</strong> 。自己找到通往这里的路非常困难，但你可以寻求实体 <i><a
+                                href="#小美-button"
+                                onclick="expandTabContent(document.getElementById('小美-button'), '小美')">小美</a></i>
+                        ，她会很乐意提供帮助。
                     </li>
 
                 </ul>
@@ -621,6 +625,9 @@
         }, 30000);
     }
 
+    setInterval(() => {
+        redPhenomenon();
+    }, getRandomInt(60000, 90000));
 </script>
 
 </html>
