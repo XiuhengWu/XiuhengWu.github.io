@@ -44,7 +44,7 @@ const catalog = titles;
 for (index in catalog) {
 	document.getElementById('catalog').innerHTML += "<li style='padding-left: " + (
 		catalog[index].level * 22 - 22
-	) + "px;'>" + "<a href='#" + catalog[index].id + "'>" + catalog[index].title + "</a>"
+	) + "px;'>" + "<a href='javascript:void(0);' onclick='location.replace(\"#" + catalog[index].id + "\")'>" + catalog[index].title + "</a>"
 };
 
 function collapsibleExpand(elem) {

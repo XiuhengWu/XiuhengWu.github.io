@@ -109,9 +109,9 @@
             <span>◆</span><b>&nbsp;&nbsp;少量实体</b>
         </p>
         <div class="image-block" style="float: unset;clear: unset;margin: 0;width: unset;margin-top: 1em;">
-            <img src="./assets/map.webp" alt="一位流浪者凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。" class="image">
+            <img id="map" src="./assets/map.webp" alt="似乎是凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。" class="image">
             <div class="caption">
-                <p>一位流浪者凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。</p>
+                <p>似乎是凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。</p>
             </div>
         </div>
         <h1 id='描述'>描述</h1>
@@ -174,7 +174,7 @@
             </div>
             <div id="普通教室" class="content">
                 <strong>普通教室</strong><br>
-                <p>普通教室。这类房间的环境与 “高一(3)班” 类似;</p>
+                <p>这类房间的环境与 “高一(3)班” 类似;</p>
             </div>
             <div id="厕所" class="content">
                 <strong>厕所</strong><br>
@@ -185,14 +185,13 @@
                         <p>厕所中巨大的坑洞似乎暗示着一些未知的危险实体</p>
                     </div>
                 </div>
-                厕所。默认情况下，所有隔间的门都被未知手段锁死<sup><del>来宾sk138hd3gn：没有被锁死的是<i>[数据丢失]</i>不要进入!!</del></sup>。如果你能打开它们，你就可以安全使用大多数隔间。然而，逗留过长时间是不被推荐的，否则地板将开始自发地渗出一种危险的酸性液体;
+                默认情况下，所有厕所隔间的门都被未知手段锁死<sup><del>来宾sk138hd3gn：没有被锁死的是<i>[数据丢失]</i>不要进入!!</del></sup>。如果你能打开它们，你就可以安全使用大多数隔间。然而，逗留过长时间是不被推荐的，否则地板将开始自发地渗出一种危险的酸性液体;
                 </p>
                 <div style="clear: both;"></div>
             </div>
             <div id="生物危害实验室" class="content">
                 <strong>生物危害实验室</strong><br>
-                <p><span
-                        id="laboratory">生物危害实验室。</span>虽然公开的目击报告有限，但普遍的看法是：这些实验室确实存在。根据这些报告，生物危害实验室内可能存储着数百种具有高度传染性的病原体，更令人担忧的是，这些病原体似乎经常发生泄漏。这也解释了为什么流浪者在
+                <p>虽然公开的目击报告有限，但普遍的看法是：这些实验室确实存在。根据这些报告，生物危害实验室内可能存储着数百种具有高度传染性的病原体，更令人担忧的是，这些病原体似乎经常发生泄漏。这也解释了为什么流浪者在
                     <strong>Level 4294</strong> 中，会频繁地感染到各种疾病。
                 </p>
             </div>
@@ -215,19 +214,33 @@
             </div>
             <div id="宿舍厕所" class="content">
                 <strong>宿舍厕所</strong><br>
+                <div class="image-block">
+                    <img src="./assets/lifebuoy.webp" alt="门上的老式航海救生圈" class="image">
+                    <div class="caption">
+                        <p>门上的老式航海救生圈</p>
+                    </div>
+                </div>
                 <p>这个区域的门默认是关闭的，如果你发现门异常难以打开，这通常表明厕所已被水填满。在厕所中使用水龙头或淋浴喷头是不被推荐的，因为任何接触到下水装置的水，都将以算数级数增长它的体积，从而导致房间被迅速灌满。此外，在少数情况下，座便器也会自发地向外喷水，因此建议流浪者携带宿舍门上的
                     老式航海救生圈 以确保安全。</p>
+                <div style="clear: both;"></div>
             </div>
             <div id="主空间" class="content">
                 <strong>主空间</strong><br>
+                <div class="image-block left">
+                    <img src="./assets/dormitory-wall.webp" alt="墙上有时存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份" class="image">
+                    <div class="caption">
+                        <p>墙上有时存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份</p>
+                    </div>
+                </div>
                 <p>中央空调的损坏导致主空间温度极其不可控，甚至可能到达 “危险”
-                    的程度（记录的最高温度为43℃）。有时，墙上会被发现存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份。在靠近窗户的位置存在两个白色木制书桌，它们通常是空置的。有时，你可以在其中找到几瓶牛奶和一些空本子，不建议饮用牛奶，因为它们已经被
+                    的程度（记录的最高温度为43℃）。在靠近窗户的位置存在两个白色木制书桌，它们通常是空置的。有时，你可以在其中找到几瓶牛奶和一些空本子，不建议饮用牛奶，因为它们已经被
                     <i><a href="#牛奶杆菌-button"
                             onclick="expandTabContent(document.getElementById('牛奶杆菌-button'))">牛奶杆菌</a></i>
                     污染。更罕见的情况下，一些有价值的记录会出现在抽屉里，M.E.G. 已经将所有发现的记录托管并收录。例如，其中一张古老的记录，含糊地介绍了一个被称为 “救赎之路”
                     的秘密行动，这次行动被认为导致了层级的一个出口
                     --位于操场上的护栏上的洞口。
                 </p>
+                <div style="clear: both;"></div>
             </div>
         </div>
         <h3 id='异象'>异象</h3>
@@ -242,10 +255,10 @@
             </p>
             <p><em>&lt;记录开始&gt;</em></p>
             <p><strong>Herbert Frazier</strong>：<em>[翻开记录本]</em> 我们现在开始。Rodgers 先生，您能详细叙述一下您昨天的经历吗？</p>
-            <p><strong>Mike Rodgers</strong>：当然可以。<em>[深呼吸]</em> 那天下午，我感到非常疲惫。你知道的，在这样的环境中，良好的睡眠是奢望...
-                尽管有令人不安的嘎吱声，我还是躺在了床上。我在晚上8点24分惊醒，外面传来了越来越响的直升机轰鸣声和尖锐的歌声...</p>
+            <p><strong>Mike Rodgers</strong>：当然可以。<em>[深呼吸]</em> 那天下午，我感到非常疲惫。你知道的，在这种鬼地方，良好的睡眠只是奢望...
+                尽管有令人不安的嘎吱声，我还是躺在了宿舍的床上。我在晚上8点24分惊醒，外面传来了越来越响的直升机轰鸣声和尖锐的歌声...</p>
             <p><strong>Herbert Frazier</strong>：<em>[快速记笔记]</em> 请继续。</p>
-            <p><strong>Mike Rodgers</strong>：我试图安慰自己，认为这可能只是这个层面上的一个无害异常。但随后发生的事情，完全超出了我的预期。我感觉到有东西在猛烈敲打房门，那种力量...
+            <p><strong>Mike Rodgers</strong>：我试图安慰自己，认为这可能只是这个层级一个无害异常。但随后发生的事情，完全超出了我的预期。我感觉到有东西在猛烈敲打房门，那种力量...
                 <em>[眼神中透出了恐惧]</em>，它...
                 根本不像是普通人能拥有的，而更像是由一群壮汉操作的攻城锤！一下又一下，门不断被撞击，墙壁在震动，我的水杯从桌子上掉落，摔成了碎片。我紧握匕首，惊恐地注视着门的方向。不久，我...
                 对不起，我需要整理一下思绪...
@@ -269,7 +282,7 @@
         <h2 id='beta0beta1beta2---一层二层三层beta教学区'>Beta<sub>0</sub>，Beta<sub>1</sub>，Beta<sub>2</sub> --一层，二层，三层：Beta教学区
         </h2>
         <p>从“高一(3)班”外的走廊出发，穿越一条昏暗的连廊，便可抵达 Beta教学区。</p>
-        <div class="image-block left">
+        <div class="image-block">
             <img src="./assets/beta-corridor.webp" alt="Beta区的地上部分" class="image">
             <div class="caption">
                 <p>Beta区的地上部分</p>
@@ -287,7 +300,7 @@
                 钢琴岛是一个八边型的木制平台，中央摆放了一架白色的钢琴。这个区域没有被发现过有害实体，因此它被视为一个安全的临时休息地。更为特别的是，演奏这架钢琴能够轻微地缓解探索者因层级结构带来的负面影响。</p>
         </div>
         <h2 id='beta-1---负一层地下空间'>Beta<sub>-1</sub> --负一层：地下空间</h2>
-        <div class="image-block">
+        <div class="image-block left">
             <img src="./assets/beta-lg1-corridor.webp" alt="在Beta<sub>-1</sub>内部，电涌时有发生" class="image">
             <div class="caption">
                 <p>在Beta<sub>-1</sub>内部，电涌时有发生</p>
@@ -296,7 +309,7 @@
         <p>Beta<sub>-1</sub> 可以通过两个已知入口（<a href='#map'>详见层级地图</a>）进入，它由一条中央走廊及其周围的房间构成。据了解，这一层是 <strong>Level
                 4294</strong>
             中损坏最严重的区域之一。电力供应不稳定，导致大部分区域陷入昏暗，仅有零星的灯光在闪烁。因此，强烈建议携带独立光源。</p>
-        <p>在 Beta<sub>-1</sub> 探索时，走廊顶部的扬声器可能偶发性地启动，播放一段预录的音频。这段音频通常是：<code>亲爱的同学们，距离正式上课还有三分钟，请尽快回到教室...</code>
+        <p>在 Beta<sub>-1</sub> 探索时，走廊顶部的扬声器可能偶发性地启动，播放一段预录的音频。这段音频通常是：<code>亲爱的同学们，距离正式上课还有三分钟，请各位同学尽快回到教室...</code>
             紧接着是一阵突然的静电噪声。这种现象的产生原因 被认为是 环境潮湿导致的存储芯片损坏。</p>
         <p>此外，流浪者很容易发现，这一层走廊的形状与 Beta<sub>0</sub> 相同，然而，走廊两侧都被坚固的墙壁或玻璃板隔断。这意味着，Beta<sub>-1</sub>
             的中间存在一个无法进入的隔离区。为了揭示这个隔离区域的真正用途，M.E.G.
@@ -311,7 +324,7 @@
             </p>
         </div>
         <h2 id='gamma0gamma1---一层二层活动场馆'>Gamma<sub>0</sub>，Gamma<sub>1</sub> --一层，二层：活动场馆</h2>
-        <div class="image-block left">
+        <div class="image-block">
             <img src="./assets/gamma-exit.webp" alt="Gamma<sub>0</sub>中有一个通向Delta区的主出口" class="image">
             <div class="caption">
                 <p>Gamma<sub>0</sub>中有一个通向Delta区的主出口</p>
@@ -350,7 +363,7 @@
                     href='https://backrooms-wiki-cn.wikidot.com/entity-17'>爬菌</a>的袜子等。</p>
         </div>
         <h2 id='gamma-1----负一层食堂'>Gamma<sub>-1</sub> --负一层：食堂</h2>
-        <div class="image-block">
+        <div class="image-block left">
             <img src="./assets/student-cafeteria.webp" alt="食堂在视觉上给人以不安的情绪" class="image">
             <div class="caption">
                 <p>食堂在视觉上给人以不安的情绪</p>
@@ -410,7 +423,7 @@
         </div>
         <p>除了以上几种菜品，还有其他一些食物因缺少相关报告未被提及。若流浪者不得不食用它们，应先少量取食，确定有无不良影响后再做进一步决策。</p>
         <h2 id='delta----户外空间'>Delta --户外空间</h2>
-        <div class="image-block left">
+        <div class="image-block">
             <img src="./assets/delta.webp" alt="Delta区的空气能见度很低" class="image">
             <div class="caption">
                 <p>Delta区的空气能见度很低</p>
@@ -424,7 +437,7 @@
             Delta区 探索具有极高的风险性。
         </p>
         <p>Delta区
-            的边界由一道高约3米的防护栏围绕。空气中的浓雾限制了视线，使得围栏外的景象变得朦胧不清。尝试攀爬这些防护栏的行为被证实是徒劳的，因为大多数人在攀爬至大约三分之二的高度时，都会被一种无法抗拒的恐惧感所克服，迫使他们放弃继续上升并返回。然而，根据一些零星的成功报告，在围栏的某个地点存在一个人工造成的豁口，它会把流浪者引向
+            的边界由一道高约2米的防护栏围绕。空气中的浓雾限制了视线，使得围栏外的景象变得朦胧不清。尝试攀爬这些防护栏的行为被证实是徒劳的，因为大多数人在攀爬至大约三分之二的高度时，都会被一种无法抗拒的恐惧感所征服，迫使他们放弃继续上升并返回。然而，根据一些零星的成功报告，在围栏的某个地点存在一个人工造成的豁口，它会把流浪者引向
             <strong><a href='https://backrooms-wiki-cn.wikidot.com/level-1'>Level 1 移居地带</a></strong>。
         </p>
 
@@ -439,7 +452,7 @@
         <div class="tab-panel">
             <div class="tab">
                 <button class="links active" onclick="expandTabContent(this)">晨主任</button>
-                <button class="links" onclick="expandTabContent(this, '王丹老师')">王丹老师</button>
+                <button class="links" onclick="expandTabContent(this, '王丹老师')">王丹老师（Damn）</button>
                 <button class="links" onclick="expandTabContent(this)">乔丹老师</button>
                 <button id="牛奶杆菌-button" class="links" onclick="expandTabContent(this)">牛奶杆菌</button>
                 <button id="小美-button" class="links"
@@ -544,8 +557,8 @@
                     <li><mark>[由于 Delta区 的高危险性，且实体 <i><a href="#小美-button"
                                     onclick="expandTabContent(document.getElementById('小美-button'), '小美')">小美</a></i>
                             在层级中消失，这个出口已被认定为失效]</mark><br>
-                        爬出位于位于操场护栏上的洞口可以把你带向 <strong>Level 1 移居地带</strong> 。自己找到通往这里的路非常困难，但你可以寻求实体 <i><a
-                                href="#小美-button"
+                        爬出位于位于操场护栏上的洞口可以把你带向 <strong><a href='https://backrooms-wiki-cn.wikidot.com/level-1'>Level 1
+                                移居地带</a></strong> 。自己找到通往这里的路非常困难，但你可以寻求实体 <i><a href="#小美-button"
                                 onclick="expandTabContent(document.getElementById('小美-button'), '小美')">小美</a></i>
                         ，她会很乐意提供帮助。
                     </li>
@@ -640,6 +653,7 @@
 
     setTimeout(() => {
         redPhenomenon();
+        clearInterval();
     }, getRandomInt(60000, 90000));
 </script>
 
