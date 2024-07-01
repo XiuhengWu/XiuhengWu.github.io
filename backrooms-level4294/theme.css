@@ -1,61 +1,14 @@
 @import url('https://fonts.font.im/icon?family=Material+Icons');
-@import url('https://fonts.font.im/css2?family=ZCOOL+XiaoWei&display=swap');:root {
-	--logo-image: url("http://backroomssandboxcn.wikidot.com/local--files/img/LOGO_MEG.png");
+@import url('https://fonts.font.im/css2?family=ZCOOL+XiaoWei&display=swap');
+@import url('./basic-theme.css');
 
-	--body-font: 'Arial', 'Helvetica', sans-serif;
-	--caption-font: 'Russo One', 'ZCOOL XiaoWei', sans-serif;
-	--title-font: 'Exo', '幼圆', "Noto Sans SC", sans-serif;
-
-	--white-monochrome: 215, 207, 137;
-	--text-white-monochrome: 222, 222, 222;
-	--pale-gray-monochrome: 255, 185, 97;
-	--light-gray-monochrome: 90, 20, 20;
-	--gray-monochrome: 90, 20, 20;
-	--black-monochrome: 12, 12, 12;
-	--bright-accent: 255, 185, 97;
-	--medium-accent: 86, 23, 23;
-	--dark-accent: 164, 107, 0;
-	--pale-accent: 203, 0, 183;
-	--alt-accent: 234, 88, 255;
-	--legacy-accent: 34, 80, 121;
-	--darker-legacy-accent: 45, 53, 67;
-	--backrooms-yellow: 215, 200, 0;
-
-	--swatch-topmenu-border-color: var(--medium-accent);
-	--swatch-headerh1-color: 222, 222, 222;
-	--swatch-headerh2-color: 255, 185, 97;
-
-	--link-color: 90, 20, 20;
-	--hover-link-color: 255, 185, 97;
-	--visited-link-color: 215, 150, 64;
-
-	--background-gradient-distance: 0;
-
-	--gradient-header: linear-gradient(to top, rgba(var(--medium-accent)) 0%, rgba(var(--medium-accent), 0.90) 0%);
-	--diagonal-stripes: linear-gradient(transparent 0);
-}
-
-
-html {
-	background-color: #d7cf89;
-	scroll-padding-top: 70px;
-	scroll-behavior: smooth;
-}
-
-body {
-	margin: 0;
-	color: black;
-	background-image: radial-gradient(circle, rgb(var(--medium-accent), 0.05) 50%, transparent 0);
-	background-size: 0.25em 0.25em;
-	background-repeat: repeat;
-}
 body.red-phenomenon {
 	background: unset;
 	background: url('https://vip.123pan.cn/1814216664/image/backrooms-level4294/assets/red-phenomenon-background.webp') center/90%;
 	color: red;
+	--text-white-monochrome: red;
 	--bright-accent: red;
 	--medium-accent: opacity;
-	--gray-monochrome: opacity;
 }
 
 .help {
@@ -64,30 +17,10 @@ body.red-phenomenon {
 	font-weight: bold;
 }
 
-#page-content {
-	min-height: 100vh;
-	font-family: var(--body-font);
-	margin: 0 1em;
-	padding-bottom: 5em;
-	font-size: 16px;
-}
-#page-content >:nth-last-child(1) {
-	margin-bottom: 0;
-}
-@media(min-width: 800px) {
-	#page-content {
-		margin: 0 auto;
-		width: 800px;
-	}
-}
-#page-content div {
-	clear: both;
-}
-
 .top-box {
 	background-color: rgb(245, 156, 0);
 	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 40%);
-	color: white;
+	color: rgba(var(--text-white-monochrome));
 	font-family: var(--body-font);
 	margin-top: 2rem;
 	border-left: 4.6px solid rgb(72, 69, 60);
@@ -222,11 +155,6 @@ h4 {
 	margin: 5px;
 }
 
-#page-content a:link,
-#page-content a:visited {
-	color: rgb(var(--link-color));
-}
-
 code {
 	background-color: #d3d3d3;
 	border-radius: 0.5em;
@@ -303,15 +231,14 @@ code {
 
 .styled-quote {
 	background-color: rgb(var(--bright-accent));
-	border-left: 0.5rem solid rgba(var(--gray-monochrome));
-	color: rgb(var(--black-monochrome));
+	border-left: 0.5rem solid rgba(var(--medium-accent));
 	padding: 0.1rem 1rem;
 	margin: 0.5rem 0 0.5rem 0.25rem;
 	box-shadow: 0.05rem 0.1rem 0.3rem rgba(0, 0, 0, 0.25);
 }
 
 .lightblock {
-	background-color: rgb(var(--white-monochrome));
+	background-color: rgb(215, 207, 137);
 	padding: 0.01rem 1rem;
 	margin: 1rem 0;
 	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
@@ -370,7 +297,7 @@ code {
 }
 
 .titleblock {
-	background-color: rgb(var(--gray-monochrome));
+	background-color: rgb(var(--medium-accent));
 	color: rgb(var(--text-white-monochrome));
 	padding: 0.5rem 1rem 0.10rem;
 	margin: 1.5rem 0 0.5rem;
@@ -379,7 +306,7 @@ code {
 }
 
 .titlebox {
-	color: rgb(var(--gray-monochrome));
+	color: black;
 	position: relative;
 	top: -1.6rem;
 	background-color: rgb(var(--bright-accent));
@@ -391,61 +318,4 @@ code {
 	margin: 1rem 0;
 	background: linear-gradient(90deg, rgba(199,192,137,1) 0%, rgba(214,206,146,0) 100%);
 	border-radius: 0.8rem;
-}
-
-#page-content > * {
-	animation-name: fadeIn;
-	animation-duration: 1s;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-out;
-	animation-fill-mode: backwards;
-}
-
-@keyframes fadeIn {
-	from {
-		opacity: 0;
-		transform: translate(0, 30px);
-	}
-	to {
-		opacity: 1;
-		transform: translate(0, 0);
-	}
-}
-
-#page-content {
-	--fade-in-delay: 0.1s;
-}
-
-#page-content >:nth-child(1) {
-	animation-delay: calc(1 * var(--fade-in-delay));
-}
-#page-content >:nth-child(2) {
-	animation-delay: calc(2 * var(--fade-in-delay));
-}
-#page-content >:nth-child(3) {
-	animation-delay: calc(3 * var(--fade-in-delay));
-}
-#page-content >:nth-child(4) {
-	animation-delay: calc(4 * var(--fade-in-delay));
-}
-#page-content >:nth-child(5) {
-	animation-delay: calc(5 * var(--fade-in-delay));
-}
-#page-content >:nth-child(6) {
-	animation-delay: calc(6 * var(--fade-in-delay));
-}
-#page-content >:nth-child(7) {
-	animation-delay: calc(7 * var(--fade-in-delay));
-}
-#page-content >:nth-child(8) {
-	animation-delay: calc(8 * var(--fade-in-delay));
-}
-#page-content >:nth-child(9) {
-	animation-delay: calc(9 * var(--fade-in-delay));
-}
-#page-content >:nth-child(10) {
-	animation-delay: calc(10 * var(--fade-in-delay));
-}
-#page-content >:nth-child(n + 10) {
-	animation-delay: calc(11 * var(--fade-in-delay));
 }

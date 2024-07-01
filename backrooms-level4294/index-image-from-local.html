@@ -18,68 +18,30 @@
             background-size: auto 95%;
         }
     </style>
+    <script>
+        var counter = 0
+        function writeImageBlock(src, alt) {
+            const scriptElement = document.currentScript;
+            const htmlContent = `
+                <div class="image-block${counter % 2 == 0 ? ' left' : ''}">
+                    <img src="${src}" alt="${alt}" class="image">
+                    <div class="caption">
+                        <p>${alt}</p>
+                    </div>
+                </div>
+            `;
+            counter++;
+            scriptElement.insertAdjacentHTML('afterend', htmlContent);
+            if (scriptElement.parentNode.id != 'page-content') {
+                document.addEventListener("DOMContentLoaded", function () {
+                    scriptElement.parentNode.insertAdjacentHTML('beforeend', '<div style="clear: both;"></div>');
+                });
+            }
+        }
+    </script>
 </head>
 
 <body>
-    <header class="nav-top">
-        <a href="index.html">Level 4294：北京明城外国语学校</a>
-        <span class="hamburger material-icons" id="ham">menu</span>
-    </header>
-    <nav class="nav-drill">
-        <ul id="nav-items">
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
-                    <i class="material-icons">sort</i> 目录
-                </a>
-                <div class="collapsible-menu">
-                    <ul id="catalog" style="margin: 0;"></ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
-                    <i class="material-icons">format_size</i> 文本大小
-                </a>
-                <div class="collapsible-menu">
-                    <ul style="margin: 0;">
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='13px'">13px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='14px'">14px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='15px'">15px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='16px'">16px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='17px'">17px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='18px'">18px</a></li>
-                        <li><a href="javascript:void(0);"
-                                onclick="document.getElementById('page-content').style.fontSize='19px'">19px</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="./assets/page-content.pdf" download>
-                    <i class="material-icons">picture_as_pdf</i> 下载这个档案为 PDF
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
-                    <i class="material-icons">history</i> 查看历史版本
-                </a>
-                <div class="collapsible-menu">
-                    <ul style="margin: 0;">
-                        <li><a href="index-old.html">第一版 Dec 23, 2023</a></li>
-                    </ul>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="about.html">
-                    <i class="material-icons">info</i> 关于
-                </a>
-            </li>
-        </ul>
-    </nav>
     <div class="modal">
         <span class="close material-icons">close</span>
         <img class="modal-content" id="preview-image">
@@ -88,32 +50,33 @@
 
     <div id="page-content">
         <h1 id="Level-4294-北京明城外国语学校" style="padding-top: 100px;margin-top: 0;">Level 4294: 北京明城外国语学校</h1>
+
         <div class="quote-block">
             <div class="quote-mark-left">“</div>
             <div class="quote-content">
                 <p>我已经深入探索了数个月，但我确信这还不是故事的终章。 一切的一切背后仍蕴藏着什么东西，那些泛黄的墙壁、那些诡异的敲墙声、那些被水淹没的宿舍房间...
-                    一些思绪，它们如同幽灵般在我眼前飘过，在我耳边低语，我却又无法捕捉它们... 尽管如此，我坚信，黎明前的黑暗终将消散，最终的答案已经离我不远了！
-                </p>
+                    一些思绪，它们如同幽灵般在我眼前飘过，在我耳边低语，我却又无法捕捉它们... 尽管如此，我坚信，黎明前的黑暗终将消散，最终的答案已经离我不远了</p>
             </div>
             <div class="quote-mark-right">„</div>
             <div class="quote-source"><em>—— 一位流浪者的笔记</em></div>
         </div>
+
         <div class="top-box">
             <b style="font-size: 2.14rem;z-index: 2;">生存难度：</b><br>
             <b style="font-size: 1.5rem;font-weight: 500;font-style: italic;z-index: 2;">等级 2</b>
         </div>
-        <p style="color: #48453c;font-size: 25px;margin: 0 1em;margin-top: 2rem;"><span>◆</span><b>&nbsp;&nbsp;不安全</b>
-        </p>
+
+        <p style="color: #48453c;font-size: 25px;margin: 0 1em;margin-top: 2rem;"><span>◆</span><b>&nbsp;&nbsp;不安全</b></p>
         <p style="color: #48453c;font-size: 25px;margin: 0 1em;"><span>◆</span><b>&nbsp;&nbsp;稳定</b> </p>
-        <p style="color: #48453c;font-size: 25px;margin: 0 1em;margin-bottom: 2rem;">
-            <span>◆</span><b>&nbsp;&nbsp;少量实体</b>
-        </p>
+        <p style="color: #48453c;font-size: 25px;margin: 0 1em;margin-bottom: 2rem;"><span>◆</span><b>&nbsp;&nbsp;少量实体</b></p>
+
         <div class="image-block" style="float: unset;clear: unset;margin: 0;width: unset;margin-top: 1em;">
             <img id="map" src="./assets/map.webp" alt="似乎是凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。" class="image">
             <div class="caption">
                 <p>似乎是凭借记忆, 绘制出的层级地图。原件现存于M.E.G.数据档案馆。</p>
             </div>
         </div>
+
         <h1 id='描述'>描述</h1>
         <p><strong>Level 4294</strong>
             看起来像一座普通中学，它由三栋教学楼（Alpha区，Beta区，Gamma区）和户外的操场（Delta区）组成，由于年久失修，该层级大部分已经呈现出破旧、腐朽的景象，但截至本文修订时间，室内部分的主体结构仍被证明是稳固的。
@@ -123,12 +86,9 @@
         </p>
         <h2 id='alpha0---一层alpha教学区'>Alpha<sub>0</sub> --一层：Alpha教学区</h2>
         <h3 id='初始区域高一3班'>初始区域：高一(3)班</h3>
-        <div class="image-block left">
-            <img src="./assets/classroom.webp" alt="一张教室照片，由 B.N.T.G.特工 Kathryn Howell 所摄" class="image">
-            <div class="caption">
-                <p>一张教室照片，由 B.N.T.G.特工 Kathryn Howell 所摄</p>
-            </div>
-        </div>
+
+        <script>writeImageBlock("./assets/classroom.webp", "一张教室照片，由 B.N.T.G.特工 Kathryn Howell 所摄")</script>
+
         </p>
         <p>通常情况下，进入 <strong>Level 4294</strong>
             的流浪者会在标识为“高一(3)班”的教室中出现。教室中分布着约20套标准尺寸的胶合板桌椅，地面铺设着暗灰色的橡胶地板，墙壁和天花板则涂有已经褪色的白色油漆。</p>
@@ -136,12 +96,9 @@
                     href='https://backrooms-wiki-cn.wikidot.com/the-grave'>隐秘层级 坟墓</a></strong>
             间存在某种关联。在某些情况下，管道中的水流声会骤然增大，它被这些人解释为一个流浪者在后室中死亡。
         </p>
-        <div class="image-block">
-            <img src="./assets/alpha-outside.webp" alt="池塘中令人担忧的生物组合体" class="image">
-            <div class="caption">
-                <p>池塘中令人担忧的生物组合体</p>
-            </div>
-        </div>
+
+        <script>writeImageBlock("./assets/alpha-outside.webp", "池塘中令人担忧的生物组合体")</script>
+
         <p>在教室的左侧，有三扇布满污渍的窗户，透过它们可以看见外面被浓雾笼罩的池塘。池塘中生长着大量棕色的植物触手，它们类似于水草，但有时会呼吸或活动，从而在水面激起细小的涟漪。有人担心，这些奇怪的生物可能会沿着岸边爬行，并偷偷潜入“高一(3)班”的教室。这种担忧并非无稽之谈——池塘里时常有漂浮物和鱼类被这些棕色触手缠绕，偶尔甚至能听到落入陷阱的青蛙的惨叫声。
         </p>
         <p>在 <a href='https://backrooms-wiki-cn.wikidot.com/groups-list#toc8'>M.E.G.</a>
@@ -154,16 +111,10 @@
             的一部分，它也表现出类似的非欧几里德性质。整体上，走廊似乎环绕着一个约150平方米中心区，但假如有人靠近墙壁，走廊将在当前方向上延伸到无穷远，若此时流浪者立即离开，走廊将重新开始收缩，直到达到最初的形状。</p>
         <div class="titleblock">
             <p><span class="titlebox">走廊中心区Alpha</span></p>
-            <div class="image-block left">
-                <img src="./assets/center-area-alpha.webp" alt="肢团下方仿佛有生物将要从中钻出" class="image">
-                <div class="caption">
-                    <p>肢团下方仿佛有生物将要从中钻出</p>
-                </div>
-            </div>
+            <script>writeImageBlock("./assets/center-area-alpha.webp", "肢团下方仿佛有生物将要从中钻出")</script>
             <p style="margin-top: -1em;">
                 走廊中心区栽种了若干盆栽植物和几株木本植物，它的地面由蓝色，白色和黑色的瓷砖铺成，一些瓷砖已经脱落，并露出下方的混凝土。中心区中存在一条被玻璃板覆盖的水域，其中可见许多肢团和尸鼠，然而它们不具有攻击性。
             </p>
-            <div style="clear: both;"></div>
         </div>
         <p>在走廊的两侧，分布着一些房间，它们很不相同：</p>
         <div class="tab-panel">
@@ -179,13 +130,8 @@
             <div id="厕所" class="content">
                 <strong>厕所</strong><br>
                 <p>
-                <div class="image-block">
-                    <img src="./assets/toilet.webp" alt="厕所中巨大的坑洞似乎暗示着一些未知的危险实体" class="image">
-                    <div class="caption">
-                        <p>厕所中巨大的坑洞似乎暗示着一些未知的危险实体</p>
-                    </div>
-                </div>
-                默认情况下，所有厕所隔间的门都被未知手段锁死<sup><del>来宾sk138hd3gn：没有被锁死的是<i>[数据丢失]</i>不要进入!!</del></sup>。如果你能打开它们，你就可以安全使用大多数隔间。然而，逗留过长时间是不被推荐的，否则地板将开始自发地渗出一种危险的酸性液体;
+                    <script>writeImageBlock("./assets/toilet.webp", "厕所中巨大的坑洞似乎暗示着一些未知的危险实体")</script>
+                    默认情况下，所有厕所隔间的门都被未知手段锁死<sup><del>来宾sk138hd3gn：没有被锁死的是<i>[数据丢失]</i>不要进入!!</del></sup>。如果你能打开它们，你就可以安全使用大多数隔间。然而，逗留过长时间是不被推荐的，否则地板将开始自发地渗出一种危险的酸性液体;
                 </p>
                 <div style="clear: both;"></div>
             </div>
@@ -197,12 +143,7 @@
             </div>
         </div>
         <h2 id='alpha2alpha3---二层三层宿舍'>Alpha<sub>2</sub>&amp;Alpha<sub>3</sub> --二层&amp;三层：宿舍</h2>
-        <div class="image-block left">
-            <img src="./assets/dormitory-corridor.webp" alt="宿舍的走廊" class="image">
-            <div class="caption">
-                <p>宿舍的走廊</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/dormitory-corridor.webp", "宿舍的走廊")</script>
         <p>你可以从走廊中心区的入口前往男生宿舍，或从“高一(3)班”斜对角的楼梯前往女生宿舍。宿舍由一个矩形的走廊和右侧的房间构成。走廊具有与零层相似的外观和非欧几里德特性，但多铺设了一条蓝灰色的地毯。右侧房间大部分都十分相似。
         </p>
         <h3 id='宿舍房间'>宿舍房间</h3>
@@ -214,24 +155,14 @@
             </div>
             <div id="宿舍厕所" class="content">
                 <strong>宿舍厕所</strong><br>
-                <div class="image-block">
-                    <img src="./assets/lifebuoy.webp" alt="门上的老式航海救生圈" class="image">
-                    <div class="caption">
-                        <p>门上的老式航海救生圈</p>
-                    </div>
-                </div>
+                <script>writeImageBlock("./assets/lifebuoy.webp", "门上的老式航海救生圈")</script>
                 <p>这个区域的门默认是关闭的，如果你发现门异常难以打开，这通常表明厕所已被水填满。在厕所中使用水龙头或淋浴喷头是不被推荐的，因为任何接触到下水装置的水，都将以算数级数增长它的体积，从而导致房间被迅速灌满。此外，在少数情况下，座便器也会自发地向外喷水，因此建议流浪者携带宿舍门上的
                     老式航海救生圈 以确保安全。</p>
                 <div style="clear: both;"></div>
             </div>
             <div id="主空间" class="content">
                 <strong>主空间</strong><br>
-                <div class="image-block left">
-                    <img src="./assets/dormitory-wall.webp" alt="墙上有时存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份" class="image">
-                    <div class="caption">
-                        <p>墙上有时存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份</p>
-                    </div>
-                </div>
+                <script>writeImageBlock("./assets/dormitory-wall.webp", "墙上有时存在着未知的透明液体，经化验，其中包含类似人类遗传物质的成份")</script>
                 <p>中央空调的损坏导致主空间温度极其不可控，甚至可能到达 “危险”
                     的程度（记录的最高温度为43℃）。在靠近窗户的位置存在两个白色木制书桌，它们通常是空置的。有时，你可以在其中找到几瓶牛奶和一些空本子，不建议饮用牛奶，因为它们已经被
                     <i><a href="#牛奶杆菌-button"
@@ -282,12 +213,7 @@
         <h2 id='beta0beta1beta2---一层二层三层beta教学区'>Beta<sub>0</sub>，Beta<sub>1</sub>，Beta<sub>2</sub> --一层，二层，三层：Beta教学区
         </h2>
         <p>从“高一(3)班”外的走廊出发，穿越一条昏暗的连廊，便可抵达 Beta教学区。</p>
-        <div class="image-block">
-            <img src="./assets/beta-corridor.webp" alt="Beta区的地上部分" class="image">
-            <div class="caption">
-                <p>Beta区的地上部分</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/beta-corridor.webp", "Beta区的地上部分")</script>
         <p>这个区域以其数量众多的 <em>幼年<a href='https://backrooms-wiki-cn.wikidot.com/entity-4'>无面灵</a></em>
             而著称。在大多数情况下，只要不激怒这些实体，它们便不会主动攻击。然而，它们似乎能感知到人类的情绪波动，并在无预警的情况下进行移动或发出刺耳的尖叫。长时间暴露在这种环境中，流浪者可能会经历从轻微不适到严重焦虑的一系列反应。这种持续的心理压力甚至可能导致感官剥夺，使个体失去对周围环境的感知能力。
         </p>
@@ -300,12 +226,7 @@
                 钢琴岛是一个八边型的木制平台，中央摆放了一架白色的钢琴。这个区域没有被发现过有害实体，因此它被视为一个安全的临时休息地。更为特别的是，演奏这架钢琴能够轻微地缓解探索者因层级结构带来的负面影响。</p>
         </div>
         <h2 id='beta-1---负一层地下空间'>Beta<sub>-1</sub> --负一层：地下空间</h2>
-        <div class="image-block left">
-            <img src="./assets/beta-lg1-corridor.webp" alt="在Beta<sub>-1</sub>内部，电涌时有发生" class="image">
-            <div class="caption">
-                <p>在Beta<sub>-1</sub>内部，电涌时有发生</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/beta-lg1-corridor.webp", "在Beta<sub>-1</sub>内部，电涌时有发生")</script>
         <p>Beta<sub>-1</sub> 可以通过两个已知入口（<a href='#map'>详见层级地图</a>）进入，它由一条中央走廊及其周围的房间构成。据了解，这一层是 <strong>Level
                 4294</strong>
             中损坏最严重的区域之一。电力供应不稳定，导致大部分区域陷入昏暗，仅有零星的灯光在闪烁。因此，强烈建议携带独立光源。</p>
@@ -324,12 +245,7 @@
             </p>
         </div>
         <h2 id='gamma0gamma1---一层二层活动场馆'>Gamma<sub>0</sub>，Gamma<sub>1</sub> --一层，二层：活动场馆</h2>
-        <div class="image-block">
-            <img src="./assets/gamma-exit.webp" alt="Gamma<sub>0</sub>中有一个通向Delta区的主出口" class="image">
-            <div class="caption">
-                <p>Gamma<sub>0</sub>中有一个通向Delta区的主出口</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/gamma-exit.webp", "Gamma<sub>0</sub>中有一个通向Delta区的主出口")</script>
         <p>Gamma区 可以从 Beta区 的任意层 或 Delta区 进入。这一层主要包含以下几个部分。</p>
         <div class="lightblock">
             <h3 id='音乐厅'>音乐厅</h3>
@@ -363,12 +279,7 @@
                     href='https://backrooms-wiki-cn.wikidot.com/entity-17'>爬菌</a>的袜子等。</p>
         </div>
         <h2 id='gamma-1----负一层食堂'>Gamma<sub>-1</sub> --负一层：食堂</h2>
-        <div class="image-block left">
-            <img src="./assets/student-cafeteria.webp" alt="食堂在视觉上给人以不安的情绪" class="image">
-            <div class="caption">
-                <p>食堂在视觉上给人以不安的情绪</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/student-cafeteria.webp", "食堂在视觉上给人以不安的情绪")</script>
         <p>食堂是 Gamma<sub>-1</sub> 的唯一组成部分。整个区域都能听到明显的机械噪音，其源头很可能是正在运转的通风系统。尽管被这些声音所包围，食堂中非常特殊的气味却依然能够被察觉。大部分流浪者将这种气味描述为
             “腐烂的尸堆与所有常用调料的混合物”。</p>
         <p>偶尔，你可以听到 餐具与盘子的碰撞声，挪动椅子的噪声，轻微的交谈声或啜泣声，但它们将在你转身时消失，你会发现，你的身后并没有任何人。</p>
@@ -423,12 +334,7 @@
         </div>
         <p>除了以上几种菜品，还有其他一些食物因缺少相关报告未被提及。若流浪者不得不食用它们，应先少量取食，确定有无不良影响后再做进一步决策。</p>
         <h2 id='delta----户外空间'>Delta --户外空间</h2>
-        <div class="image-block">
-            <img src="./assets/delta.webp" alt="Delta区的空气能见度很低" class="image">
-            <div class="caption">
-                <p>Delta区的空气能见度很低</p>
-            </div>
-        </div>
+        <script>writeImageBlock("./assets/delta.webp", "Delta区的空气能见度很低")</script>
         <p>Delta区 的入口位于 Beta<sub>0</sub> 和
             Gamma<sub>0</sub>，这里常年被一层无法散去的浓雾笼罩。该区域的非欧几里得特性极为显著，虽然它仅包括四个主场地，但任何看似直线的路径都会不可避免地扭曲和弯折，有时甚至会形成闭合的环形或曲线，仿佛空间本身在这个区域变得不可琢磨。此外，关于
             <em><a href='https://backrooms-wiki-cn.wikidot.com/entity-3'>Entity 3 笑魇</a></em>、<em><a
@@ -572,6 +478,30 @@
 
 <script src="top-bar.js"></script>
 <script>
+    writeTopBar(`
+    <li class="nav-item">
+        <a class="nav-link" href="./assets/page-content.pdf" download>
+            <i class="material-icons">picture_as_pdf</i> 下载这个档案为 PDF
+        </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="javascript:void(0);" onclick="collapsibleExpand(this.nextElementSibling)">
+            <i class="material-icons">history</i> 查看历史版本
+        </a>
+        <div class="collapsible-menu">
+            <ul style="margin: 0;">
+                <li><a href="index-old.html">第一版 Dec 23, 2023</a></li>
+            </ul>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="about.html">
+            <i class="material-icons">info</i> 关于
+        </a>
+    </li>
+`)
+</script>
+<script>
     var modal = document.getElementsByClassName("modal")[0];
     var images = document.getElementsByClassName('image');
     var metaTag = document.querySelector('meta[name="viewport"]');
@@ -590,6 +520,21 @@
             modal.style.display = "none";
             metaTag.setAttribute('content', 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no');
         }
+    }
+
+    function expandTabContent(elem, symbol) {
+        var i, contents, links;
+        contents = elem.parentNode.parentNode.getElementsByClassName("content");
+        for (i = 0; i < contents.length; i++) {
+            contents[i].style.display = "none";
+        }
+        links = elem.parentNode.parentNode.getElementsByClassName("links");
+        for (i = 0; i < links.length; i++) {
+            links[i].classList.remove("active");
+        }
+
+        document.getElementById(symbol || elem.innerText).style.display = "block";
+        elem.classList.add("active");
     }
 
     function getRandomInt(m, n) {
@@ -651,10 +596,14 @@
         }, 30000);
     }
 
-    setTimeout(() => {
-        redPhenomenon();
-        clearInterval();
-    }, getRandomInt(60000, 90000));
+    const paramsStr = window.location.search;
+    const params = new URLSearchParams(paramsStr);
+    if (params.get('easteregg') != "disable") {
+        setTimeout(() => {
+            redPhenomenon();
+            clearInterval();
+        }, getRandomInt(60000, 90000));
+    }
 </script>
 
 </html>
