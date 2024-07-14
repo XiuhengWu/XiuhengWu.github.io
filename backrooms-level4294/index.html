@@ -517,11 +517,11 @@
             }
             links = elem.parentNode.parentNode.getElementsByClassName("links");
             for (i = 0; i < links.length; i++) {
-                links[i].classList.remove("active");
+                links[i].className = links[i].className.replace(" active", "");
             }
 
             document.getElementById(symbol || elem.innerText).style.display = "block";
-            elem.classList.add("active");
+            elem.className += " active";
         }
 
         function getRandomInt(m, n) {
@@ -546,7 +546,7 @@
                 children[i].appendChild(helpDiv);
             }
             setTimeout(() => {
-                document.getElementsByTagName("body")[0].classList.add("red-phenomenon");
+                document.getElementsByTagName("body")[0].className += "red-phenomenon";
                 document.getElementsByTagName("body")[0].style.color = "red";
                 setTimeout(() => {
                     document.getElementsByTagName("html")[0].scrollTo({
@@ -568,7 +568,7 @@
                                 setTimeout(() => {
                                     document.getElementsByClassName("nav-top")[0].style.display = "flex";
                                     document.getElementsByClassName("nav-drill")[0].style.display = "flex";
-                                    document.getElementsByTagName("body")[0].classList.remove("red-phenomenon");
+                                    document.getElementsByTagName("body")[0].className = document.getElementsByTagName("body")[0].className.replace("red-phenomenon", "");
                                     document.getElementsByTagName("body")[0].style.color = "unset";
                                     var helpDivs = document.getElementsByClassName("help");
                                     while (helpDivs.length > 0) {
