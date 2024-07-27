@@ -95,14 +95,14 @@
                     let label = document.querySelector(`.page-2 > :nth-child(${i})`)
                     label.innerText = label.innerText.slice(0, 8) + 'TIMEOUT'
                     document.querySelector(`.page-2 > :nth-child(${i})`).style.color = 'red'
-                }, i * 1500);
+                }, i * 2000);
             }
             setTimeout(() => {
                 let label = document.querySelector(`.page-2 > :nth-child(5)`)
                 label.innerText = label.innerText.slice(0, 8) + 'Successful'
                 document.querySelector(`.page-2 > :nth-child(5)`).style.color = 'green'
                 showVideo()
-            }, 5 * 1500);
+            }, 5 * 2000);
         }
 
         function showVideo() {
