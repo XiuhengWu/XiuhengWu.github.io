@@ -221,12 +221,32 @@ document.addEventListener('DOMContentLoaded', (event) => {
         try {
             copyExpressionToClickBoard();
         } catch {
-            
+
         }
         setTimeout(() => {
             this.innerHTML = '复制曼巴表达式';
         }, 1500);
-    })
+    });
+
+    let coll = document.getElementsByClassName("collapsible");
+    for (let i = 0; i < coll.length; i++) {
+        coll[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var content = this.nextElementSibling;
+            if (content.style.maxHeight){
+            content.style.maxHeight = null;
+            } else {
+            content.style.maxHeight = content.scrollHeight + "px";
+            } 
+        });
+    }
+
+    document.querySelector('.dialog .close').addEventListener('click', function() {
+        document.querySelector('.overlay').style.display = 'none';
+    });
+    document.querySelector('.about').addEventListener('click', function() {
+        document.querySelector('.overlay').style.display = 'flex';
+    });
     
     result_elem.innerHTML = '<p class="info">孩子，你可以开始输入了</p>'
 });
