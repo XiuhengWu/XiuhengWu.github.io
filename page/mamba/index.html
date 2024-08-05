@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曼巴数分解器</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft Yahei", "STHeiti", "STHeiti", Arial, Helvetica, sans-serif;
+        }
+        body {
+            position: relative;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background-color: rgb(254, 214, 28);
+            background: url(https://vip.123pan.cn/1814216664/image/mamba/background.webp) no-repeat;
+            background-size: cover;
+            background-position: 50%;
+            background-attachment: fixed;
+            box-shadow: inset 0px 0px 20px 20px rgb(254, 214, 28);
+        }
+        button {
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+            tap-highlight-color: transparent;
+            -webkit-tap-highlight-color: transparent;
+        }
+        a {
+            color: rgb(255, 227, 105);
+        }
+        
+        .page-wrap {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 30%;
+            max-width: 70rem;
+            margin: 0 auto;
+            background-color: rgba(127, 122, 113, 0.8);
+            backdrop-filter: blur(20px);
+            color: #fff;
+            border-radius: 2rem 2rem 0 0;
+            box-sizing: border-box;
+            padding: 1.5rem;
+            min-height: 70%;
+        }
+        
+        .page-wrap h1 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 2.3rem;
+        }
+        
+        .page-wrap .controls {
+            display: flex;
+            height: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .controls * {
+            border: none;
+            outline: none;
+        }
+        
+        .controls .input-container {
+            position: relative;
+            flex: 3 1 0;
+            margin-right: 10px;
+        }
+        .controls input {
+            position: absolute;
+            font-size: 1rem;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            border-bottom: 2px solid #ccc;
+            color: #fff;
+            padding: 5px 0;
+            background-color: transparent;
+        }
+        .controls input::-webkit-outer-spin-button,
+        .controls input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+        .controls .label {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            color: #ccc;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .controls input:focus ~ .label,
+        .controls input:valid ~ .label {
+            bottom: calc(2rem + 5px);
+            font-size: 16px;
+            color: rgb(255, 227, 105);
+        }
+        .controls .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: rgb(255, 227, 105);
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+        .controls input:focus ~ .underline,
+        .controls input:valid ~ .underline {
+            transform: scaleX(1);
+        }
+        
+        .controls button {
+            flex: 1 1 0;
+            font-size: 1rem;
+        }
+        
+        .equal {
+            font-size: 2rem;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .warning {
+            background-color: rgb(212, 190, 88);
+            color: #fff;
+            margin: 0.7em 0;
+            border-radius: 5px;
+            padding: 5px;
+            display: none;
+        }
+        
+        .result {
+            --f-size: 2rem;
+            background-color: #aaa;
+            min-height: 10rem;
+            padding: 1rem;
+            border-radius: 5px;
+            font-size: var(--f-size);
+            letter-spacing: 0.1em;
+            text-align: center;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .result img {
+            height: 2em;
+            vertical-align: middle;
+            width: auto;
+        }
+        .result .info {
+            font-size: 1rem;
+        }
+        .result sup {
+            font-size: 0.5em;
+        }
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 0.1em;
+            font-size: 0.85em;
+        }
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+        .frac .frac {
+            font-size: 0.9em
+        }
+        .frac .bottom {
+            border-top: 2px solid #fff;
+        }
+        .frac .symbol {
+            display: none;
+        }
+        .bracket {
+            --h: var(--f-size)
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: middle;
+            width: calc(var(--h) / 6);
+            min-width: 8px;
+            height: var(--h);
+            border: 2px solid #fff;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+        .bracket.right {
+            border-left: none;
+            border-right: 2px solid #fff;
+            border-radius: 0 10px 10px 0;
+        }
+        .bracket.s1 { --h: var(--f-size) }
+        .bracket.s2 { --h: calc(1.5 * var(--f-size)) }
+        .bracket.s3 { --h: calc(2.25 * var(--f-size)) }
+        .bracket.s4 { --h: calc(2.5 * var(--f-size)) }
+        .bracket.s5 { --h: calc(3 * var(--f-size)) }
+        .bracket.s6 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s7 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s8 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s9 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s10 { --h: calc(3.2 * var(--f-size)) }
+        
+        .copy {
+            display: block;
+            width: 100%;
+            margin: 1.3rem 0;
+            font-size: 1.2rem;
+            height: 3rem;
+        }
+        
+        .about {
+            display: block;
+            text-align: center;
+        }
+        
+        button span{
+            background-color: rgba(239, 211, 83, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            animation: animate .7s ease-out infinite;
+        }
+        @keyframes animate {
+            from {
+                width: 0;
+                height: 0;
+                opacity: 0.5;
+            }
+            
+            to {
+                width: 100vmin;
+                height: 100vmin;
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        ['https://vip.123pan.cn/1814216664/image/mamba/calc.js', 'https://vip.123pan.cn/1814216664/image/mamba/index.bundle.js'].forEach(script_url => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', script_url, false); // false makes the request synchronous
+            xhr.send(null);
+    
+            if (xhr.status === 200) {
+                const calc_js = document.createElement('script');
+                calc_js.type = 'text/javascript';
+                calc_js.innerHTML = xhr.responseText;
+                document.querySelector('head').appendChild(calc_js);
+            } else {
+                console.error('Error fetching JS file:', xhr.statusText);
+            }
+        });
+    </script>
+    
+</head>
+<body>
+    <div class="page-wrap">
+        <h1>孩子们，我回来了！并且，在每个数中 ...</h1>
+        <div class="controls">
+            <div class="input-container">
+                <input id="num-input" type="number" id="input" required="">
+                <label for="input" class="label">输入一个整数...</label>
+                <div class="underline"></div>
+            </div>
+            
+            <button id="go">分解</button>
+        </div>
+        <h2 class="equal">=</h2>
+        <div class="warning">
+            孩子，过长的整数可不是件好事，它可能造成结果异常 ...
+        </div>
+        <div class="result">
+            <p class="info">初始化中，这将在几秒内完成 ...</p>
+        </div>
+        <i style="text-align: center;display: block;margin-top: 0.2rem;">（长度溢出时，上方内容块可以左右滑动）</i>
+        <button class="copy">复制曼巴表达式</button>
+        <a class="about" href="./about.html">这是什么原理？</a>
+    </div>
+</body>
+</html>
