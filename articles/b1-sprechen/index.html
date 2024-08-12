@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="/src/css/article.css" rel="stylesheet"/>
+<script async="" src="/src/js/article.min.js"></script>
+<title>Pro- und Kontra-Aussagen der 27 Themen</title>
+<style>
+        /* Loading animation */
+        .show-box {
+            background-color: rgb(231, 224, 236);
+            color: rgb(28, 27, 31);
+        }
+        @media (prefers-color-scheme: dark) {
+            .show-box {
+                background-color: rgb(73, 69, 79);
+                color: rgb(230, 225, 229);
+            }
+        }
+        .show-box {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            left: 0;
+            width: 100vw;
+            z-index: 500;
+        }
+        .show-box.hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .loader {
+            position: relative;
+            width: 100px;
+        }
+        .loader::before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+        .circular {
+            animation: rotate 2s linear infinite;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: rgb(103, 80, 164);
+            animation: dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+        .post {
+            color: rgba(0, 0, 0, 0.8);
+        }
+    </style>
+</head>
+<body>
+<!-- loading animation -->
+<div class="show-box">
+<div class="loader">
+<svg class="circular" viewbox="25 25 50 50">
+<circle class="path" cx="50" cy="50" fill="none" r="20" stroke-miterlimit="10" stroke-width="3"></circle>
+</svg>
+</div>
+<h1>LOADING...</h1>
+<i>This might take a few seconds...</i>
+</div>
+<script>
+        var loading_animation = setTimeout(() => {
+            document.querySelector('.show-box').style.display = 'flex';
+        }, 200);
+    </script>
+<div class="app">
+<!-- header -->
+<div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
+<header class="top-app-bar">
+<mdui-button-icon href="/index.html#repository" icon="arrow_back"></mdui-button-icon>
+<a class="title" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
+<span>
+<mdui-dropdown>
+<mdui-button-icon icon="translate" slot="trigger"></mdui-button-icon>
+<mdui-menu id="language-select" onclick="document.getElementById('language-select-left').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-button-icon class="theme-button" icon="light_mode"></mdui-button-icon>
+<mdui-button-icon icon="menu_book" id="open-reader"></mdui-button-icon>
+</span>
+</header>
+<header class="navigation-rail">
+<span style="margin-top: 2rem;margin-bottom: auto">
+<mdui-button class="material-icons" href="/index.html#repository" style="color: rgb(var(--mdui-color-on-surface));" variant="text">arrow_back</mdui-button>
+<label data-translatable="">Back // 返回 // Zurück</label>
+</span>
+<mdui-dropdown placement="right-end" slot="bottom">
+<mdui-button-icon icon="translate" slot="trigger" style="margin-bottom: 1rem;"></mdui-button-icon>
+<mdui-menu id="language-select-left" onclick="document.getElementById('language-select').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-fab class="theme-button" icon="light_mode" slot="bottom" style="margin-bottom: 1rem;"></mdui-fab>
+</header>
+<mdui-fab icon="menu_book" id="open-reader-fab">Reader</mdui-fab>
+<aside class="toc-button navigation-drawer" id="reader">
+<mdui-button data-translatable="" full-width="" icon="close" id="close-reader" variant="text">Close // 关闭 // Schließen</mdui-button>
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                        Table of Contents // 目录 // Inhaltsverzeichnis
+                    </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<mdui-select id="font-size" onchange="document.getElementById('font-size-right').value = this.value" slot="end-icon" style="width: 6rem;" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch" onchange="document.getElementById('animation-switch-right').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</aside>
+<!-- page content -->
+<div class="page-wrap">
+<div class="post" style="background-image: url(./cover.webp);">
+<div class="post-info">
+<div class="meta-tags"><span data-translatable>
+       Document // 文档 // Dokument
+      </span><span data-translatable>
+       Article // 文章 // Artikels
+      </span><span data-translatable>
+       German // 英文 // Deutsch
+      </span></div>
+<h1>Pro- und Kontra-Aussagen der 27 Themen</h1>
+<div class="meta-info">
+<div><i class="material-icons">calendar_month</i> <span data-translatable="">Created:  // 创建于： // Erstellt: </span><time data-desc="creation" datetime="2024-06-08">08.06.2024</time></div>
+<div><i class="material-icons">sync</i> <span data-translatable="">Modified:  // 修改于： // Geändert: </span><time data-desc="modification" datetime="2024-06-08">08.06.2024</time></div>
+</div>
+</div>
+<svg class="waves" preserveaspectratio="none" shape-rendering="auto" viewbox="0 24 150 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" id="gentle-wave"></path>
+</defs>
+<g class="parallax">
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.7)" x="48" xlink:href="#gentle-wave" y="0"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.5)" x="48" xlink:href="#gentle-wave" y="3"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.3)" x="48" xlink:href="#gentle-wave" y="5"></use>
+<use fill="rgb(var(--mdui-color-inverse-on-surface))" x="48" xlink:href="#gentle-wave" y="7"></use>
+</g>
+</svg>
+</div>
+<article class="article-wrap">
+<h1 id="pro--und-kontra-aussagen-der-27-themen">Pro- und Kontra-Aussagen
+der 27 Themen</h1>
+<blockquote>
+<p>Insgesamt 27 themenspezifische Vorteile-Nachteile-Statements, zur
+Vorbereitung auf die Goethe B1-Prüfung Sprechen. <em>(Dieses Dokument
+wird von der AI erstellt)</em></p>
+</blockquote>
+<h2 id="alltag-mit-oder-ohne-fernsehen">Alltag mit oder ohne
+Fernsehen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Familienzeit erhöhen</strong>: Ohne Fernsehen haben Familien
+mehr Zeit, gemeinsam zu essen und zu interagieren.</li>
+<li><strong>Kreativität fördern</strong>: Kinder können sich kreativer
+beschäftigen, indem sie Spiele spielen oder Bastelarbeiten machen.</li>
+<li><strong>Körperliche Aktivität steigern</strong>: Ohne Fernsehen sind
+Kinder eher dazu geneigt, draußen zu spielen und sich zu bewegen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Informationsmangel</strong>: Ohne Fernsehen können Menschen
+wichtige Nachrichten und Informationen verpassen.</li>
+<li><strong>Entertainment-Limitation</strong>: Fernsehen bietet eine
+Vielzahl von Unterhaltungsoptionen, die ohne es fehlen würden.</li>
+<li><strong>Soziale Isolation</strong>: Fernsehen kann eine Möglichkeit
+sein, mit anderen in Kontakt zu treten, insbesondere für Menschen, die
+wenig soziale Interaktion haben.</li>
+</ol>
+<hr/>
+<h2 id="auslandsaufenthalt---ja-oder-nein">Auslandsaufenthalt - ja oder
+nein</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Kulturelle Vielfalt</strong>: Auslandsaufenthalte bieten die
+Möglichkeit, verschiedene Kulturen kennenzulernen und zu erleben.</li>
+<li><strong>Sprachförderung</strong>: Die Sprachkenntnisse verbessern
+sich durch regelmäßigen Gebrauch der Fremdsprache.</li>
+<li><strong>Berufliche Entwicklung</strong>: Internationale Erfahrungen
+können die berufliche Laufbahn positiv beeinflussen.</li>
+<li><strong>Persönliches Wachstum</strong>: Man lernt Unabhängigkeit und
+Problemlösungsfähigkeiten zu entwickeln.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kulturelle Anpassung</strong>: Es kann schwierig sein, sich
+an neue Bräuche und Lebensweisen anzupassen.</li>
+<li><strong>Fernbeziehungen</strong>: Die Entfernung zu Freunden und
+Familie kann emotional belastend sein.</li>
+<li><strong>Kosten</strong>: Auslandsaufenthalte können teuer sein,
+insbesondere wenn es um Reisen und Unterbringung geht.</li>
+<li><strong>Rechtliche Hürden</strong>: Es gibt oft bürokratische
+Herausforderungen bei der Einreise und Aufenthaltsgenehmigung.</li>
+</ol>
+<hr/>
+<h2 id="brauchen-kinder-kochunterricht">Brauchen Kinder
+Kochunterricht</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Selbstständigkeit fördern</strong>: Kinder lernen, wie man
+Essen zubereitet, was ihre Selbstversorgungsfähigkeiten fördert.</li>
+<li><strong>Ernährungsbewusstsein verbessern</strong>: Das Verständnis
+für die Herkunft und Zubereitung von Lebensmitteln hilft Kindern, die
+Bedeutung einer gesunden Ernährung zu erkennen.</li>
+<li><strong>Hand-Augen-Koordination entwickeln</strong>: Tätigkeiten wie
+Schneiden und Rühren während des Kochens verbessern die
+Hand-Augen-Koordination.</li>
+<li><strong>Mathematische und Lese-Fähigkeiten</strong>: Das Befolgen
+von Rezepten und Messanweisungen kann die mathematischen und
+Lese-Fähigkeiten verbessern.</li>
+<li><strong>Kreativität und Experimentierfreude</strong>: Kochen erlaubt
+Kindern, mit verschiedenen Zutaten zu experimentieren und ihre
+Kreativität zu entfalten.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Sicherheitsrisiken</strong>: Die Küche birgt viele
+potenzielle Gefahren wie heißes Öl, scharfe Messer und heiße
+Herdplatten, die strenge Aufsicht erfordern.</li>
+<li><strong>Mögliche Verschwendung</strong>: Kinder könnten während des
+Lernprozesses Lebensmittel verschwenden.</li>
+<li><strong>Reinigungsarbeit</strong>: Nach dem Kochen kann es viel zu
+reinigen geben, was eine Herausforderung sein kann.</li>
+<li><strong>Geduldsprobe</strong>: Es kann schwierig sein, junge Kinder
+für längere Zeit auf Kochaktivitäten zu konzentrieren.</li>
+<li><strong>Lebensmittelallergien</strong>: Bei Lebensmittelallergien in
+der Familie ist beim Kochen besondere Vorsicht geboten.</li>
+</ol>
+<hr/>
+<h2 id="brauchen-wir-schönheitsideale">Brauchen wir
+Schönheitsideale</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Inspiration und Motivation</strong>: Schönheitsideale können
+als Ziel dienen, das Menschen dazu anregt, sich selbst zu verbessern und
+ihre eigenen Fähigkeiten zu entwickeln.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Unrealistische Erwartungen</strong>: Schönheitsideale können
+zu unerreichbaren Standards führen, die zu Unsicherheit und geringem
+Selbstwertgefühl beitragen.</li>
+<li><strong>Diskriminierung</strong>: Wenn Schönheitsideale nicht
+inklusiv sind, können sie zu Diskriminierung gegenüber Personen führen,
+die nicht den gängigen Standards entsprechen.</li>
+<li><strong>Untergrabung von Vielfalt</strong>: Sie können die
+Wertschätzung für individuelle Unterschiede und die Vielfalt der
+menschlichen Form untergraben.</li>
+<li><strong>Übermäßige Betonung des Äußeren</strong>: Schönheitsideale
+können dazu führen, dass das äußere Erscheinungsbild über persönliche
+Eigenschaften oder Leistungen gestellt wird.</li>
+</ol>
+<hr/>
+<h2 id="einkaufen-im-einkaufszentrum">Einkaufen im Einkaufszentrum</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Vielfalt an Produkten</strong>: Einkaufszentren bieten eine
+große Auswahl an Produkten aus verschiedenen Bereichen.</li>
+<li><strong>Komfort</strong>: Es gibt oft Restaurants, Cafés und andere
+Einrichtungen für den Komfort der Kunden.</li>
+<li><strong>Parkmöglichkeiten</strong>: Viele Einkaufszentren haben
+große Parkplätze oder sogar Parkhäuser.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kosten</strong>: Die Preise in Einkaufszentren können höher
+sein als in anderen Geschäften.</li>
+<li><strong>Verkehrslast</strong>: Die Nähe zu großen Straßen kann zu
+Verkehrsstaus führen.</li>
+<li><strong>Klimaanlage</strong>: In den Sommermonaten kann es im
+Inneren des Einkaufszentrums sehr heiß sein.</li>
+</ol>
+<hr/>
+<h2 id="essen-wir-zu-viele-süßigkeiten">Essen wir zu viele
+Süßigkeiten</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Vielfalt</strong>: Essen Süßigkeiten bietet eine große
+Auswahl an Geschmacksrichtungen und Sorten, was es den Kunden
+ermöglicht, ihre Vorlieben zu erfüllen.</li>
+<li><strong>Kulturelle Bedeutung</strong>: Süßigkeiten spielen oft eine
+wichtige Rolle in kulturellen Bräuchen und Feierlichkeiten, was sie zu
+einem wichtigen Teil der sozialen Interaktion macht.</li>
+<li><strong>Erfolgsmarkt</strong>: Der Markt für Süßigkeiten ist
+weltweit gut etabliert und wächst stetig, was Investitionen attraktiv
+macht.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Gesundheitsrisiken</strong>: Regelmäßiger Verzehr von
+Süßigkeiten kann zu gesundheitlichen Problemen wie
+Zahnfleischerkrankungen und Diabetes führen.</li>
+<li><strong>Überproduktion</strong>: Die Süßwarenindustrie ist oft mit
+Überproduktion und Verschwendung konfrontiert, was Umweltprobleme
+verursachen kann.</li>
+</ol>
+<hr/>
+<h2 id="extremsportarten-werden-immer-beliebter">Extremsportarten werden
+immer beliebter</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Abenteuer und Freiheit</strong>: Extremsport bietet die
+Möglichkeit, Grenzen zu überschreiten und sich persönlich
+herauszufordern.</li>
+<li><strong>Körperliche Fitness</strong>: Die meisten Extremsportarten
+fördern die körperliche Fitness und Ausdauer.</li>
+<li><strong>Mentale Stärke</strong>: Sie erfordern mentale Stärke und
+Entschlossenheit, was zu einem gestärkten Selbstbewusstsein führen
+kann.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Hohe Risiken</strong>: Extremsportarten können sehr
+gefährlich sein und das Risiko von Verletzungen oder sogar dem Tod
+verursachen.</li>
+<li><strong>Kosten</strong>: Viele Extremsportarten erfordern teure
+Ausrüstung und Training.</li>
+<li><strong>Zeitaufwand</strong>: Sie können viel Zeit in Anspruch
+nehmen, was für andere Lebensbereiche einschränkend sein kann.</li>
+</ol>
+<hr/>
+<h2 id="gehören-ältere-leute-ins-altersheim">Gehören ältere Leute ins
+Altersheim</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Professionelle Pflege</strong>: Ältere Menschen erhalten
+spezialisierte und persönliche Betreuung.</li>
+<li><strong>Soziale Interaktion</strong>: Gemeinschaftsleben fördert
+soziale Kontakte und verhindert Isolation.</li>
+<li><strong>Sicherheit</strong>: Altersheime bieten eine sichere
+Umgebung mit Notfallversorgung.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Verlust von Unabhängigkeit</strong>: Einzug in ein
+Altersheim kann als Verlust der persönlichen Freiheit empfunden
+werden.</li>
+<li><strong>Emotionale Belastung</strong>: Trennung von Familie und
+vertrauten Umgebung kann emotional schwierig sein.</li>
+<li><strong>Kosten</strong>: Die Unterbringung in einem Altersheim kann
+teuer sein und finanzielle Belastungen für die Familie bedeuten.</li>
+</ol>
+<hr/>
+<h2 id="können-wir-die-umwelt-schützen">Können wir die Umwelt
+schützen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Nachhaltigkeit</strong>: Schutz der Umwelt fördert die
+langfristige Verfügbarkeit natürlicher Ressourcen.</li>
+<li><strong>Gesundheit</strong>: Reduzierung von Verschmutzung
+verbessert die öffentliche Gesundheit.</li>
+<li><strong>Wirtschaft</strong>: Erneuerbare Energien und grüne
+Technologien können neue Arbeitsplätze schaffen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kosten</strong>: Umweltschutzmaßnahmen können teuer sein und
+zu höheren Preisen für Verbraucher führen.</li>
+<li><strong>Wirtschaftliche Auswirkungen</strong>: Einige Branchen
+könnten durch strengere Umweltvorschriften beeinträchtigt werden.</li>
+<li><strong>Politische Herausforderungen</strong>: Es kann schwierig
+sein, internationale Übereinkommen zu erreichen und durchzusetzen.</li>
+</ol>
+<hr/>
+<h2 id="muss-jeder-studieren">Muss jeder studieren</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Bildung</strong>: Studieren fördert das Wissen und die
+Fähigkeiten.</li>
+<li><strong>Karrierechancen</strong>: Ein Studium kann zu besseren
+Jobmöglichkeiten führen.</li>
+<li><strong>Persönliche Entwicklung</strong>: Es ermöglicht persönliches
+Wachstum und Selbstvertrauen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kosten</strong>: Studiengebühren können hoch sein und
+Schulden verursachen.</li>
+<li><strong>Zeitaufwand</strong>: Es erfordert viel Zeit und kann die
+Freizeit einschränken.</li>
+<li><strong>Druck</strong>: Die akademische Belastung kann Stress und
+Burnout verursachen.</li>
+</ol>
+<hr/>
+<h2 id="müssen-jugendliche-mit-der-mode-gehen-um-cool-zu-sein">Müssen
+Jugendliche mit der Mode gehen, um cool zu sein</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Soziale Akzeptanz</strong>: Jugendliche, die sich an
+aktuelle Trends halten, können leichter in ihre Altersgruppe integriert
+werden.</li>
+<li><strong>Selbstausdruck</strong>: Mode bietet eine Plattform für
+individuellen Ausdruck und Identität.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Druck</strong>: Es kann zu einem hohen Druck kommen, sich
+ständig an neue Trends anzupassen, was teuer und stressig sein
+kann.</li>
+<li><strong>Materialismus</strong>: Eine übermäßige Betonung auf Mode
+kann zu materialistischen Werten führen.</li>
+<li><strong>Umweltauswirkungen</strong>: Die schnelle Modeindustrie kann
+negative Auswirkungen auf die Umwelt haben, wie z.B. übermäßiger
+Ressourcenverbrauch und Abfallproduktion.</li>
+</ol>
+<hr/>
+<h2 id="sind-ganztagsschulen-zu-empfehlen">Sind Ganztagsschulen zu
+empfehlen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Ganztagsschulen bieten umfassende Betreuung</strong>:
+Schüler erhalten Unterstützung und Förderung neben den regulären
+Unterricht hinaus.</li>
+<li><strong>Erhöhte Chancengleichheit</strong>: Kinder aus verschiedenen
+sozialen Schichten haben gleiche Möglichkeiten zu Bildung und
+Betreuung.</li>
+<li><strong>Verbesserte Lernergebnisse</strong>: Langfristige Studien
+zeigen, dass Ganztagsschulen zu besseren akademischen Leistungen führen
+können.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Hohe Kosten</strong>: Die Einrichtung von Ganztagsschulen
+kann teuer sein.</li>
+<li><strong>Mögliche Überforderung</strong>: Kinder könnten durch die
+längere Schultage überfordert werden.</li>
+<li><strong>Fehlende Flexibilität</strong>: Kinder haben weniger
+Flexibilität bei der Planung ihres Freizeit, da sie länger in der Schule
+sind.</li>
+</ol>
+<hr/>
+<h2 id="sollen-jugendliche-mit-freunden-verreisen-oder-mit-ihren-eltern">Sollen
+Jugendliche mit Freunden verreisen oder mit ihren Eltern</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Unabhängigkeit</strong>: Jugendliche können ihre eigenen
+Entscheidungen treffen und lernen, Verantwortung zu übernehmen.</li>
+<li><strong>Soziale Entwicklung</strong>: Durch Reisen mit Freunden
+können sie soziale Fähigkeiten verbessern und neue Freundschaften
+schließen.</li>
+<li><strong>Persönliches Wachstum</strong>: Neue Erfahrungen fördern das
+Selbstbewusstsein und die Selbstständigkeit.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Sicherheitsrisiken</strong>: Jugendliche könnten sich in
+unbekannten Umgebungen unsicher fühlen oder in Gefahr geraten.</li>
+<li><strong>Budgetbeschränkungen</strong>: Jugendliche haben oft weniger
+finanzielle Ressourcen als Erwachsene, was die Reisepläne einschränken
+kann.</li>
+</ol>
+<hr/>
+<h2 id="sollen-jugendliche-sich-die-arbeit-im-haushalt-teilen">Sollen
+Jugendliche sich die Arbeit im Haushalt teilen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Familienzusammenhalt</strong>: Jugendliche lernen,
+Verantwortung zu übernehmen und das Gefühl der Gemeinschaft zu
+stärken.</li>
+<li><strong>Fähigkeitenentwicklung</strong>: Sie entwickeln praktische
+Fähigkeiten und Selbstständigkeit.</li>
+<li><strong>Zeitmanagement</strong>: Es fördert die Fähigkeit, Zeit
+effektiv zu planen und zu nutzen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Druck</strong>: Jugendliche könnten sich unter Druck gesetzt
+fühlen, wenn sie nicht genügend Unterstützung erhalten.</li>
+<li><strong>Unfairness</strong>: Es kann zu Konflikten kommen, wenn die
+Aufgaben nicht gerecht verteilt werden.</li>
+<li><strong>Mangel an Freizeit</strong>: Zu viele Haushaltsaufgaben
+können die Zeit für andere Aktivitäten einschränken.</li>
+</ol>
+<hr/>
+<h2 id="sollen-man-auch-nachts-einkaufen-können">Sollen man auch nachts
+einkaufen können</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Geschäfte sind 24/7 geöffnet</strong>: Kunden haben die
+Flexibilität, zu jeder Tageszeit einzukaufen, was besonders nützlich ist
+für Notfälle oder für Menschen mit unregelmäßigen Arbeitszeiten.</li>
+<li><strong>Wirtschaftliche Vorteile</strong>: Geschäfte können ihre
+Umsätze steigern, indem sie die Nachtschicht nutzen, was zu einer
+besseren Wirtschaftsleistung führen kann.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Störung des Schlafzyklus</strong>: Die erhöhte Aktivität
+nachts kann den Schlaf der Anwohner stören und zu gesundheitlichen
+Problemen führen.</li>
+<li><strong>Erhöhte Sicherheitsrisiken</strong>: Nachts gibt es ein
+höheres Risiko von Kriminalität.</li>
+<li><strong>Energieverbrauch</strong>: Die Beleuchtung und
+Wärmeversorgung der Geschäfte nachts erhöht den Energieverbrauch und
+damit auch die Umweltbelastung.</li>
+<li><strong>Auswirkungen auf lokale Unternehmen</strong>: Kleinere
+Geschäfte könnten von den großen Ketten übertroffen werden, die die
+Nachtschicht effizienter nutzen können.</li>
+</ol>
+<hr/>
+<h2 id="sollten-18-jährige-schon-allein-wohnen">Sollten 18-jährige schon
+allein wohnen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Unabhängigkeit</strong>: 18-jährige können ihre eigenen
+Entscheidungen treffen und ihr eigenes Leben gestalten.</li>
+<li><strong>Verantwortungsbewusstsein</strong>: Allein zu leben fördert
+die Entwicklung von Verantwortung und Selbstmanagementfähigkeiten.</li>
+<li><strong>Persönliche Entwicklung</strong>: Es bietet die Möglichkeit,
+sich selbst kennenzulernen und persönliche Ziele zu verfolgen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Soziale Isolation</strong>: Es besteht das Risiko, sich von
+der Familie und Freunden zu isolieren.</li>
+<li><strong>Finanzielle Belastung</strong>: Die Kosten für Miete und
+Nebenkosten können für junge Erwachsene eine Herausforderung
+darstellen.</li>
+<li><strong>Fehlende Unterstützung</strong>: Bei Problemen oder
+Notfällen gibt es möglicherweise weniger Unterstützung durch
+andere.</li>
+</ol>
+<hr/>
+<h2 id="sollten-schon-16-jährige-den-autoführerschein-machen-dürfen">Sollten
+schon 16-Jährige den Autoführerschein machen dürfen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Frühe Unabhängigkeit</strong>: 16-Jährige können früher
+eigenständig mobil sein.</li>
+<li><strong>Fahrerfahrung</strong>: Früheres Fahren kann zu mehr
+Erfahrung führen.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Reife</strong>: 16-Jährige haben möglicherweise noch nicht
+genug Reife für die Verantwortung.</li>
+<li><strong>Unfallrisiko</strong>: Jüngere Fahrer haben ein höheres
+Unfallrisiko.</li>
+<li><strong>Verkehrssicherheit</strong>: Es könnte die
+Verkehrssicherheit beeinträchtigen.</li>
+</ol>
+<hr/>
+<h2 id="sollten-schüler-jobben">Sollten Schüler jobben</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Erwerb von praktischer Erfahrung</strong>: Schüler können
+wertvolle Fähigkeiten und Kenntnisse erwerben, die in der Zukunft
+nützlich sein können.</li>
+<li><strong>Finanzielle Unabhängigkeit</strong>: Ein Teilzeitjob kann
+dazu beitragen, dass Schüler unabhängiger werden und sich finanziell
+selbst versorgen können.</li>
+<li><strong>Zeitmanagement</strong>: Die Notwendigkeit, zwischen Schule
+und Arbeit zu balancieren, kann Schülern helfen, effektiver zu planen
+und Zeitmanagementfähigkeiten zu entwickeln.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Müdigkeit</strong>: Zu viel Arbeit kann zu Erschöpfung
+führen, was die Leistung in der Schule beeinträchtigen kann.</li>
+<li><strong>Stress</strong>: Die zusätzliche Verantwortung eines Jobs
+kann Stress verursachen und die psychische Gesundheit
+beeinträchtigen.</li>
+<li><strong>Minderer Freizeit</strong>: Ein Job kann weniger Zeit für
+Freizeitaktivitäten und soziale Interaktionen mit Freunden lassen.</li>
+</ol>
+<hr/>
+<h2 id="soziale-netzwerke-wie-facebook">Soziale Netzwerke wie
+Facebook</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Globaler Austausch</strong>: Soziale Netzwerke ermöglichen
+den globalen Austausch von Informationen und Kulturen.</li>
+<li><strong>Netzwerkbildung</strong>: Sie erleichtern, die Verbindung
+mit Freunden und Familie zu bleiben.</li>
+<li><strong>Unterstützung und Mobilisierung</strong>: Soziale Medien
+können für Unterstützungszwecke und zur Mobilisierung von Menschen für
+soziale Anliegen genutzt werden.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Datensicherheit</strong>: Es gibt Bedenken hinsichtlich der
+Sicherheit persönlicher Daten und des Datenschutzes.</li>
+<li><strong>Psychische Gesundheit</strong>: Übermäßiger Gebrauch kann zu
+psychischen Problemen wie Angstzuständen und Depressionen führen.</li>
+<li><strong>Informationskontrolle</strong>: Es besteht die Gefahr der
+Verbreitung von Falschinformationen und Propaganda.</li>
+</ol>
+<hr/>
+<h2 id="sport-als-beruf">Sport als Beruf</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Persönliche Entwicklung</strong>: Sport als Beruf fördert
+Disziplin, Teamarbeit und körperliche Fitness.</li>
+<li><strong>Berufliche Chancen</strong>: Es gibt viele Möglichkeiten, im
+Sportbereich zu arbeiten, wie Trainer, Sportler oder
+Sportjournalist.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Verletzungsrisiko</strong>: Sportler haben ein höheres
+Risiko für Verletzungen.</li>
+<li><strong>Karriereunsicherheit</strong>: Die Karriere eines Sportlers
+kann sehr kurzlebig sein.</li>
+<li><strong>Wettbewerbsdruck</strong>: Der Druck, erfolgreich zu sein,
+kann sehr hoch sein und zu Stress führen.</li>
+</ol>
+<hr/>
+<h2 id="stadtzentrum-ohne-auto">Stadtzentrum ohne Auto</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Reduzierte Umweltverschmutzung</strong>: Weniger Autos
+bedeuten weniger Emissionen und eine sauberere Luftqualität.</li>
+<li><strong>Erhöhte Lebensqualität</strong>: Stille und Ruhe in der
+Stadtmitte können das Wohlbefinden der Bewohner verbessern.</li>
+<li><strong>Förderung des öffentlichen Verkehrs</strong>: Eine autofreie
+Stadtzentrum fördert den Einsatz von Bussen, Bahnen und Fahrrädern.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Mobilitätsbeschränkungen</strong>: Ohne Autos kann es
+schwieriger sein, über weite Entfernungen zu reisen oder schweres Gepäck
+zu transportieren.</li>
+<li><strong>Economic Impact</strong>: Einige Geschäfte könnten leiden,
+wenn Kunden nicht mehr so leicht anreisen können.</li>
+<li><strong>Notfälle</strong>: In Notfällen könnte die Verfügbarkeit von
+Rettungsdiensten beeinträchtigt sein.</li>
+<li><strong>Anpassungsprobleme</strong>: Es könnte eine Zeit der
+Anpassung geben, während sich die Menschen an neue Verkehrsmittel
+gewöhnen müssen.</li>
+</ol>
+<hr/>
+<h2 id="studium-oder-berufsausbildung">Studium oder
+Berufsausbildung</h2>
+<p><strong>Studium:</strong></p>
+<ul>
+<li><strong>Fachspezifisches Wissen:</strong> Studierende erhalten
+tiefgreifendes Fachwissen in einem bestimmten Bereich.</li>
+<li><strong>Forschungsmöglichkeiten:</strong> Viele Studiengänge bieten
+die Möglichkeit, an Forschungsprojekten teilzunehmen.</li>
+<li><strong>Internationale Perspektiven:</strong> Studienprogramme
+bieten oft die Möglichkeit, im Ausland zu studieren und internationale
+Kontakte zu knüpfen.</li>
+</ul>
+<p><strong>Berufsausbildung:</strong></p>
+<ul>
+<li><strong>Praktische Erfahrung:</strong> Berufsausbildende erhalten
+praktische Erfahrungen direkt am Arbeitsplatz.</li>
+<li><strong>Kurzfristige Qualifikation:</strong> Sie können schneller in
+den Arbeitsmarkt einsteigen und eine Karriere beginnen.</li>
+<li><strong>Geringere Schulden:</strong> Berufsausbildungen sind oft
+kostengünstiger als ein Studium und führen zu weniger Schulden.</li>
+</ul>
+<p>Beide Wege haben ihre eigenen Vorteile und können je nach
+persönlichen Zielen und Interessen unterschiedlich geeignet sein. Es ist
+wichtig, die eigenen Prioritäten und langfristigen Ziele zu
+berücksichtigen, wenn man sich für einen Weg entscheidet.</p>
+<hr/>
+<h2 id="urlaub-am-meer-oder-in-den-bergen">Urlaub am Meer oder in den
+Bergen</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Erholung</strong>: Die Natur bietet eine friedvolle Umgebung
+für Entspannung und Erholung.</li>
+<li><strong>Aktivitäten</strong>: Beide Orte bieten vielfältige
+Freizeitaktivitäten, wie Schwimmen am Meer oder Wandern in den
+Bergen.</li>
+<li><strong>Luftqualität</strong>: Frische Luft und saubere Umgebung
+sind vorteilhaft für die Gesundheit.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kosten</strong>: Urlaub an beiden Orten kann teuer sein,
+insbesondere wenn man auf Luxus aus ist.</li>
+<li><strong>Wetter</strong>: Das Wetter kann unvorhersehbar sein, was zu
+Störungen der Pläne führen kann.</li>
+<li><strong>Überfüllung</strong>: Beliebte Urlaubsziele können überfüllt
+sein, was die Ruhe stört.</li>
+</ol>
+<p><strong>Vorteile am Meer</strong>:<br/>
+1. <strong>Strand</strong>: Entspannung und Freizeit am Sandstrand. 2.
+<strong>Wasseraktivitäten</strong>: Schwimmen, Surfen, Tauchen. 3.
+<strong>Sonnenbaden</strong>: Vitamin D durch Sonnenlicht.</p>
+<p><strong>Vorteile in den Bergen</strong>:<br/>
+1. <strong>Naturschönheit</strong>: Panoramen und atemberaubende
+Landschaften. 2. <strong>Wandern</strong>: Entdeckung neuer Wege und
+Natur. 3. <strong>Frische Luft</strong>: Gesundheitsvorteile durch die
+Höhenluft.</p>
+<hr/>
+<h2 id="warum-soll-man-sport-treiben">Warum soll man Sport treiben</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Gesundheit</strong>: Sport verbessert die körperliche
+Gesundheit und stärkt das Immunsystem.</li>
+<li><strong>Stimmung</strong>: Regelmäßige Bewegung kann die Stimmung
+heben und Stress reduzieren.</li>
+<li><strong>Koordination</strong>: Sport fördert die Koordination und
+die motorischen Fähigkeiten.</li>
+<li><strong>Soziale Kontakte</strong>: Gemeinsam Sport zu treiben kann
+soziale Kontakte stärken.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Verletzungsgefahr</strong>: Bei Überanstrengung oder
+falscher Technik besteht das Risiko von Verletzungen.</li>
+<li><strong>Zeitaufwand</strong>: Sport erfordert Zeit, die man
+vielleicht für andere Aktivitäten einsetzen möchte.</li>
+<li><strong>Kosten</strong>: Einige Sportarten können teuer sein, wenn
+man Ausrüstung oder Mitgliedschaften benötigt.</li>
+<li><strong>Druck</strong>: In Wettkampfsportarten kann der Druck,
+erfolgreich zu sein, stressig sein.</li>
+</ol>
+<hr/>
+<h2 id="wie-nützlich-ist-schüleraustausch">Wie nützlich ist
+Schüleraustausch</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Kultureller Austausch</strong>: Schüleraustausch fördert das
+Verständnis für andere Kulturen und Sprachen.</li>
+<li><strong>Persönliches Wachstum</strong>: Teilnahme an einem
+Austauschprogramm kann Selbstvertrauen und Unabhängigkeit stärken.</li>
+<li><strong>Sprachförderung</strong>: Regelmäßiger Kontakt mit
+Muttersprachlern verbessert die Sprachkenntnisse.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Kulturelle Anpassungsschwierigkeiten</strong>: Schüler
+können sich anfangs in einer fremden Umgebung unwohl fühlen.</li>
+<li><strong>Familienzusammenhalt</strong>: Der Austausch kann die
+Bindung zu Familie und Freunden schwächen.</li>
+<li><strong>Akademische Herausforderungen</strong>: Unterschiedliche
+Bildungssysteme können zu Schwierigkeiten bei der Anpassung führen.</li>
+</ol>
+<hr/>
+<h2 id="wo-wohnt-man-besser-auf-dem-land-oder-in-der-stadt">Wo wohnt man
+besser, auf dem Land oder in der Stadt</h2>
+<p><strong>Wohnen auf dem Land:</strong></p>
+<ul>
+<li><strong>Frieden und Ruhe:</strong> Die ländliche Umgebung bietet oft
+eine friedlichere und ruhigere Atmosphäre, was ideal für Erholung und
+Stressabbau ist.</li>
+<li><strong>Naturverbundenheit:</strong> Es gibt mehr Möglichkeiten, in
+die Natur zu gehen, wie z.B. Gärtnern, Wandern oder einfach nur die
+frische Luft genießen zu können.</li>
+<li><strong>Kleinere Gemeinschaften:</strong> Die Bevölkerungsdichte ist
+niedriger, was zu engeren Gemeinschaftsbeziehungen führen kann.</li>
+</ul>
+<p><strong>Wohnen in der Stadt:</strong></p>
+<ul>
+<li><strong>Annehmlichkeiten:</strong> Städte bieten eine Vielzahl von
+Annehmlichkeiten wie Restaurants, Kulturveranstaltungen und
+Einkaufsmöglichkeiten.</li>
+<li><strong>Arbeitsmöglichkeiten:</strong> Es gibt oft mehr
+Arbeitsplätze und Karrieremöglichkeiten in städtischen Gebieten.</li>
+<li><strong>Infrastruktur:</strong> Städte haben eine bessere
+Infrastruktur mit öffentlichen Verkehrsmitteln und anderen
+Dienstleistungen.</li>
+</ul>
+<p>Jede Wahl hängt von den persönlichen Vorlieben und Lebenszielen ab.
+Manche bevorzugen die Ruhe und Natur des ländlichen Lebens, während
+andere die Dynamik und Annehmlichkeiten der Stadt schätzen.</p>
+<hr/>
+<h2 id="wären-einige-autofreie-tage-im-jahr-sinnvoll">Wären einige
+autofreie Tage im Jahr sinnvoll</h2>
+<p><strong>Vorteile</strong>:</p>
+<ol type="1">
+<li><strong>Reduzierung der Luftverschmutzung</strong>: Autofreie Tage
+können die Luftqualität verbessern, indem sie die Emissionen von
+Schadstoffen verringern.</li>
+<li><strong>Stärkung des öffentlichen Verkehrs</strong>: Sie fördern die
+Nutzung öffentlicher Verkehrsmittel und Radfahren.</li>
+<li><strong>Gesundheitliche Vorteile</strong>: Weniger Autoverkehr
+bedeutet weniger Lärm und mehr Raum für Fußgänger und Radfahrer, was zu
+einer gesünderen Lebensweise beitragen kann.</li>
+</ol>
+<p><strong>Nachteile</strong>:</p>
+<ol type="1">
+<li><strong>Unannehmlichkeiten für Autofahrer</strong>: Autofreie Tage
+können zu Verzögerungen und Unannehmlichkeiten für Menschen führen, die
+auf ihr Auto angewiesen sind.</li>
+<li><strong>Economic Impact</strong>: Einige Geschäfte könnten einen
+Rückgang der Kunden besorgen, da Menschen möglicherweise nicht so leicht
+zum Einkaufen kommen.</li>
+<li><strong>Logistische Herausforderungen</strong>: Die Durchführung von
+autofreien Tagen erfordert eine sorgfältige Planung und Koordination, um
+Staus und andere Probleme zu vermeiden.</li>
+</ol>
+</article>
+<div class="toc-right">
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                            Table of Contents // 目录 // Inhaltsverzeichnis
+                        </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem;color: rgb(var(--mdui-color-on-background));">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<span slot="end-icon" style="width: 6rem;">
+<mdui-select id="font-size-right" onchange="document.getElementById('font-size').value = this.value" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</span>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch-right" onchange="document.getElementById('animation-switch').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</div>
+</div>
+<!-- elements out of the document -->
+<mdui-snackbar auto-close-delay="20000" closeable="" id="snackbar" style="background-color: rgb(var(--mdui-color-inverse-surface), 0.7); backdrop-filter: blur(20px);">
+<span data-translatable="">You clicked on an anchor link // 你点击了一个锚点链接 // Sie haben auf einen Ankerlink geklickt</span>
+<mdui-button data-translatable="" onclick="window.history.back(); document.getElementById('snackbar').open = false;" slot="action" variant="text">Back to the previous position // 返回上一个位置 // Zurück zur vorherigen Position</mdui-button>
+</mdui-snackbar>
+</div>
+</body>
+</html>

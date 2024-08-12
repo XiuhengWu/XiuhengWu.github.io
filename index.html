@@ -1,26 +1,780 @@
 <!DOCTYPE html>
-<html>
+<html lang="en-US">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+  <link href="/src/css/index.css" rel="stylesheet"/>
+  <script src="/src/js/index.min.js">
+  </script>
+  <title>
+   Xiuheng's Blog
+  </title>
+  <script>
+   if (!['#repository', '#timeline', '#about'].includes(location.hash)) {
+            location.replace('#repository')
+        }
+  </script>
+  <style>
+   /* Loading animation */
+        .show-box {
+            background-color: rgb(231, 224, 236);
+            color: rgb(28, 27, 31);
+        }
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1, maximum-scale=10.0, user-scalable=yes"/>
-</head>
+        @media (prefers-color-scheme: dark) {
+            .show-box {
+                background-color: rgb(73, 69, 79);
+                color: rgb(230, 225, 229);
+            }
+        }
 
-<body>
-  <h1>Home Page</h1>
-  <a href="https://xiuhengwu.github.io/how-to-use-v2rayn/">How to use v2rayN</a><br>
-  <a href="https://xiuhengwu.github.io/how-to-use-v2rayng/">How to use v2rayNG</a><br>
-  <a href="https://xiuhengwu.github.io/backrooms-level4294/">The Backrooms: Level 4294</a><br>
-  <a href="https://xiuhengwu.github.io/backrooms-level4294/index-image-from-local.html">The Backrooms: Level 4294 (Load images from Github)</a><br>
-  <a href="https://xiuhengwu.github.io/backrooms-level4294/index-image-from-local.html?easteregg=disable">The Backrooms: Level 4294 (Load images from Github) (Disable easter egg)</a><br>
-  <a href="https://xiuhengwu.github.io/ZhangDan805.github.io/">ZhangDan Official Website </a><br>
-  <a href="https://xiuhengwu.github.io/html5-flashcard-sets/index.html">HTML5 Flashcard</a><br>
-  <a href="https://xiuhengwu.github.io/html5-text-editor/">HTML5 Text editor</a>
-  <br>
-  <br>
-  <br>
-  <p>The website is still under construction</p>
-  <p>Copyright (c) 2023 Hank Wu</p>
-</body>
+        .show-box {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            left: 0;
+            width: 100vw;
+            z-index: 500;
+        }
 
+        .show-box.hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .loader {
+            position: relative;
+            width: 100px;
+        }
+
+        .loader::before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+
+        .circular {
+            animation: rotate 2s linear infinite;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: rgb(103, 80, 164);
+            animation: dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+  </style>
+ </head>
+ <body>
+  <!-- loading animation -->
+  <div class="show-box">
+   <div class="loader">
+    <svg class="circular" viewbox="25 25 50 50">
+     <circle class="path" cx="50" cy="50" fill="none" r="20" stroke-miterlimit="10" stroke-width="3">
+     </circle>
+    </svg>
+   </div>
+   <h1>
+    LOADING...
+   </h1>
+   <i>
+    This might take a few seconds...
+   </i>
+  </div>
+  <script>
+   var loading_animation = setTimeout(() => {
+            document.querySelector('.show-box').style.display = 'flex';
+        }, 200);
+  </script>
+  <div class="app">
+   <!-- header -->
+   <header class="top-app-bar">
+    <mdui-button-icon icon="menu" id="open-navigation">
+    </mdui-button-icon>
+    <a class="title" style="text-decoration: none ; color: inherit;" href="/index.html">
+     Xiuheng's Blog
+    </a>
+    <span>
+     <mdui-dropdown>
+      <mdui-button-icon icon="translate" slot="trigger">
+      </mdui-button-icon>
+      <mdui-menu id="language-select" onclick="document.getElementById('language-select-left').value = this.value" selects="single" value="auto">
+       <mdui-menu-item value="en">
+        English
+       </mdui-menu-item>
+       <mdui-menu-item value="zh-CN">
+        简体中文
+       </mdui-menu-item>
+       <mdui-menu-item value="de">
+        Deutsch
+       </mdui-menu-item>
+       <mdui-divider>
+       </mdui-divider>
+       <mdui-menu-item data-translatable="" value="auto">
+        System Standard // 跟随系统 // Systemstandard
+       </mdui-menu-item>
+      </mdui-menu>
+     </mdui-dropdown>
+     <mdui-button-icon class="theme-button" icon="light_mode">
+     </mdui-button-icon>
+    </span>
+   </header>
+   <header class="navigation-rail">
+    <form class="selection">
+     <div style="margin-top: 2rem;">
+      <mdui-button href="#repository" style="color: rgb(var(--mdui-color-on-surface));" variant="text">
+       <mdui-icon-book--outlined>
+       </mdui-icon-book--outlined>
+      </mdui-button>
+      <label data-translatable="">
+       Repository // 仓库 // Repository
+      </label>
+     </div>
+     <div>
+      <mdui-button href="#timeline" style="color: rgb(var(--mdui-color-on-surface));" variant="text">
+       <mdui-icon-format-list-bulleted--outlined>
+       </mdui-icon-format-list-bulleted--outlined>
+      </mdui-button>
+      <label data-translatable="">
+       Timeline // 时间线 // Zeitleiste
+      </label>
+     </div>
+     <div>
+      <mdui-button href="#about" style="color: rgb(var(--mdui-color-on-surface));" variant="text">
+       <mdui-icon-info--outlined>
+       </mdui-icon-info--outlined>
+      </mdui-button>
+      <label data-translatable="">
+       About // 关于 // Info
+      </label>
+     </div>
+    </form>
+    <mdui-dropdown placement="right-end" slot="bottom">
+     <mdui-button-icon icon="translate" slot="trigger" style="margin-bottom: 1rem;">
+     </mdui-button-icon>
+     <mdui-menu id="language-select-left" onclick="document.getElementById('language-select').value = this.value" selects="single" value="auto">
+      <mdui-menu-item value="en">
+       English
+      </mdui-menu-item>
+      <mdui-menu-item value="zh-CN">
+       简体中文
+      </mdui-menu-item>
+      <mdui-menu-item value="de">
+       Deutsch
+      </mdui-menu-item>
+      <mdui-divider>
+      </mdui-divider>
+      <mdui-menu-item data-translatable="" value="auto">
+       System Standard // 跟随系统 // SystemStandard
+      </mdui-menu-item>
+     </mdui-menu>
+    </mdui-dropdown>
+    <mdui-fab class="theme-button" icon="light_mode" slot="bottom" style="margin-bottom: 1rem;">
+    </mdui-fab>
+   </header>
+   <aside class="navigation-drawer" id="navigation">
+    <mdui-button data-translatable="" full-width="" icon="close" id="close-navigation" variant="text">
+     Close // 关闭 // Schließen
+    </mdui-button>
+    <mdui-list>
+     <mdui-list-item href="#repository" rounded="">
+      <span data-translatable="">
+       Repository // 仓库 // Repository
+      </span>
+      <mdui-icon-book--outlined slot="icon">
+      </mdui-icon-book--outlined>
+     </mdui-list-item>
+     <mdui-list-item href="#timeline" rounded="">
+      <span data-translatable="">
+       Timeline // 时间线 // Zeitleiste
+      </span>
+      <mdui-icon-format-list-bulleted--outlined slot="icon">
+      </mdui-icon-format-list-bulleted--outlined>
+     </mdui-list-item>
+     <mdui-list-item href="#about" icon="info" rounded="">
+      <span data-translatable="">
+       About // 关于 // Infos
+      </span>
+      <mdui-icon-info--outlined slot="icon">
+      </mdui-icon-info--outlined>
+     </mdui-list-item>
+    </mdui-list>
+   </aside>
+   <!-- page content -->
+   <div class="layout main" id="repository">
+    <h1 data-translatable="">
+     Repository // 仓库 // Repository
+    </h1>
+    <b data-translatable="" style="display: block;margin: 1rem 0;">
+     Sort // 分类 // Sortieren
+    </b>
+    <div class="segmented-button-wrapper">
+     <mdui-segmented-button-group selects="single" value="tutorial backrooms document tool">
+      <mdui-segmented-button data-translatable="" value="tutorial backrooms document tool">
+       All // 全部 // Alles
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="tutorial">
+       Tutorial // 教程 // Tutorial
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="backrooms">
+       The Backrooms // 后室 // The Backrooms
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="document">
+       Document // 文档 // Dokument
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="tool">
+       Tool // 工具 // Tool
+      </mdui-segmented-button>
+     </mdui-segmented-button-group>
+    </div>
+    <b data-translatable="" style="display: block;margin: 1rem 0;">
+     Type // 类型 // Typ
+    </b>
+    <div class="segmented-button-wrapper">
+     <mdui-segmented-button-group selects="single" value="article html-page">
+      <mdui-segmented-button data-translatable="" value="article html-page">
+       All // 全部 // Alles
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="article">
+       Article // 文章 // Artikels
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="html-page">
+       HTML Page // HTML 页面 // HTML Seite
+      </mdui-segmented-button>
+     </mdui-segmented-button-group>
+    </div>
+    <b data-translatable="" style="display: block;margin: 1rem 0;">
+     Language // 语言 // Sprache
+    </b>
+    <div class="segmented-button-wrapper">
+     <mdui-segmented-button-group selects="single" value="chinese english german">
+      <mdui-segmented-button data-translatable="" value="chinese english german">
+       All // 全部 // Alles
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="chinese">
+       Chinese // 中文 // Chinesisch
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="english">
+       English // 英文 // Englisch
+      </mdui-segmented-button>
+      <mdui-segmented-button data-translatable="" value="german">
+       German // 德文 // Deutsch
+      </mdui-segmented-button>
+     </mdui-segmented-button-group>
+    </div>
+    <!-- Article list -->
+    <div class="cards-wrap">
+     <mdui-card clickable="" data-id="cd7b6b2d-1e4b-4428-856d-e9c1bfa238aa" data-tags="document article german" href="/articles/b1-sprechen/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(/articles/b1-sprechen/cover.webp);">
+       </div>
+       <h3>
+        Pro- und Kontra-Aussagen der 27 Themen
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2024-06-08">
+           08.06.2024
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Document // 文档 // Dokument
+         </span>
+         <span data-translatable="">
+          Article // 文章 // Artikels
+         </span>
+         <span data-translatable="">
+          German // 英文 // Deutsch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="0c9b062c-2122-4dd1-ae04-7be8223d78e3" data-tags="tutorial article chinese" href="/articles/how-to-use-v2rayn/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(/articles/how-to-use-v2rayn/cover.webp);">
+       </div>
+       <h3>
+        详细介绍Windows端的免费翻墙方式——v2rayN
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2023-10-15">
+           15.10.2023
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Tutorial // 教程 // Tutorial
+         </span>
+         <span data-translatable="">
+          Article // 文章 // Artikels
+         </span>
+         <span data-translatable="">
+          Chinese // 中文 // Chinesisch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="c9d304a1-da03-4bb8-aff3-8f67abf9c5b7" data-tags="tutorial article chinese" href="/articles/how-to-use-v2rayng/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(/articles/how-to-use-v2rayng/cover.webp);">
+       </div>
+       <h3>
+        详细介绍Windows端的免费翻墙方式——v2rayNG
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2023-10-15">
+           15.10.2023
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Tutorial // 教程 // Tutorial
+         </span>
+         <span data-translatable="">
+          Article // 文章 // Artikels
+         </span>
+         <span data-translatable="">
+          Chinese // 中文 // Chinesisch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="b36de1bf-25d0-4c57-a10f-f531ebdeb10f" data-tags="backrooms html-page chinese" href="./pages/backrooms-level4294/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(./pages/backrooms-level4294/cover.webp);">
+       </div>
+       <h3>
+        Level 4294: 北京明城外国语学校
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2024-06-30">
+           30.06.2024
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          The Backrooms // 后室 // The Backrooms
+         </span>
+         <span data-translatable="">
+          HTML Page // HTML 页面 // HTML Seite
+         </span>
+         <span data-translatable="">
+          Chinese // 中文 // Chinesisch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="ad5060e4-ef03-4e90-9a6a-51718769f9b3" data-tags="tool html-page chinese german" href="./pages/deutsche-aussprache-tabelle/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(./pages/deutsche-aussprache-tabelle/cover.webp);">
+       </div>
+       <h3>
+        Deutsche Aussprache Tabelle
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2023-10-21">
+           21.10.2023
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Tool // 工具 // Tool
+         </span>
+         <span data-translatable="">
+          HTML Page // HTML 页面 // HTML Seite
+         </span>
+         <span data-translatable="">
+          Chinese // 中文 // Chinesisch
+         </span>
+         <span data-translatable="">
+          German // 英文 // Deutsch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="cc874a0a-323c-4d8b-8ea4-5dbc4c95fedc" data-tags="tool html-page english" href="./pages/html5-flashcard-sets/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(./pages/html5-flashcard-sets/cover.webp);">
+       </div>
+       <h3>
+        HTML5 Flashcard (Beta)
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2024-02-05">
+           05.02.2024
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Tool // 工具 // Tool
+         </span>
+         <span data-translatable="">
+          HTML Page // HTML 页面 // HTML Seite
+         </span>
+         <span data-translatable="">
+          English // 英文 // Englisch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+     <mdui-card clickable="" data-id="fc2f23b5-473b-47eb-bd17-fad924e06ce5" data-tags="tool html-page chinese" href="./pages/mamba/index.html" variant="filled">
+      <div class="cover-wrapper">
+       <div class="cover-container" style="background-image: url(./pages/mamba/cover.webp);">
+       </div>
+       <h3>
+        曼巴数分解器
+       </h3>
+       <div class="cover-content">
+        <div class="meta-info">
+         <div>
+          <i class="material-icons" style="opacity: 0.4;">
+           update
+          </i>
+          <time datetime="2024-08-05">
+           05.08.2024
+          </time>
+         </div>
+        </div>
+        <div class="meta-tags">
+         <span data-translatable="">
+          Tool // 工具 // Tool
+         </span>
+         <span data-translatable="">
+          HTML Page // HTML 页面 // HTML Seite
+         </span>
+         <span data-translatable="">
+          Chinese // 中文 // Chinesisch
+         </span>
+        </div>
+       </div>
+      </div>
+     </mdui-card>
+    </div>
+   </div>
+   <div class="layout no-gap" id="timeline">
+    <h1 data-translatable="">
+     Timeline // 时间线 // Zeitleiste
+    </h1>
+    <ul class="main">
+     <li data-id="fc2f23b5-473b-47eb-bd17-fad924e06ce5" data-target="./pages/mamba/index.html">
+      <div class="date">
+       05.08.2024
+      </div>
+      <div class="title">
+       曼巴数分解器
+      </div>
+      <div class="descr">
+       <img alt="cover" src="./pages/mamba/cover.webp"/>
+      </div>
+     </li>
+     <li data-id="b36de1bf-25d0-4c57-a10f-f531ebdeb10f" data-target="./pages/backrooms-level4294/index.html">
+      <div class="date">
+       29.06.2024
+      </div>
+      <div class="title">
+       Level 4294: 北京明城外国语学校
+      </div>
+      <div class="descr">
+       <img alt="cover" src="./pages/backrooms-level4294/cover.webp"/>
+      </div>
+     </li>
+     <li data-id="cd7b6b2d-1e4b-4428-856d-e9c1bfa238aa" data-target="/articles/b1-sprechen/index.html">
+      <div class="date">
+       08.06.2024
+      </div>
+      <div class="title">
+       Pro- und Kontra-Aussagen der 27 Themen
+      </div>
+      <div class="descr">
+       Insgesamt 27 themenspezifische Vorteile-Nachteile-Statements, zur Vorbereitung auf die Goethe B1-Prü...
+      </div>
+     </li>
+     <li data-id="cc874a0a-323c-4d8b-8ea4-5dbc4c95fedc" data-target="./pages/html5-flashcard-sets/index.html">
+      <div class="date">
+       05.02.2024
+      </div>
+      <div class="title">
+       HTML5 Flashcard (Beta)
+      </div>
+      <div class="descr">
+       <img alt="cover" src="./pages/html5-flashcard-sets/cover.webp"/>
+      </div>
+     </li>
+     <li data-id="c9d304a1-da03-4bb8-aff3-8f67abf9c5b7" data-target="/articles/how-to-use-v2rayng/index.html">
+      <div class="date">
+       15.10.2023
+      </div>
+      <div class="title">
+       详细介绍Windows端的免费翻墙方式——v2rayNG
+      </div>
+      <div class="descr">
+       如果你在微信内部打开了该链接，请点击窗口标题栏的 ··· 按钮，再点击 在浏览器打开 以切换至系统默认浏览器。如果你未发现类似标识，请忽略此步。   你可以使用以下方式来下载软件的安装包： 访问网址...
+      </div>
+     </li>
+     <li data-id="0c9b062c-2122-4dd1-ae04-7be8223d78e3" data-target="/articles/how-to-use-v2rayn/index.html">
+      <div class="date">
+       14.10.2023
+      </div>
+      <div class="title">
+       详细介绍Windows端的免费翻墙方式——v2rayN
+      </div>
+      <div class="descr">
+       如果你在微信内部打开了该链接，请点击窗口标题栏的 Internet标识 以切换至系统默认浏览器。如果你未发现类似标识，请忽略此步。   你可以使用以下方式来下载软件的自解压程序： 访问网址：http...
+      </div>
+     </li>
+     <li data-id="ad5060e4-ef03-4e90-9a6a-51718769f9b3" data-target="./pages/deutsche-aussprache-tabelle/index.html">
+      <div class="date">
+       09.09.2023
+      </div>
+      <div class="title">
+       Deutsche Aussprache Tabelle
+      </div>
+      <div class="descr">
+       <img alt="cover" src="./pages/deutsche-aussprache-tabelle/cover.webp"/>
+      </div>
+     </li>
+    </ul>
+   </div>
+   <div class="layout main" id="about">
+    <h1 data-translatable="" style="align-self: flex-start;">
+     About // 关于 // Infos
+    </h1>
+    <mdui-avatar class="avatar" src="/src/imgs/avatar.webp">
+    </mdui-avatar>
+    <p>
+     Xiuheng Wu
+    </p>
+    <mdui-button data-translatable="" icon="email">
+     Contact me via email // 通过电子邮件联系我 // Kontaktieren Sie mich per E-Mail
+    </mdui-button>
+    <hr style="width: 100%;"/>
+    <p data-translatable="">
+     This site depends on the following open source projects: // 这个网站依赖了以下开源项目： // Diese Website basiert auf
+                den folgenden Open-Source-Projekten:
+    </p>
+    <div class="licenses">
+     <mdui-collapse>
+      <mdui-collapse-item value="item-1">
+       <mdui-list-item end-icon="keyboard_arrow_down" slot="header">
+        MDUI
+       </mdui-list-item>
+       <div>
+        <mdui-button data-translatable="" full-width="" href="https://www.mdui.org/" icon="home" variant="tonal">
+         View home page // 查看主页 // Homepage anzeigen
+        </mdui-button>
+        The MIT License (MIT)
+
+                            Copyright (c) 2016-present zdhxiong@gmail.com
+
+                            Permission is hereby granted, free of charge, to any person obtaining a copy
+                            of this software and associated documentation files (the "Software"), to deal
+                            in the Software without restriction, including without limitation the rights
+                            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            copies of the Software, and to permit persons to whom the Software is
+                            furnished to do so, subject to the following conditions:
+
+                            The above copyright notice and this permission notice shall be included in all
+                            copies or substantial portions of the Software.
+
+                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                            SOFTWARE.
+       </div>
+      </mdui-collapse-item>
+      <mdui-collapse-item value="item-2">
+       <mdui-list-item end-icon="keyboard_arrow_down" slot="header">
+        dom-i18n
+       </mdui-list-item>
+       <div>
+        <mdui-button data-translatable="" full-width="" href="https://github.com/ruyadorno/dom-i18n" icon="home" variant="tonal">
+         View home page // 查看主页 // Homepage anzeigen
+        </mdui-button>
+        The MIT License (MIT)
+
+                            Copyright (c) Ruy Adorno (ruyadorno.com)
+
+                            Permission is hereby granted, free of charge, to any person obtaining a copy
+                            of this software and associated documentation files (the "Software"), to deal
+                            in the Software without restriction, including without limitation the rights
+                            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            copies of the Software, and to permit persons to whom the Software is
+                            furnished to do so, subject to the following conditions:
+
+                            The above copyright notice and this permission notice shall be included in
+                            all copies or substantial portions of the Software.
+
+                            THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            THE SOFTWARE.
+       </div>
+      </mdui-collapse-item>
+      <mdui-collapse-item value="item-3">
+       <mdui-list-item end-icon="keyboard_arrow_down" slot="header">
+        date-fns
+       </mdui-list-item>
+       <div>
+        <mdui-button data-translatable="" full-width="" href="https://date-fns.org/" icon="home" variant="tonal">
+         View home page // 查看主页 // Homepage anzeigen
+        </mdui-button>
+        The MIT License (MIT)
+                            Copyright © 2024 Sasha Koss
+
+                            Permission is hereby granted, free of charge, to any person obtaining a copy of this
+                            software and associated documentation files (the “Software”), to deal in the Software
+                            without restriction, including without limitation the rights to use, copy, modify, merge,
+                            publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons
+                            to whom the Software is furnished to do so, subject to the following conditions:
+
+                            The above copyright notice and this permission notice shall be included in all copies or
+                            substantial portions of the Software.
+
+                            THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED,
+                            INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR
+                            PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE
+                            FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+                            OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+                            DEALINGS IN THE SOFTWARE.
+       </div>
+      </mdui-collapse-item>
+      <mdui-collapse-item value="item-4">
+       <mdui-list-item end-icon="keyboard_arrow_down" slot="header">
+        Fancybox
+       </mdui-list-item>
+       <div>
+        <mdui-button data-translatable="" full-width="" href="https://fancyapps.com/fancybox/" icon="home" variant="tonal">
+         View home page // 查看主页 // Homepage anzeigen
+        </mdui-button>
+        Copyright (c)2008-present Jānis Skarnelis.
+
+                            Portions of this software are licensed as follows:
+
+                            - All content residing under the "docs/" directory of this repository is licensed under
+                            "Creative Commons: CC BY-SA 4.0 license".
+                            - Content outside of the above mentioned directory is licensed under the Fancyapps UI
+                            license. To use this software, you need to agree to the "License Agreement" for Fancyapps
+                            UI.
+
+                            All available Fancyapps licenses may be obtained at http://www.fancyapps.com/pricing.
+       </div>
+      </mdui-collapse-item>
+      <mdui-collapse-item value="item-5">
+       <mdui-list-item end-icon="keyboard_arrow_down" slot="header">
+        particles.js
+       </mdui-list-item>
+       <div>
+        <mdui-button data-translatable="" full-width="" href="https://marcbruederlin.github.io/particles.js/" icon="home" variant="tonal">
+         View home page // 查看主页 // Homepage anzeigen
+        </mdui-button>
+        Copyright © 2017 Marc Bruederlin
+
+                            Permission is hereby granted, free of charge, to any person obtaining a copy
+                            of this software and associated documentation files (the “Software”), to deal
+                            in the Software without restriction, including without limitation the rights
+                            to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                            copies of the Software, and to permit persons to whom the Software is
+                            furnished to do so, subject to the following conditions:
+
+                            The above copyright notice and this permission notice shall be included in
+                            all copies or substantial portions of the Software.
+
+                            THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                            IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                            FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                            AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                            LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                            OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+                            THE SOFTWARE.
+       </div>
+      </mdui-collapse-item>
+     </mdui-collapse>
+    </div>
+   </div>
+  </div>
+ </body>
 </html>

@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html>
+
+<style>
+    body {
+        background-image: linear-gradient(to bottom left, #fbe3d7, #b3eaff);
+    }
+
+    .go-home-button {
+        position: relative;
+        width: 100%;
+        font-weight: bold;
+        font-size: 1.2rem;
+        overflow: hidden;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        outline: none;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.5);
+        cursor: pointer;
+    }
+
+    .button-container {
+        margin-top: 10px;
+        width: auto;
+    }
+
+    .button-container button {
+        overflow: hidden;
+        transition: all 0.3s ease-in-out;
+        margin-right: 20px;
+        margin-bottom: 20px;
+        padding-left: 15px;
+        padding-right: 15px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border: none;
+        outline: none;
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.5);
+        cursor: pointer;
+        position: relative;
+    }
+
+    .button-container button.onreading {
+        background-color: rgba(255, 255, 0, 0.5);
+    }
+
+    .button-container button.smaller {
+        transform: scale(0.95);
+        box-shadow: none;
+    }
+
+    .explain-text {
+        overflow: hidden;
+        transition: all 0.2s ease-in-out;
+        margin-top: 20px;
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-top: 15px;
+        padding-bottom: 15px;
+        font-weight: bold;
+        text-align: left;
+        border-radius: 15px;
+        width: auto;
+        height: auto;
+        background-color: rgba(255, 255, 255, 0.3);
+        box-shadow: 0px 8px 24px rgba(149, 157, 165, 0.3);
+        position: relative;
+    }
+
+    .explain-text button {
+        overflow: hidden;
+        margin-top: 8px;
+        padding-left: 5px;
+        padding-right: 5px;
+        padding-top: 3px;
+        padding-bottom: 3px;
+        background-color: rgba(255, 255, 255, 0.6);
+        border: none;
+        outline: none;
+        text-decoration: none;
+        border-radius: 5px;
+        cursor: pointer;
+        position: relative;
+    }
+
+    button span {
+        background-color: #fff;
+        border-radius: 50%;
+        pointer-events: none;
+        position: absolute;
+        transform: translate(-50%, -50%);
+        animation: animate 1s ease-out infinite;
+    }
+
+    @keyframes animate {
+        0% {
+            width: 0;
+            height: 0;
+            opacity: 0.5;
+        }
+
+        100% {
+            width: 100vmin;
+            height: 100vmin;
+            opacity: 0;
+        }
+    }
+</style>
+
+<head>
+    <!--Tags: tool html-page chinese german-->
+    <meta http-equiv="content-type" content="text/html;charset=utf-8">
+    <title>Deutsche Aussprache Tabelle</title>
+    <meta name="viewport" content="width=device-width">
+</head>
+
+<body>
+    <button class="go-home-button" onclick="location.href = '/index.html'">👈 Back to Homepage</button>
+    <h1 style="font-family: 'Gill Sans', sans-serif;text-align:center;">Deutsche Aussprache Tabelle</h1>
+    <div style="width: 90%;margin: 0 auto;">
+
+
+        <h2>Teil1</h2>
+        <div class="explain-text">
+            元音a-e-i-o-u（长音）<br>
+            元音发长音的情况：<br>
+            1．元音后有一个或者零个辅音，如Bad，但是有一些例外，比如das，发短音<br>
+            2．元音双写，但仅有aa，ee，oo三种<br>
+            3．元音后有一个字母h，h不发音，元音发长音，如Bahn<br>
+        </div>
+
+        <div class="explain-text">
+            辅音b，p，d，t，g，k<br>
+            若浊辅音b，d，g后没有元音，则发清辅音p，t，k，其余与汉语拼音发音一致<br>
+            b-p,d-t,g-k<br>
+            <button id="read_aloud_button0" onclick="read_aloud(0,17)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button0" onclick="read(this.id)">Bad</button>
+            <button id="button1" onclick="read(this.id)">Boot</button>
+            <button id="button2" onclick="read(this.id)">da</button>
+            <button id="button3" onclick="read(this.id)">du</button>
+            <button id="button4" onclick="read(this.id)">geht</button>
+            <button id="button5" onclick="read(this.id)">gut</button>
+            <button id="button6" onclick="read(this.id)">Hob</button>
+            <button id="button7" onclick="read(this.id)">Idee</button>
+            <button id="button8" onclick="read(this.id)">Kita</button>
+            <button id="button9" onclick="read(this.id)">Kuba</button>
+            <button id="button10" onclick="read(this.id)">Kuh</button>
+            <button id="button11" onclick="read(this.id)">Lob</button>
+            <button id="button12" onclick="read(this.id)">mag</button>
+            <button id="button13" onclick="read(this.id)">Opa</button>
+            <button id="button14" onclick="read(this.id)">Tag</button>
+            <button id="button15" onclick="read(this.id)">Tee</button>
+            <button id="button16" onclick="read(this.id)">Tod</button>
+            <button id="button17" onclick="read(this.id)">tut</button>
+        </div>
+
+
+        <h2>Teil2</h2>
+        <div class="explain-text">
+            辅音f，w，m，n<br>
+            1．w字母需要咬嘴唇<br>
+            2．m和n与英语发音规则相似<br>
+            <button id="read_aloud_button1" onclick="read_aloud(18,26)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button18" onclick="read(this.id)">an</button>
+            <button id="button19" onclick="read(this.id)">Dom</button>
+            <button id="button20" onclick="read(this.id)">Foto</button>
+            <button id="button21" onclick="read(this.id)">in</button>
+            <button id="button22" onclick="read(this.id)">Mam</button>
+            <button id="button23" onclick="read(this.id)">nun</button>
+            <button id="button24" onclick="read(this.id)">Oma</button>
+            <button id="button25" onclick="read(this.id)">Uni</button>
+            <button id="button26" onclick="read(this.id)">wo</button>
+        </div>
+
+        <div class="explain-text">
+            元音a-e-i-o-H （短音）<br>
+            元音后有两个及以上的辅音字母，则发短音<br>
+            注意：辅音双写，只读一个<br>
+            元音o和e长短音发音不同<br>
+            <button id="read_aloud_button2" onclick="read_aloud(27,32)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button27" onclick="read(this.id)">Bott</button>
+            <button id="button28" onclick="read(this.id)">dumm</button>
+            <button id="button29" onclick="read(this.id)">Kamm</button>
+            <button id="button30" onclick="read(this.id)">knapp</button>
+            <button id="button31" onclick="read(this.id)">Komma</button>
+            <button id="button32" onclick="read(this.id)">Lamm</button>
+        </div>
+
+        <div class="explain-text">
+            元音e（非重读）<br>
+            1．单独放在词尾<br>
+            2．en，em，el，er放在词尾，注意一定要多音节单词<br>
+            3．be，ge放在词首<br>
+            <button id="read_aloud_button3" onclick="read_aloud(33,49)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button33" onclick="read(this.id)">aber</button>
+            <button id="button34" onclick="read(this.id)">Affe</button>
+            <button id="button35" onclick="read(this.id)">baden</button>
+            <button id="button36" onclick="read(this.id)">bekommen</button>
+            <button id="button37" onclick="read(this.id)">bitte</button>
+            <button id="button38" onclick="read(this.id)">fegen</button>
+            <button id="button39" onclick="read(this.id)">gefallen</button>
+            <button id="button40" onclick="read(this.id)">gutem</button>
+            <button id="button41" onclick="read(this.id)">holen</button>
+            <button id="button42" onclick="read(this.id)">kommen</button>
+            <button id="button43" onclick="read(this.id)">mager</button>
+            <button id="button44" onclick="read(this.id)">Name</button>
+            <button id="button45" onclick="read(this.id)">nennen</button>
+            <button id="button46" onclick="read(this.id)">Putte</button>
+            <button id="button47" onclick="read(this.id)">Tafel</button>
+            <button id="button48" onclick="read(this.id)">Tage</button>
+            <button id="button49" onclick="read(this.id)">wollen</button>
+        </div>
+
+
+        <h2>Teil3</h2>
+        <div class="explain-text">
+            辅音 h，s，l，r，v<br>
+            h<br>
+            1．元音前发［h］，和汉语拼音相同<br>
+            2．特殊情况不发音，比如元音后，或者跟着其他辅音组合<br>
+            <button id="read_aloud_button4" onclick="read_aloud(50,59)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button50" onclick="read(this.id)">fahren</button>
+            <button id="button51" onclick="read(this.id)">gehen</button>
+            <button id="button52" onclick="read(this.id)">haben</button>
+            <button id="button53" onclick="read(this.id)">helfen</button>
+            <button id="button54" onclick="read(this.id)">Himmel</button>
+            <button id="button55" onclick="read(this.id)">hinter</button>
+            <button id="button56" onclick="read(this.id)">Kuh</button>
+            <button id="button57" onclick="read(this.id)">lehnen</button>
+            <button id="button58" onclick="read(this.id)">Lehrer</button>
+            <button id="button59" onclick="read(this.id)">Thema</button>
+        </div>
+
+        <div class="explain-text">
+            s,β<br>
+            1．s在元音前发［z］，元音后发［s］<br>
+            2．ss，β 只发［s］<br>
+            <button id="read_aloud_button5" onclick="read_aloud(60,74)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button60" onclick="read(this.id)">Dose</button>
+            <button id="button61" onclick="read(this.id)">Fass</button>
+            <button id="button62" onclick="read(this.id)">Fuβ</button>
+            <button id="button63" onclick="read(this.id)">ist</button>
+            <button id="button64" onclick="read(this.id)">Maβ</button>
+            <button id="button65" onclick="read(this.id)">muss</button>
+            <button id="button66" onclick="read(this.id)">sagen</button>
+            <button id="button67" onclick="read(this.id)">See</button>
+            <button id="button68" onclick="read(this.id)">sind</button>
+            <button id="button69" onclick="read(this.id)">so</button>
+            <button id="button70" onclick="read(this.id)">SoBe</button>
+            <button id="button71" onclick="read(this.id)">Sonne</button>
+            <button id="button72" onclick="read(this.id)">Summe</button>
+            <button id="button73" onclick="read(this.id)">was</button>
+            <button id="button74" onclick="read(this.id)">wissen</button>
+        </div>
+
+        <div class="explain-text">
+            l<br>
+            1．元音前发[I]，与汉语拼音相同<br>
+            2．元音后注意舌尖放在上牙齿根部，两边出气<br>
+            <button id="read_aloud_button6" onclick="read_aloud(75,85)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button75" onclick="read(this.id)">Ball</button>
+            <button id="button76" onclick="read(this.id)">fallen</button>
+            <button id="button77" onclick="read(this.id)">hell</button>
+            <button id="button78" onclick="read(this.id)">Kalt</button>
+            <button id="button79" onclick="read(this.id)">knall</button>
+            <button id="button80" onclick="read(this.id)">Laden</button>
+            <button id="button81" onclick="read(this.id)">Lina</button>
+            <button id="button82" onclick="read(this.id)">Lob</button>
+            <button id="button83" onclick="read(this.id)">Luft</button>
+            <button id="button84" onclick="read(this.id)">malen</button>
+            <button id="button85" onclick="read(this.id)">Moll</button>
+        </div>
+
+        <div class="explain-text">
+            r<br>
+            1．元音前发小舌音，如果发不出来则发［h］ 2．元音后发尖音，类似于很短的［a］<br>
+            <button id="read_aloud_button7" onclick="read_aloud(86,98)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button86" onclick="read(this.id)">Bremen</button>
+            <button id="button87" onclick="read(this.id)">fahren</button>
+            <button id="button88" onclick="read(this.id)">Grit</button>
+            <button id="button89" onclick="read(this.id)">Herr</button>
+            <button id="button90" onclick="read(this.id)">irre</button>
+            <button id="button91" onclick="read(this.id)">pur</button>
+            <button id="button92" onclick="read(this.id)">Reden</button>
+            <button id="button93" onclick="read(this.id)">rot</button>
+            <button id="button94" onclick="read(this.id)">Teer</button>
+            <button id="button95" onclick="read(this.id)">Tor</button>
+            <button id="button96" onclick="read(this.id)">tragen</button>
+            <button id="button97" onclick="read(this.id)">treffen</button>
+            <button id="button98" onclick="read(this.id)">Uhr</button>
+        </div>
+
+        <div class="explain-text">
+            1．外来词发音同w<br>
+            2．德语词发音同f<br>
+            3．单独放在词尾发f，不管是外来词还是德语词<br>
+            <button id="read_aloud_button8" onclick="read_aloud(99,108)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button99" onclick="read(this.id)">aktiv</button>
+            <button id="button100" onclick="read(this.id)">November</button>
+            <button id="button101" onclick="read(this.id)">Vase</button>
+            <button id="button102" onclick="read(this.id)">Vater</button>
+            <button id="button103" onclick="read(this.id)">Visa</button>
+            <button id="button104" onclick="read(this.id)">Visum</button>
+            <button id="button105" onclick="read(this.id)">Vital</button>
+            <button id="button106" onclick="read(this.id)">vom</button>
+            <button id="button107" onclick="read(this.id)">von</button>
+            <button id="button108" onclick="read(this.id)">vor</button>
+        </div>
+
+
+        <h2>Teil4</h2>
+        <div class="explain-text">
+            变元音ä，ö，ü<br>
+            长音和短音发音规则与普通元音一致<br>
+            <button id="read_aloud_button9" onclick="read_aloud(109,116)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button109" onclick="read(this.id)">Fall-Fälle</button>
+            <button id="button110" onclick="read(this.id)">kam-käme</button>
+            <button id="button111" onclick="read(this.id)">Mutter-Mütter</button>
+            <button id="button112" onclick="read(this.id)">Ofen-Öfen</button>
+            <button id="button113" onclick="read(this.id)">schon-schön</button>
+            <button id="button114" onclick="read(this.id)">Sohn-Söhne</button>
+            <button id="button115" onclick="read(this.id)">Vater-Väter</button>
+            <button id="button116" onclick="read(this.id)">Wand-wände</button>
+        </div>
+
+        <div class="explain-text">
+            st<br>
+            1．词首发卷舌音［ft］，注意如果后面有元音一般要浊化<br>
+            2．词中，词尾发翘舌音［st］<br>
+            <button id="read_aloud_button10" onclick="read_aloud(117,134)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button117" onclick="read(this.id)">besten</button>
+            <button id="button118" onclick="read(this.id)">bist</button>
+            <button id="button119" onclick="read(this.id)">durst</button>
+            <button id="button120" onclick="read(this.id)">ist</button>
+            <button id="button121" onclick="read(this.id)">Kunst</button>
+            <button id="button122" onclick="read(this.id)">Staat</button>
+            <button id="button123" onclick="read(this.id)">starb</button>
+            <button id="button124" onclick="read(this.id)">Steg</button>
+            <button id="button125" onclick="read(this.id)">stehen</button>
+            <button id="button126" onclick="read(this.id)">stehlen</button>
+            <button id="button127" onclick="read(this.id)">Stil</button>
+            <button id="button128" onclick="read(this.id)">StraBe</button>
+            <button id="button129" onclick="read(this.id)">Strafe</button>
+            <button id="button130" onclick="read(this.id)">Stress</button>
+            <button id="button131" onclick="read(this.id)">Stube</button>
+            <button id="button132" onclick="read(this.id)">Stuhl</button>
+            <button id="button133" onclick="read(this.id)">tasten</button>
+            <button id="button134" onclick="read(this.id)">Westen</button>
+        </div>
+
+        <div class="explain-text">
+            sp<br>
+            1．词首发卷舌音［ʃp］，注意如果后面有元音一般要浊化<br>
+            2．词中，词尾发翘舌音［sp］<br>
+            <button id="read_aloud_button11" onclick="read_aloud(135,145)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button135" onclick="read(this.id)">Aspekt</button>
+            <button id="button136" onclick="read(this.id)">Kasper</button>
+            <button id="button137" onclick="read(this.id)">Respekt</button>
+            <button id="button138" onclick="read(this.id)">sparsam</button>
+            <button id="button139" onclick="read(this.id)">Sport</button>
+            <button id="button140" onclick="read(this.id)">Spott</button>
+            <button id="button141" onclick="read(this.id)">Sprit</button>
+            <button id="button142" onclick="read(this.id)">Spross</button>
+            <button id="button143" onclick="read(this.id)">Sprudel</button>
+            <button id="button144" onclick="read(this.id)">Spuk</button>
+            <button id="button145" onclick="read(this.id)">Wespe</button>
+        </div>
+
+        <div class="explain-text">
+            z-tz-ts-ds<br>
+            <button id="read_aloud_button12" onclick="read_aloud(146,155)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button146" onclick="read(this.id)">abends</button>
+            <button id="button147" onclick="read(this.id)">ganz</button>
+            <button id="button148" onclick="read(this.id)">Katze</button>
+            <button id="button149" onclick="read(this.id)">nichts</button>
+            <button id="button150" onclick="read(this.id)">Pizza</button>
+            <button id="button151" onclick="read(this.id)">tanzen</button>
+            <button id="button152" onclick="read(this.id)">Walzer</button>
+            <button id="button153" onclick="read(this.id)">Zahn</button>
+            <button id="button154" onclick="read(this.id)">Zoo</button>
+            <button id="button155" onclick="read(this.id)">zwölf</button>
+        </div>
+
+        <div class="explain-text">
+            sch<br>
+            <button id="read_aloud_button13" onclick="read_aloud(156,166)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button156" onclick="read(this.id)">Menschen</button>
+            <button id="button157" onclick="read(this.id)">Schade</button>
+            <button id="button158" onclick="read(this.id)">Schi</button>
+            <button id="button159" onclick="read(this.id)">Schiff</button>
+            <button id="button160" onclick="read(this.id)">Schnee</button>
+            <button id="button161" onclick="read(this.id)">Schokolade</button>
+            <button id="button162" onclick="read(this.id)">Schub</button>
+            <button id="button163" onclick="read(this.id)">Schule</button>
+            <button id="button164" onclick="read(this.id)">Schüler</button>
+            <button id="button165" onclick="read(this.id)">Taschen</button>
+            <button id="button166" onclick="read(this.id)">wischen</button>
+        </div>
+
+        <div class="explain-text">
+            tsch<br>
+            <button id="read_aloud_button14" onclick="read_aloud(167,172)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button167" onclick="read(this.id)">Kutsche</button>
+            <button id="button168" onclick="read(this.id)">Lutschen</button>
+            <button id="button169" onclick="read(this.id)">Matsch</button>
+            <button id="button170" onclick="read(this.id)">Putsch</button>
+            <button id="button171" onclick="read(this.id)">Rutsch</button>
+            <button id="button172" onclick="read(this.id)">Tschüs</button>
+        </div>
+
+
+        <h2>Teil5</h2>
+        <div class="explain-text">
+            元音字母组合 ie，ei，au，eu<br>
+            ie<br>
+            <button id="read_aloud_button15" onclick="read_aloud(173,180)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button173" onclick="read(this.id)">Bier</button>
+            <button id="button174" onclick="read(this.id)">Dieb</button>
+            <button id="button175" onclick="read(this.id)">fliegen</button>
+            <button id="button176" onclick="read(this.id)">Kieker</button>
+            <button id="button177" onclick="read(this.id)">Liebe</button>
+            <button id="button178" onclick="read(this.id)">Lied</button>
+            <button id="button179" onclick="read(this.id)">Piep</button>
+            <button id="button180" onclick="read(this.id)">tief</button>
+        </div>
+
+        <div class="explain-text">
+            ei,ai,ay,ey<br>
+            <button id="read_aloud_button16" onclick="read_aloud(181,197)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button181" onclick="read(this.id)">bei</button> <button id="button182"
+                onclick="read(this.id)">Beyer</button>
+            <button id="button183" onclick="read(this.id)">Blei</button>
+            <button id="button184" onclick="read(this.id)">ein</button> <button id="button185"
+                onclick="read(this.id)">einer</button>
+            <button id="button186" onclick="read(this.id)">eins</button>
+            <button id="button187" onclick="read(this.id)">Hai</button> <button id="button188"
+                onclick="read(this.id)">Heidi</button>
+            <button id="button189" onclick="read(this.id)">Heike</button>
+            <button id="button190" onclick="read(this.id)">Kai</button> <button id="button191"
+                onclick="read(this.id)">kein</button>
+            <button id="button192" onclick="read(this.id)">Laie</button>
+            <button id="button193" onclick="read(this.id)">leider</button>
+            <button id="button194" onclick="read(this.id)">Mai</button> <button id="button195"
+                onclick="read(this.id)">Main</button>
+            <button id="button196" onclick="read(this.id)">Mayer</button>
+            <button id="button197" onclick="read(this.id)">mein</button>
+        </div>
+
+        <div class="explain-text">
+            au<br>
+            <button id="read_aloud_button17" onclick="read_aloud(198,207)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button198" onclick="read(this.id)">auf</button> <button id="button199"
+                onclick="read(this.id)">Aufbau</button>
+            <button id="button200" onclick="read(this.id)">Aula</button>
+            <button id="button201" onclick="read(this.id)">Baum</button>
+            <button id="button202" onclick="read(this.id)">blau</button>
+            <button id="button203" onclick="read(this.id)">Haus</button>
+            <button id="button204" onclick="read(this.id)">kaufen</button>
+            <button id="button205" onclick="read(this.id)">Klaus</button>
+            <button id="button206" onclick="read(this.id)">Paul</button>
+            <button id="button207" onclick="read(this.id)">Paula</button>
+        </div>
+
+        <div class="explain-text">
+            eu äu<br>
+            <button id="read_aloud_button18" onclick="read_aloud(208,218)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button208" onclick="read(this.id)">Bäuer</button>
+            <button id="button209" onclick="read(this.id)">Bäume</button>
+            <button id="button210" onclick="read(this.id)">Eugen</button>
+            <button id="button211" onclick="read(this.id)">Eule</button>
+            <button id="button212" onclick="read(this.id)">Feuer</button>
+            <button id="button213" onclick="read(this.id)">Heu</button> <button id="button214"
+                onclick="read(this.id)">heute</button>
+            <button id="button215" onclick="read(this.id)">Leute</button>
+            <button id="button216" onclick="read(this.id)">Läufer</button>
+            <button id="button217" onclick="read(this.id)">neu</button> <button id="button218"
+                onclick="read(this.id)">Teufel</button>
+        </div>
+
+
+        <h2>Teil6</h2>
+        <div class="explain-text">
+            辅音组合ch<br>
+            1．德语词，在a，o，u，au 后发［x］<br>
+            2．德语词，在其他元音、词首、以及辅音后发［c］<br>
+            3．外来词，一般词首，发［ʃ］<br>
+            4．外来词，一般词首，发［k］<br>
+            <button id="read_aloud_button19" onclick="read_aloud(219,264)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button219" onclick="read(this.id)">Aachen</button>
+            <button id="button220" onclick="read(this.id)">acht</button>
+            <button id="button221" onclick="read(this.id)">auch</button>
+            <button id="button222" onclick="read(this.id)">Bach</button>
+            <button id="button223" onclick="read(this.id)">brauchen</button>
+            <button id="button224" onclick="read(this.id)">Buch</button>
+            <button id="button225" onclick="read(this.id)">Chance</button>
+            <button id="button226" onclick="read(this.id)">Chaos</button>
+            <button id="button227" onclick="read(this.id)">Charakter</button>
+            <button id="button228" onclick="read(this.id)">charmant</button>
+            <button id="button229" onclick="read(this.id)">Chef</button>
+            <button id="button230" onclick="read(this.id)">Chemie</button>
+            <button id="button231" onclick="read(this.id)">China</button>
+            <button id="button232" onclick="read(this.id)">Chinesisch</button>
+            <button id="button233" onclick="read(this.id)">Chor</button>
+            <button id="button234" onclick="read(this.id)">Christ</button>
+            <button id="button235" onclick="read(this.id)">dich</button>
+            <button id="button236" onclick="read(this.id)">dicht</button>
+            <button id="button237" onclick="read(this.id)">doch</button>
+            <button id="button238" onclick="read(this.id)">Fach</button>
+            <button id="button239" onclick="read(this.id)">fauchen</button>
+            <button id="button240" onclick="read(this.id)">feucht</button>
+            <button id="button241" onclick="read(this.id)">Friedrich</button>
+            <button id="button242" onclick="read(this.id)">gleich</button>
+            <button id="button243" onclick="read(this.id)">hoch</button>
+            <button id="button244" onclick="read(this.id)">ich</button> <button id="button245"
+                onclick="read(this.id)">Kirche</button>
+            <button id="button246" onclick="read(this.id)">kochen</button>
+            <button id="button247" onclick="read(this.id)">Krach</button>
+            <button id="button248" onclick="read(this.id)">lachen</button>
+            <button id="button249" onclick="read(this.id)">leicht</button>
+            <button id="button250" onclick="read(this.id)">Loch</button>
+            <button id="button251" onclick="read(this.id)">machen</button>
+            <button id="button252" onclick="read(this.id)">mich</button>
+            <button id="button253" onclick="read(this.id)">Milch</button>
+            <button id="button254" onclick="read(this.id)">Mittwoch</button>
+            <button id="button255" onclick="read(this.id)">möchten</button>
+            <button id="button256" onclick="read(this.id)">nach</button>
+            <button id="button257" onclick="read(this.id)">Nacht</button>
+            <button id="button258" onclick="read(this.id)">nicht</button>
+            <button id="button259" onclick="read(this.id)">noch</button>
+            <button id="button260" onclick="read(this.id)">Recht</button>
+            <button id="button261" onclick="read(this.id)">sich</button>
+            <button id="button262" onclick="read(this.id)">Tuch</button>
+            <button id="button263" onclick="read(this.id)">Woche</button>
+            <button id="button264" onclick="read(this.id)">Würstchen</button>
+            <audio id="player" style="display: none;"></audio>
+        </div>
+
+        <div class="explain-text">
+            元音辅音组合ig<br>
+            放在词尾与ich发音相同<br>
+            <button id="read_aloud_button20" onclick="read_aloud(265,278)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button265" onclick="read(this.id)">beleidigt</button>
+            <button id="button266" onclick="read(this.id)">beschäftigt</button>
+            <button id="button267" onclick="read(this.id)">billig</button>
+            <button id="button268" onclick="read(this.id)">billiger</button>
+            <button id="button269" onclick="read(this.id)">fleiβig</button>
+            <button id="button270" onclick="read(this.id)">fleiβige</button>
+            <button id="button271" onclick="read(this.id)">geistig</button>
+            <button id="button272" onclick="read(this.id)">mutig</button>
+            <button id="button273" onclick="read(this.id)">nötig</button>
+            <button id="button274" onclick="read(this.id)">richtig</button>
+            <button id="button275" onclick="read(this.id)">verdächtigt</button>
+            <button id="button276" onclick="read(this.id)">wenig</button>
+            <button id="button277" onclick="read(this.id)">wichtig</button>
+            <button id="button278" onclick="read(this.id)">wichtige</button>
+        </div>
+
+        <div class="explain-text">
+            辅音y<br>
+            1．在德语中一般做元音使用，发音规则同ü<br>
+            2．外来词中与j发音相同<br>
+            <button id="read_aloud_button21" onclick="read_aloud(279,288)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button279" onclick="read(this.id)">Analyse</button>
+            <button id="button280" onclick="read(this.id)">Lyrik</button>
+            <button id="button281" onclick="read(this.id)">Psyche</button>
+            <button id="button282" onclick="read(this.id)">Symbol</button>
+            <button id="button283" onclick="read(this.id)">System</button>
+            <button id="button284" onclick="read(this.id)">Typ</button>
+            <button id="button285" onclick="read(this.id)">Typen</button>
+            <button id="button286" onclick="read(this.id)">Yacht</button>
+            <button id="button287" onclick="read(this.id)">Yard</button>
+            <button id="button288" onclick="read(this.id)">Yoga</button>
+        </div>
+
+        <div class="explain-text">
+            辅音j<br>
+            <button id="read_aloud_button22" onclick="read_aloud(289,294)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button289" onclick="read(this.id)">ja</button>
+            <button id="button290" onclick="read(this.id)">Januar</button>
+            <button id="button291" onclick="read(this.id)">Japan</button>
+            <button id="button292" onclick="read(this.id)">jeden</button>
+            <button id="button293" onclick="read(this.id)">Jena</button>
+            <button id="button294" onclick="read(this.id)">jäger</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合pf<br>
+            在词首f发音很轻，很多人都是有动作无声音<br>
+            <button id="read_aloud_button23" onclick="read_aloud(295,306)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button295" onclick="read(this.id)">Apfel</button>
+            <button id="button296" onclick="read(this.id)">dampfen</button>
+            <button id="button297" onclick="read(this.id)">Kopf</button>
+            <button id="button298" onclick="read(this.id)">Napf</button>
+            <button id="button299" onclick="read(this.id)">Opfer</button>
+            <button id="button300" onclick="read(this.id)">Pfad</button>
+            <button id="button301" onclick="read(this.id)">Pfanne</button>
+            <button id="button302" onclick="read(this.id)">Pfeffer</button>
+            <button id="button303" onclick="read(this.id)">pfeifen</button>
+            <button id="button304" onclick="read(this.id)">Pfeil</button>
+            <button id="button305" onclick="read(this.id)">Pflicht</button>
+            <button id="button306" onclick="read(this.id)">Topf</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合ph<br>
+            同f<br>
+            <button id="read_aloud_button24" onclick="read_aloud(307,311)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button307" onclick="read(this.id)">Alphabet</button>
+            <button id="button308" onclick="read(this.id)">Atmosphäre</button>
+            <button id="button309" onclick="read(this.id)">Phase</button>
+            <button id="button310" onclick="read(this.id)">Photo</button>
+            <button id="button311" onclick="read(this.id)">Physik</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合qu<br>
+            同qw<br>
+            <button id="read_aloud_button25" onclick="read_aloud(312,317)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button312" onclick="read(this.id)">bequem</button>
+            <button id="button313" onclick="read(this.id)">Quadrat</button>
+            <button id="button314" onclick="read(this.id)">Qualität</button>
+            <button id="button315" onclick="read(this.id)">Quantität</button>
+            <button id="button316" onclick="read(this.id)">Quatsch</button>
+            <button id="button317" onclick="read(this.id)">quer</button>
+        </div>
+
+
+        <h2>Teil7</h2>
+        <div class="explain-text">
+            辅音组合ks，chs 辅音 x<br>
+            注意s后即使有元音也一般不浊化<br>
+            <button id="read_aloud_button26" onclick="read_aloud(318,337)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button318" onclick="read(this.id)">Achse</button>
+            <button id="button319" onclick="read(this.id)">Erwachsen</button>
+            <button id="button320" onclick="read(this.id)">Experte</button>
+            <button id="button321" onclick="read(this.id)">Fax</button>
+            <button id="button322" onclick="read(this.id)">Fuchs</button>
+            <button id="button323" onclick="read(this.id)">Lexikon</button>
+            <button id="button324" onclick="read(this.id)">links</button>
+            <button id="button325" onclick="read(this.id)">Luxus</button>
+            <button id="button326" onclick="read(this.id)">Max</button>
+            <button id="button327" onclick="read(this.id)">Mexiko</button>
+            <button id="button328" onclick="read(this.id)">Ochse</button>
+            <button id="button329" onclick="read(this.id)">Oxford</button>
+            <button id="button330" onclick="read(this.id)">pieksen</button>
+            <button id="button331" onclick="read(this.id)">Praxis</button>
+            <button id="button332" onclick="read(this.id)">sechs</button>
+            <button id="button333" onclick="read(this.id)">Taxi</button>
+            <button id="button334" onclick="read(this.id)">Text</button>
+            <button id="button335" onclick="read(this.id)">wachsen</button>
+            <button id="button336" onclick="read(this.id)">wechsel</button>
+            <button id="button337" onclick="read(this.id)">Wuchs</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合nk<br>
+            <button id="read_aloud_button27" onclick="read_aloud(338,350)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button338" onclick="read(this.id)">Dank</button>
+            <button id="button339" onclick="read(this.id)">danken</button>
+            <button id="button340" onclick="read(this.id)">denken</button>
+            <button id="button341" onclick="read(this.id)">Denker</button>
+            <button id="button342" onclick="read(this.id)">dunkel</button>
+            <button id="button343" onclick="read(this.id)">Enkel</button>
+            <button id="button344" onclick="read(this.id)">krank</button>
+            <button id="button345" onclick="read(this.id)">links</button>
+            <button id="button346" onclick="read(this.id)">Punkt</button>
+            <button id="button347" onclick="read(this.id)">schminken</button>
+            <button id="button348" onclick="read(this.id)">Tank</button>
+            <button id="button349" onclick="read(this.id)">tanken</button>
+            <button id="button350" onclick="read(this.id)">trinken</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合ng<br>
+            <button id="read_aloud_button28" onclick="read_aloud(351,358)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button351" onclick="read(this.id)">Englisch</button>
+            <button id="button352" onclick="read(this.id)">Finger</button>
+            <button id="button353" onclick="read(this.id)">jung</button>
+            <button id="button354" onclick="read(this.id)">jünger</button>
+            <button id="button355" onclick="read(this.id)">lang</button>
+            <button id="button356" onclick="read(this.id)">Länge</button>
+            <button id="button357" onclick="read(this.id)">singen</button>
+            <button id="button358" onclick="read(this.id)">springen</button>
+        </div>
+
+        <div class="explain-text">
+            辅音组合ung<br>
+            <button id="read_aloud_button29" onclick="read_aloud(359,367)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button359" onclick="read(this.id)">Achtung</button>
+            <button id="button360" onclick="read(this.id)">Endung</button>
+            <button id="button361" onclick="read(this.id)">Lösung</button>
+            <button id="button362" onclick="read(this.id)">Prüfung</button>
+            <button id="button363" onclick="read(this.id)">Quittung</button>
+            <button id="button364" onclick="read(this.id)">Sitzung</button>
+            <button id="button365" onclick="read(this.id)">Sprung</button>
+            <button id="button366" onclick="read(this.id)">Zeitung</button>
+            <button id="button367" onclick="read(this.id)">Übung</button>
+        </div>
+
+        <div class="explain-text">
+            辅音元音组合 tion<br>
+            <button id="read_aloud_button30" onclick="read_aloud(368,379)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button368" onclick="read(this.id)">Auktion</button>
+            <button id="button369" onclick="read(this.id)">Dekoration</button>
+            <button id="button370" onclick="read(this.id)">Delegation</button>
+            <button id="button371" onclick="read(this.id)">Konjugation</button>
+            <button id="button372" onclick="read(this.id)">Lektion</button>
+            <button id="button373" onclick="read(this.id)">Nation</button>
+            <button id="button374" onclick="read(this.id)">Opposition</button>
+            <button id="button375" onclick="read(this.id)">Produktion</button>
+            <button id="button376" onclick="read(this.id)">Promotion</button>
+            <button id="button377" onclick="read(this.id)">Sensation</button>
+            <button id="button378" onclick="read(this.id)">Station</button>
+            <button id="button379" onclick="read(this.id)">Tradition</button>
+        </div>
+
+        <div class="explain-text">
+            辅音元音组合 ssion<br>
+            <button id="read_aloud_button31" onclick="read_aloud(380,387)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button380" onclick="read(this.id)">Diskussion</button>
+            <button id="button381" onclick="read(this.id)">Emission</button>
+            <button id="button382" onclick="read(this.id)">Immission</button>
+            <button id="button383" onclick="read(this.id)">Impression</button>
+            <button id="button384" onclick="read(this.id)">Kommission</button>
+            <button id="button385" onclick="read(this.id)">Konzession</button>
+            <button id="button386" onclick="read(this.id)">Passion</button>
+            <button id="button387" onclick="read(this.id)">Profession</button>
+        </div>
+
+        <div class="explain-text">
+            辅音元音组合 sion<br>
+            <button id="read_aloud_button32" onclick="read_aloud(388,396)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button388" onclick="read(this.id)">Diffusion</button>
+            <button id="button389" onclick="read(this.id)">Division</button>
+            <button id="button390" onclick="read(this.id)">Explosion</button>
+            <button id="button391" onclick="read(this.id)">Fusion</button>
+            <button id="button392" onclick="read(this.id)">Illusion</button>
+            <button id="button393" onclick="read(this.id)">Infusion</button>
+            <button id="button394" onclick="read(this.id)">Invasion</button>
+            <button id="button395" onclick="read(this.id)">Inversion</button>
+            <button id="button396" onclick="read(this.id)">Vision</button>
+        </div>
+
+        <div class="explain-text">
+            辅音元音组合 ismus<br>
+            <button id="read_aloud_button33" onclick="read_aloud(397,403)">顺次朗读当前区块</button>
+        </div>
+        <div class="button-container">
+            <button id="button397" onclick="read(this.id)">Analphabetismus</button>
+            <button id="button398" onclick="read(this.id)">Buddhismus</button>
+            <button id="button399" onclick="read(this.id)">Feudalismus</button>
+            <button id="button400" onclick="read(this.id)">Idealismus</button>
+            <button id="button401" onclick="read(this.id)">Kapitalismus</button>
+            <button id="button402" onclick="read(this.id)">Mechanismus</button>
+            <button id="button403" onclick="read(this.id)">Sozialismus</button>
+        </div>
+
+    </div>
+</body>
+
+</html>
+
+
+<script>
+    const buttons = document.querySelectorAll("button");
+
+    buttons.forEach((button) => {
+        button.addEventListener("click", (e) => {
+            let x = e.pageX - e.target.offsetLeft;
+            let y = e.pageY - e.target.offsetTop;
+
+            let ripples = document.createElement("span");
+            ripples.style.left = x + "px";
+            ripples.style.top = y + "px";
+
+            button.appendChild(ripples);
+
+            setTimeout(() => {
+                ripples.remove();
+            }, 1000);
+        });
+
+        button.addEventListener('mousedown', function () {
+            button.classList.add('smaller');
+        });
+
+        button.addEventListener('mouseup', function () {
+            setTimeout(function () {
+                button.classList.remove('smaller');
+            }, 200);
+        });
+    });
+
+    var word_to_speech_dic = { 'button0': './Audio/Teil1-1/Bad.mp3', 'button1': './Audio/Teil1-1/Boot.mp3', 'button2': './Audio/Teil1-1/da.mp3', 'button3': './Audio/Teil1-1/du.mp3', 'button4': './Audio/Teil1-1/geht.mp3', 'button5': './Audio/Teil1-1/gut.mp3', 'button6': './Audio/Teil1-1/Hob.mp3', 'button7': './Audio/Teil1-1/Idee.mp3', 'button8': './Audio/Teil1-1/Kita.mp3', 'button9': './Audio/Teil1-1/Kuba.mp3', 'button10': './Audio/Teil1-1/Kuh.mp3', 'button11': './Audio/Teil1-1/Lob.mp3', 'button12': './Audio/Teil1-1/mag.mp3', 'button13': './Audio/Teil1-1/Opa.mp3', 'button14': './Audio/Teil1-1/Tag.mp3', 'button15': './Audio/Teil1-1/Tee.mp3', 'button16': './Audio/Teil1-1/Tod.mp3', 'button17': './Audio/Teil1-1/tut.mp3', 'button18': './Audio/Teil2-1/an.mp3', 'button19': './Audio/Teil2-1/Dom.mp3', 'button20': './Audio/Teil2-1/Foto.mp3', 'button21': './Audio/Teil2-1/in.mp3', 'button22': './Audio/Teil2-1/Mam.mp3', 'button23': './Audio/Teil2-1/nun.mp3', 'button24': './Audio/Teil2-1/Oma.mp3', 'button25': './Audio/Teil2-1/Uni.mp3', 'button26': './Audio/Teil2-1/wo.mp3', 'button27': './Audio/Teil2-2/Bott.mp3', 'button28': './Audio/Teil2-2/dumm.mp3', 'button29': './Audio/Teil2-2/Kamm.mp3', 'button30': './Audio/Teil2-2/knapp.mp3', 'button31': './Audio/Teil2-2/Komma.mp3', 'button32': './Audio/Teil2-2/Lamm.mp3', 'button33': './Audio/Teil2-3/aber.mp3', 'button34': './Audio/Teil2-3/Affe.mp3', 'button35': './Audio/Teil2-3/baden.mp3', 'button36': './Audio/Teil2-3/bekommen.mp3', 'button37': './Audio/Teil2-3/bitte.mp3', 'button38': './Audio/Teil2-3/fegen.mp3', 'button39': './Audio/Teil2-3/gefallen.mp3', 'button40': './Audio/Teil2-3/gutem.mp3', 'button41': './Audio/Teil2-3/holen.mp3', 'button42': './Audio/Teil2-3/kommen.mp3', 'button43': './Audio/Teil2-3/mager.mp3', 'button44': './Audio/Teil2-3/Name.mp3', 'button45': './Audio/Teil2-3/nennen.mp3', 'button46': './Audio/Teil2-3/Putte.mp3', 'button47': './Audio/Teil2-3/Tafel.mp3', 'button48': './Audio/Teil2-3/Tage.mp3', 'button49': './Audio/Teil2-3/wollen.mp3', 'button50': './Audio/Teil3-1/fahren.mp3', 'button51': './Audio/Teil3-1/gehen.mp3', 'button52': './Audio/Teil3-1/haben.mp3', 'button53': './Audio/Teil3-1/helfen.mp3', 'button54': './Audio/Teil3-1/Himmel.mp3', 'button55': './Audio/Teil3-1/hinter.mp3', 'button56': './Audio/Teil3-1/Kuh.mp3', 'button57': './Audio/Teil3-1/lehnen.mp3', 'button58': './Audio/Teil3-1/Lehrer.mp3', 'button59': './Audio/Teil3-1/Thema.mp3', 'button60': './Audio/Teil3-2/Dose.mp3', 'button61': './Audio/Teil3-2/Fass.mp3', 'button62': './Audio/Teil3-2/Fuβ.mp3', 'button63': './Audio/Teil3-2/ist.mp3', 'button64': './Audio/Teil3-2/Maβ.mp3', 'button65': './Audio/Teil3-2/muss.mp3', 'button66': './Audio/Teil3-2/sagen.mp3', 'button67': './Audio/Teil3-2/See.mp3', 'button68': './Audio/Teil3-2/sind.mp3', 'button69': './Audio/Teil3-2/so.mp3', 'button70': './Audio/Teil3-2/SoBe.mp3', 'button71': './Audio/Teil3-2/Sonne.mp3', 'button72': './Audio/Teil3-2/Summe.mp3', 'button73': './Audio/Teil3-2/was.mp3', 'button74': './Audio/Teil3-2/wissen.mp3', 'button75': './Audio/Teil3-3/Ball.mp3', 'button76': './Audio/Teil3-3/fallen.mp3', 'button77': './Audio/Teil3-3/hell.mp3', 'button78': './Audio/Teil3-3/Kalt.mp3', 'button79': './Audio/Teil3-3/knall.mp3', 'button80': './Audio/Teil3-3/Laden.mp3', 'button81': './Audio/Teil3-3/Lina.mp3', 'button82': './Audio/Teil3-3/Lob.mp3', 'button83': './Audio/Teil3-3/Luft.mp3', 'button84': './Audio/Teil3-3/malen.mp3', 'button85': './Audio/Teil3-3/Moll.mp3', 'button86': './Audio/Teil3-4/Bremen.mp3', 'button87': './Audio/Teil3-4/fahren.mp3', 'button88': './Audio/Teil3-4/Grit.mp3', 'button89': './Audio/Teil3-4/Herr.mp3', 'button90': './Audio/Teil3-4/irre.mp3', 'button91': './Audio/Teil3-4/pur.mp3', 'button92': './Audio/Teil3-4/Reden.mp3', 'button93': './Audio/Teil3-4/rot.mp3', 'button94': './Audio/Teil3-4/Teer.mp3', 'button95': './Audio/Teil3-4/Tor.mp3', 'button96': './Audio/Teil3-4/tragen.mp3', 'button97': './Audio/Teil3-4/treffen.mp3', 'button98': './Audio/Teil3-4/Uhr.mp3', 'button99': './Audio/Teil3-5/aktiv.mp3', 'button100': './Audio/Teil3-5/November.mp3', 'button101': './Audio/Teil3-5/Vase.mp3', 'button102': './Audio/Teil3-5/Vater.mp3', 'button103': './Audio/Teil3-5/Visa.mp3', 'button104': './Audio/Teil3-5/Visum.mp3', 'button105': './Audio/Teil3-5/Vital.mp3', 'button106': './Audio/Teil3-5/vom.mp3', 'button107': './Audio/Teil3-5/von.mp3', 'button108': './Audio/Teil3-5/vor.mp3', 'button109': './Audio/Teil4-1/Fall-Fälle.mp3', 'button110': './Audio/Teil4-1/kam-käme.mp3', 'button111': './Audio/Teil4-1/Mutter-Mütter.mp3', 'button112': './Audio/Teil4-1/Ofen-Öfen.mp3', 'button113': './Audio/Teil4-1/schon-schön.mp3', 'button114': './Audio/Teil4-1/Sohn-Söhne.mp3', 'button115': './Audio/Teil4-1/Vater-Väter.mp3', 'button116': './Audio/Teil4-1/Wand-wände.mp3', 'button117': './Audio/Teil4-2/besten.mp3', 'button118': './Audio/Teil4-2/bist.mp3', 'button119': './Audio/Teil4-2/durst.mp3', 'button120': './Audio/Teil4-2/ist.mp3', 'button121': './Audio/Teil4-2/Kunst.mp3', 'button122': './Audio/Teil4-2/Staat.mp3', 'button123': './Audio/Teil4-2/starb.mp3', 'button124': './Audio/Teil4-2/Steg.mp3', 'button125': './Audio/Teil4-2/stehen.mp3', 'button126': './Audio/Teil4-2/stehlen.mp3', 'button127': './Audio/Teil4-2/Stil.mp3', 'button128': './Audio/Teil4-2/StraBe.mp3', 'button129': './Audio/Teil4-2/Strafe.mp3', 'button130': './Audio/Teil4-2/Stress.mp3', 'button131': './Audio/Teil4-2/Stube.mp3', 'button132': './Audio/Teil4-2/Stuhl.mp3', 'button133': './Audio/Teil4-2/tasten.mp3', 'button134': './Audio/Teil4-2/Westen.mp3', 'button135': './Audio/Teil4-3/Aspekt.mp3', 'button136': './Audio/Teil4-3/Kasper.mp3', 'button137': './Audio/Teil4-3/Respekt.mp3', 'button138': './Audio/Teil4-3/sparsam.mp3', 'button139': './Audio/Teil4-3/Sport.mp3', 'button140': './Audio/Teil4-3/Spott.mp3', 'button141': './Audio/Teil4-3/Sprit.mp3', 'button142': './Audio/Teil4-3/Spross.mp3', 'button143': './Audio/Teil4-3/Sprudel.mp3', 'button144': './Audio/Teil4-3/Spuk.mp3', 'button145': './Audio/Teil4-3/Wespe.mp3', 'button146': './Audio/Teil4-4/abends.mp3', 'button147': './Audio/Teil4-4/ganz.mp3', 'button148': './Audio/Teil4-4/Katze.mp3', 'button149': './Audio/Teil4-4/nichts.mp3', 'button150': './Audio/Teil4-4/Pizza.mp3', 'button151': './Audio/Teil4-4/tanzen.mp3', 'button152': './Audio/Teil4-4/Walzer.mp3', 'button153': './Audio/Teil4-4/Zahn.mp3', 'button154': './Audio/Teil4-4/Zoo.mp3', 'button155': './Audio/Teil4-4/zwölf.mp3', 'button156': './Audio/Teil4-5/Menschen.mp3', 'button157': './Audio/Teil4-5/Schade.mp3', 'button158': './Audio/Teil4-5/Schi.mp3', 'button159': './Audio/Teil4-5/Schiff.mp3', 'button160': './Audio/Teil4-5/Schnee.mp3', 'button161': './Audio/Teil4-5/Schokolade.mp3', 'button162': './Audio/Teil4-5/Schub.mp3', 'button163': './Audio/Teil4-5/Schule.mp3', 'button164': './Audio/Teil4-5/Schüler.mp3', 'button165': './Audio/Teil4-5/Taschen.mp3', 'button166': './Audio/Teil4-5/wischen.mp3', 'button167': './Audio/Teil4-6/Kutsche.mp3', 'button168': './Audio/Teil4-6/Lutschen.mp3', 'button169': './Audio/Teil4-6/Matsch.mp3', 'button170': './Audio/Teil4-6/Putsch.mp3', 'button171': './Audio/Teil4-6/Rutsch.mp3', 'button172': './Audio/Teil4-6/Tschüs.mp3', 'button173': './Audio/Teil5-1/Bier.mp3', 'button174': './Audio/Teil5-1/Dieb.mp3', 'button175': './Audio/Teil5-1/fliegen.mp3', 'button176': './Audio/Teil5-1/Kieker.mp3', 'button177': './Audio/Teil5-1/Liebe.mp3', 'button178': './Audio/Teil5-1/Lied.mp3', 'button179': './Audio/Teil5-1/Piep.mp3', 'button180': './Audio/Teil5-1/tief.mp3', 'button181': './Audio/Teil5-2/bei.mp3', 'button182': './Audio/Teil5-2/Beyer.mp3', 'button183': './Audio/Teil5-2/Blei.mp3', 'button184': './Audio/Teil5-2/ein.mp3', 'button185': './Audio/Teil5-2/einer.mp3', 'button186': './Audio/Teil5-2/eins.mp3', 'button187': './Audio/Teil5-2/Hai.mp3', 'button188': './Audio/Teil5-2/Heidi.mp3', 'button189': './Audio/Teil5-2/Heike.mp3', 'button190': './Audio/Teil5-2/Kai.mp3', 'button191': './Audio/Teil5-2/kein.mp3', 'button192': './Audio/Teil5-2/Laie.mp3', 'button193': './Audio/Teil5-2/leider.mp3', 'button194': './Audio/Teil5-2/Mai.mp3', 'button195': './Audio/Teil5-2/Main.mp3', 'button196': './Audio/Teil5-2/Mayer.mp3', 'button197': './Audio/Teil5-2/mein.mp3', 'button198': './Audio/Teil5-3/auf.mp3', 'button199': './Audio/Teil5-3/Aufbau.mp3', 'button200': './Audio/Teil5-3/Aula.mp3', 'button201': './Audio/Teil5-3/Baum.mp3', 'button202': './Audio/Teil5-3/blau.mp3', 'button203': './Audio/Teil5-3/Haus.mp3', 'button204': './Audio/Teil5-3/kaufen.mp3', 'button205': './Audio/Teil5-3/Klaus.mp3', 'button206': './Audio/Teil5-3/Paul.mp3', 'button207': './Audio/Teil5-3/Paula.mp3', 'button208': './Audio/Teil5-4/Bäuer.mp3', 'button209': './Audio/Teil5-4/Bäume.mp3', 'button210': './Audio/Teil5-4/Eugen.mp3', 'button211': './Audio/Teil5-4/Eule.mp3', 'button212': './Audio/Teil5-4/Feuer.mp3', 'button213': './Audio/Teil5-4/Heu.mp3', 'button214': './Audio/Teil5-4/heute.mp3', 'button215': './Audio/Teil5-4/Leute.mp3', 'button216': './Audio/Teil5-4/Läufer.mp3', 'button217': './Audio/Teil5-4/neu.mp3', 'button218': './Audio/Teil5-4/Teufel.mp3', 'button219': './Audio/Teil6-1/Aachen.mp3', 'button220': './Audio/Teil6-1/acht.mp3', 'button221': './Audio/Teil6-1/auch.mp3', 'button222': './Audio/Teil6-1/Bach.mp3', 'button223': './Audio/Teil6-1/brauchen.mp3', 'button224': './Audio/Teil6-1/Buch.mp3', 'button225': './Audio/Teil6-1/Chance.mp3', 'button226': './Audio/Teil6-1/Chaos.mp3', 'button227': './Audio/Teil6-1/Charakter.mp3', 'button228': './Audio/Teil6-1/charmant.mp3', 'button229': './Audio/Teil6-1/Chef.mp3', 'button230': './Audio/Teil6-1/Chemie.mp3', 'button231': './Audio/Teil6-1/China.mp3', 'button232': './Audio/Teil6-1/Chinesisch.mp3', 'button233': './Audio/Teil6-1/Chor.mp3', 'button234': './Audio/Teil6-1/Christ.mp3', 'button235': './Audio/Teil6-1/dich.mp3', 'button236': './Audio/Teil6-1/dicht.mp3', 'button237': './Audio/Teil6-1/doch.mp3', 'button238': './Audio/Teil6-1/Fach.mp3', 'button239': './Audio/Teil6-1/fauchen.mp3', 'button240': './Audio/Teil6-1/feucht.mp3', 'button241': './Audio/Teil6-1/Friedrich.mp3', 'button242': './Audio/Teil6-1/gleich.mp3', 'button243': './Audio/Teil6-1/hoch.mp3', 'button244': './Audio/Teil6-1/ich.mp3', 'button245': './Audio/Teil6-1/Kirche.mp3', 'button246': './Audio/Teil6-1/kochen.mp3', 'button247': './Audio/Teil6-1/Krach.mp3', 'button248': './Audio/Teil6-1/lachen.mp3', 'button249': './Audio/Teil6-1/leicht.mp3', 'button250': './Audio/Teil6-1/Loch.mp3', 'button251': './Audio/Teil6-1/machen.mp3', 'button252': './Audio/Teil6-1/mich.mp3', 'button253': './Audio/Teil6-1/Milch.mp3', 'button254': './Audio/Teil6-1/Mittwoch.mp3', 'button255': './Audio/Teil6-1/möchten.mp3', 'button256': './Audio/Teil6-1/nach.mp3', 'button257': './Audio/Teil6-1/Nacht.mp3', 'button258': './Audio/Teil6-1/nicht.mp3', 'button259': './Audio/Teil6-1/noch.mp3', 'button260': './Audio/Teil6-1/Recht.mp3', 'button261': './Audio/Teil6-1/sich.mp3', 'button262': './Audio/Teil6-1/Tuch.mp3', 'button263': './Audio/Teil6-1/Woche.mp3', 'button264': './Audio/Teil6-1/Würstchen.mp3', 'button265': './Audio/Teil6-2/beleidigt.mp3', 'button266': './Audio/Teil6-2/beschäftigt.mp3', 'button267': './Audio/Teil6-2/billig.mp3', 'button268': './Audio/Teil6-2/billiger.mp3', 'button269': './Audio/Teil6-2/fleiβig.mp3', 'button270': './Audio/Teil6-2/fleiβige.mp3', 'button271': './Audio/Teil6-2/geistig.mp3', 'button272': './Audio/Teil6-2/mutig.mp3', 'button273': './Audio/Teil6-2/nötig.mp3', 'button274': './Audio/Teil6-2/richtig.mp3', 'button275': './Audio/Teil6-2/verdächtigt.mp3', 'button276': './Audio/Teil6-2/wenig.mp3', 'button277': './Audio/Teil6-2/wichtig.mp3', 'button278': './Audio/Teil6-2/wichtige.mp3', 'button279': './Audio/Teil6-3/Analyse.mp3', 'button280': './Audio/Teil6-3/Lyrik.mp3', 'button281': './Audio/Teil6-3/Psyche.mp3', 'button282': './Audio/Teil6-3/Symbol.mp3', 'button283': './Audio/Teil6-3/System.mp3', 'button284': './Audio/Teil6-3/Typ.mp3', 'button285': './Audio/Teil6-3/Typen.mp3', 'button286': './Audio/Teil6-3/Yacht.mp3', 'button287': './Audio/Teil6-3/Yard.mp3', 'button288': './Audio/Teil6-3/Yoga.mp3', 'button289': './Audio/Teil6-4/ja.mp3', 'button290': './Audio/Teil6-4/Januar.mp3', 'button291': './Audio/Teil6-4/Japan.mp3', 'button292': './Audio/Teil6-4/jeden.mp3', 'button293': './Audio/Teil6-4/Jena.mp3', 'button294': './Audio/Teil6-4/jäger.mp3', 'button295': './Audio/Teil6-5/Apfel.mp3', 'button296': './Audio/Teil6-5/dampfen.mp3', 'button297': './Audio/Teil6-5/Kopf.mp3', 'button298': './Audio/Teil6-5/Napf.mp3', 'button299': './Audio/Teil6-5/Opfer.mp3', 'button300': './Audio/Teil6-5/Pfad.mp3', 'button301': './Audio/Teil6-5/Pfanne.mp3', 'button302': './Audio/Teil6-5/Pfeffer.mp3', 'button303': './Audio/Teil6-5/pfeifen.mp3', 'button304': './Audio/Teil6-5/Pfeil.mp3', 'button305': './Audio/Teil6-5/Pflicht.mp3', 'button306': './Audio/Teil6-5/Topf.mp3', 'button307': './Audio/Teil6-6/Alphabet.mp3', 'button308': './Audio/Teil6-6/Atmosphäre.mp3', 'button309': './Audio/Teil6-6/Phase.mp3', 'button310': './Audio/Teil6-6/Photo.mp3', 'button311': './Audio/Teil6-6/Physik.mp3', 'button312': './Audio/Teil6-7/bequem.mp3', 'button313': './Audio/Teil6-7/Quadrat.mp3', 'button314': './Audio/Teil6-7/Qualität.mp3', 'button315': './Audio/Teil6-7/Quantität.mp3', 'button316': './Audio/Teil6-7/Quatsch.mp3', 'button317': './Audio/Teil6-7/quer.mp3', 'button318': './Audio/Teil7-1/Achse.mp3', 'button319': './Audio/Teil7-1/Erwachsen.mp3', 'button320': './Audio/Teil7-1/Experte.mp3', 'button321': './Audio/Teil7-1/Fax.mp3', 'button322': './Audio/Teil7-1/Fuchs.mp3', 'button323': './Audio/Teil7-1/Lexikon.mp3', 'button324': './Audio/Teil7-1/links.mp3', 'button325': './Audio/Teil7-1/Luxus.mp3', 'button326': './Audio/Teil7-1/Max.mp3', 'button327': './Audio/Teil7-1/Mexiko.mp3', 'button328': './Audio/Teil7-1/Ochse.mp3', 'button329': './Audio/Teil7-1/Oxford.mp3', 'button330': './Audio/Teil7-1/pieksen.mp3', 'button331': './Audio/Teil7-1/Praxis.mp3', 'button332': './Audio/Teil7-1/sechs.mp3', 'button333': './Audio/Teil7-1/Taxi.mp3', 'button334': './Audio/Teil7-1/Text.mp3', 'button335': './Audio/Teil7-1/wachsen.mp3', 'button336': './Audio/Teil7-1/wechsel.mp3', 'button337': './Audio/Teil7-1/Wuchs.mp3', 'button338': './Audio/Teil7-2/Dank.mp3', 'button339': './Audio/Teil7-2/danken.mp3', 'button340': './Audio/Teil7-2/denken.mp3', 'button341': './Audio/Teil7-2/Denker.mp3', 'button342': './Audio/Teil7-2/dunkel.mp3', 'button343': './Audio/Teil7-2/Enkel.mp3', 'button344': './Audio/Teil7-2/krank.mp3', 'button345': './Audio/Teil7-2/links.mp3', 'button346': './Audio/Teil7-2/Punkt.mp3', 'button347': './Audio/Teil7-2/schminken.mp3', 'button348': './Audio/Teil7-2/Tank.mp3', 'button349': './Audio/Teil7-2/tanken.mp3', 'button350': './Audio/Teil7-2/trinken.mp3', 'button351': './Audio/Teil7-3/Englisch.mp3', 'button352': './Audio/Teil7-3/Finger.mp3', 'button353': './Audio/Teil7-3/jung.mp3', 'button354': './Audio/Teil7-3/jünger.mp3', 'button355': './Audio/Teil7-3/lang.mp3', 'button356': './Audio/Teil7-3/Länge.mp3', 'button357': './Audio/Teil7-3/singen.mp3', 'button358': './Audio/Teil7-3/springen.mp3', 'button359': './Audio/Teil7-4/Achtung.mp3', 'button360': './Audio/Teil7-4/Endung.mp3', 'button361': './Audio/Teil7-4/Lösung.mp3', 'button362': './Audio/Teil7-4/Prüfung.mp3', 'button363': './Audio/Teil7-4/Quittung.mp3', 'button364': './Audio/Teil7-4/Sitzung.mp3', 'button365': './Audio/Teil7-4/Sprung.mp3', 'button366': './Audio/Teil7-4/Zeitung.mp3', 'button367': './Audio/Teil7-4/Übung.mp3', 'button368': './Audio/Teil7-5/Auktion.mp3', 'button369': './Audio/Teil7-5/Dekoration.mp3', 'button370': './Audio/Teil7-5/Delegation.mp3', 'button371': './Audio/Teil7-5/Konjugation.mp3', 'button372': './Audio/Teil7-5/Lektion.mp3', 'button373': './Audio/Teil7-5/Nation.mp3', 'button374': './Audio/Teil7-5/Opposition.mp3', 'button375': './Audio/Teil7-5/Produktion.mp3', 'button376': './Audio/Teil7-5/Promotion.mp3', 'button377': './Audio/Teil7-5/Sensation.mp3', 'button378': './Audio/Teil7-5/Station.mp3', 'button379': './Audio/Teil7-5/Tradition.mp3', 'button380': './Audio/Teil7-6/Diskussion.mp3', 'button381': './Audio/Teil7-6/Emission.mp3', 'button382': './Audio/Teil7-6/Immission.mp3', 'button383': './Audio/Teil7-6/Impression.mp3', 'button384': './Audio/Teil7-6/Kommission.mp3', 'button385': './Audio/Teil7-6/Konzession.mp3', 'button386': './Audio/Teil7-6/Passion.mp3', 'button387': './Audio/Teil7-6/Profession.mp3', 'button388': './Audio/Teil7-7/Diffusion.mp3', 'button389': './Audio/Teil7-7/Division.mp3', 'button390': './Audio/Teil7-7/Explosion.mp3', 'button391': './Audio/Teil7-7/Fusion.mp3', 'button392': './Audio/Teil7-7/Illusion.mp3', 'button393': './Audio/Teil7-7/Infusion.mp3', 'button394': './Audio/Teil7-7/Invasion.mp3', 'button395': './Audio/Teil7-7/Inversion.mp3', 'button396': './Audio/Teil7-7/Vision.mp3', 'button397': './Audio/Teil7-8/Analphabetismus.mp3', 'button398': './Audio/Teil7-8/Buddhismus.mp3', 'button399': './Audio/Teil7-8/Feudalismus.mp3', 'button400': './Audio/Teil7-8/Idealismus.mp3', 'button401': './Audio/Teil7-8/Kapitalismus.mp3', 'button402': './Audio/Teil7-8/Mechanismus.mp3', 'button403': './Audio/Teil7-8/Sozialismus.mp3' }
+
+
+    function playAudio(audioId, delay) { setTimeout(function () { document.getElementById("player").play(); }, delay); }
+
+
+    function read(id) {
+        stop_reading = true;
+        var path = word_to_speech_dic[id.toString()];
+        const audio = new Audio(path);
+        audio.play();
+        return audio;
+    };
+
+    var stop_reading = false;
+    var is_reading = false;
+    var current_index;
+
+    function recursive_reader(startpoint, endpoint) {
+        if (stop_reading) { 
+            try {
+                document.getElementById('button' + (startpoint-1).toString()).classList.remove('onreading');
+            } catch (TypeError) {}
+            return;
+        }
+        var path = word_to_speech_dic[('button' + startpoint).toString()];
+        const audio = new Audio(path);
+        audio.play();
+        document.getElementById('button' + startpoint.toString()).classList.add('onreading');
+        try {
+            document.getElementById('button' + (startpoint-1).toString()).classList.remove('onreading');
+        } catch (TypeError) {}
+        if (startpoint == endpoint) {
+            is_reading = false;
+            document.getElementById('button' + startpoint.toString()).classList.remove('onreading');
+            return;
+        } else {
+            audio.addEventListener('ended', function() {
+            setTimeout(() => {
+                recursive_reader(++startpoint, endpoint);
+            }, 500);
+        });
+        }
+        
+    }
+
+    function read_aloud(startpoint, endpoint) {
+        if (is_reading) { stop_reading = true; is_reading = false; return }
+        stop_reading = false;
+        is_reading = true;
+        recursive_reader(startpoint, endpoint);
+    }
+
+</script>

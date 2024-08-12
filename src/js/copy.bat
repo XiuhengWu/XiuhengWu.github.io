@@ -1,0 +1,1 @@
+copy D:\Programming\Nodejs\MDUI\dist\index.min.js D:\Programming\XiuhengWu.github.io\src\js /Y

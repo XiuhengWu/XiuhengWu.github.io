@@ -1,0 +1,307 @@
+/*
+@font-face {
+	font-family: "import-cascadia_code";  
+	src: url("https://vip.123pan.cn/1814216664/image/font/CascadiaCodePL.ttf") format("truetype");
+}
+*/
+
+* {
+	font-family: 'Cascadia Code', Arial, sans-serif;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html {
+	position: relative;
+	background-image: linear-gradient(to bottom left, #fbe3d7, #b3eaff);
+	min-height: 100%;
+	width: 100%;
+}
+
+body {
+	position: absolute;
+	top: 0;left: 0;bottom: 0;right: 0;
+}
+
+.go-home-link {
+	display: block;
+	text-align: center;
+}
+
+button,
+.dropdown-content a {
+	overflow: hidden;
+	cursor: pointer;
+	position: relative;
+}
+
+button span,
+.dropdown-content a span {
+	background-color: #fff;
+	border-radius: 50%;
+	pointer-events: none;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	animation: animate 1s ease-out infinite;
+}
+
+@keyframes animate {
+	from {
+		width: 0;
+		height: 0;
+		opacity: 0.5;
+	}
+
+	to {
+		width: 100vmin;
+		height: 100vmin;
+		opacity: 0;
+	}
+}
+
+dialog {
+	padding: 0;
+	z-index: 9;
+	margin: auto;
+	border: none;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+	width: 50%;
+	border-radius: 10px;
+}
+
+.content {
+	padding: 30px 12px;
+}
+
+.dialog_footer {
+	background: #d8e0e9;
+	overflow: hidden;
+	border-radius: 0 0 10px 10px;
+	padding-right: 20px;
+}
+
+.dialog_footer button {
+	border: none;
+	width: 50%;
+	background-color: #d8e0e9;
+	padding: 10px;
+	float: right;
+}
+
+.wave-group {
+	position: relative;
+}
+
+.wave-group .input {
+	font-size: 16px;
+	padding: 10px 10px 10px 5px;
+	display: block;
+	width: 80%;
+	border: none;
+	border-bottom: 1px solid #999;
+	background: transparent;
+}
+
+.wave-group .input:focus {
+	outline: none;
+}
+
+.wave-group .bar {
+	position: relative;
+	display: block;
+	width: calc(80% + 15px);
+}
+
+.wave-group .bar:before,
+.wave-group .bar:after {
+	content: '';
+	height: 2px;
+	width: 0;
+	bottom: 1px;
+	position: absolute;
+	background: #5264AE;
+	transition: 0.2s ease all;
+}
+
+.wave-group .bar:before {
+	left: 50%;
+}
+
+.wave-group .bar:after {
+	right: 50%;
+}
+
+.wave-group .input:focus~.bar:before,
+.wave-group .input:focus~.bar:after {
+	width: 50%;
+}
+
+#cardsets_area {
+	height: 65%;
+	margin-left: 10%;
+	margin-right: 10%;
+	border-radius: 15px;
+	padding: 30px;
+	background-color: rgba(255, 255, 255, 0.3);
+	overflow: auto;
+}
+
+.body-footer {
+	display: flex;
+	align-items: center;
+	justify-content: stretch;
+	margin: 3% 10%;
+	height: 6%;
+}
+
+.prompt {
+	height: 100%;
+	border-radius: 10px;
+	margin-right: 7px;
+	font-size: 15px;
+	color: red;
+	padding-left: 1ex;
+	padding-right: 1ex;
+	border: none;
+	display: flex;
+	align-items: center;
+	background-color: rgba(255, 255, 255, 0.3);
+	transition-duration: 0.5s;
+}
+
+.prompt.hide {
+	opacity: 0;
+	transition-duration: 0.5s;
+}
+
+#go {
+	height: 100%;
+	border-radius: 10px;
+    width: 100%;
+	margin-left: 7px;
+	font-size: 25px;
+	font-weight: bold;
+	font-style: italic;
+	border: none;
+	background-color: rgba(255, 255, 255, 0.3);
+}
+
+.new {
+	background-color: #fbe3d7;
+	padding: 10px;
+	font-size: 16px;
+	border: none;
+	border-radius: 5px;
+}
+
+.dropdown-content {
+    visibility: hidden;
+	opacity: 0;
+	border-radius: 5px;
+	position: absolute;
+	right: 0;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+	z-index: 1;
+	transition-duration: 0.5s;
+}
+
+.dropdown-content.show {
+    visibility: visible;
+	opacity: 1;
+	transform: translateY(5px);
+    transition-property: opacity, transform;
+	transition-duration: 0.4s;
+}
+
+.dropdown-content a {
+	color: black;
+	padding: 12px 16px;
+	text-decoration: none;
+	display: block;
+}
+
+.dropdown-content a:hover {
+	background-color: #f1f1f1;
+}
+
+.card_set {
+	padding: 20px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 5px;
+	box-shadow: 3px 5px 5px 0 rgba(0, 0, 0, 0.03);
+	background-color: #cce7f1;
+}
+
+.card_set > .header {
+    display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.card_set > .header > .radio-input {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.card_set > .header > .radio-input input {
+	appearance: none;
+	width: 1.5em;
+	height: 1.5em;
+	background-color: whitesmoke;
+    border: 1px solid whitesmoke;
+	border-radius: 50%;
+	cursor: pointer;
+    transition-duration: 0.2s;
+}
+
+.card_set > .header > .radio-input .circle {
+	position: relative;
+	top: 0.02em;
+	left: -1.1em;
+	width: 0.6em;
+	height: 0.6em;
+	background-color: #72929e;
+	scale: 0;
+    cursor: pointer;
+	border-radius: 10px;
+    transition-duration: 0.2s;
+}
+
+.card_set > .header > .radio-input input:checked {
+	border: 1px solid #72929e;
+    transition-duration: 0.2s;
+}
+
+.card_set > .header > .radio-input input:checked + .circle {
+	scale: 1;
+	transition-duration: 0.2s;
+}
+
+.card_set > .header > .display_name {
+	font-size: 2rex;
+	font-weight: bold;
+	color: black;
+}
+
+.card_set > .footer {
+	text-align: right;
+	margin-top: 10px;
+	margin-bottom: -18px;
+	margin-right: -18px;
+}
+
+.card_set > .footer > button {
+	border-radius: 2px;
+	width: 25%;
+	height: 20px;
+	font-size: 20px;
+	color: transparent;
+	background-color: transparent;
+	border: none;
+	background-size: contain;
+	background-repeat: no-repeat;
+	background-position: center;
+}

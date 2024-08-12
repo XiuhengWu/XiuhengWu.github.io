@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <!--Tags: tool html-page chinese-->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>曼巴数分解器</title>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            font-family: "Microsoft Yahei", "STHeiti", "STHeiti", Arial, Helvetica, sans-serif;
+        }
+        .top-app-bar {
+            width: 100%;
+            padding: 0.5rem;
+            text-align: center;
+            background-color: rgb(254, 214, 28);
+            font-weight: bold;
+            box-sizing: border-box;
+        }
+        .top-app-bar a {
+            color: #000;
+        }
+        .layout {
+            display: grid;
+            grid-template-rows: 3fr 7fr;
+            grid-template-columns: 100%;
+            justify-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+            background-color: rgb(254, 214, 28);
+            background: url(https://vip.123pan.cn/1814216664/image/mamba/background.webp) no-repeat;
+            background-size: cover;
+            background-position: 50%;
+            background-attachment: fixed;
+            box-shadow: inset 0px 0px 20px 20px rgb(254, 214, 28);
+        }
+        button {
+            border-radius: 5px;
+            border: none;
+            outline: none;
+            padding: 5px;
+            font-weight: bold;
+            background-color: #f0f0f0;
+            overflow: hidden;
+            cursor: pointer;
+            position: relative;
+        }
+        a {
+            color: rgb(255, 227, 105);
+        }
+        button, a {
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        .page-wrap {
+            grid-row: 2;
+            max-width: 70rem;
+            width: 100%;
+            background-color: rgba(127, 122, 113, 0.95);
+            color: #fff;
+            border-radius: 2rem 2rem 0 0;
+            box-sizing: border-box;
+            padding: 1.5rem;
+        }
+        
+        .page-wrap h1 {
+            text-align: center;
+            margin-top: 0;
+            font-size: 2.3rem;
+        }
+        @media screen and (min-width: 70rem) {
+            .page-wrap h1 {
+                font-size: 3rem;
+            }
+        }
+        
+        .page-wrap .controls {
+            display: flex;
+            height: 2.5rem;
+            flex-wrap: wrap;
+        }
+        .controls * {
+            border: none;
+            outline: none;
+        }
+        
+        .controls .input-container {
+            position: relative;
+            flex: 3 1 0;
+            margin-right: 10px;
+        }
+        .controls input {
+            position: absolute;
+            font-size: 1rem;
+            width: 100%;
+            top: 0;
+            bottom: 0;
+            border-bottom: 2px solid #ccc;
+            color: #fff;
+            padding: 5px 0;
+            background-color: transparent;
+        }
+        .controls input::-webkit-outer-spin-button,
+        .controls input::-webkit-inner-spin-button {
+            -webkit-appearance: none !important;
+            margin: 0;
+        }
+        .controls .label {
+            position: absolute;
+            bottom: 8px;
+            left: 0;
+            color: #ccc;
+            transition: all 0.3s ease;
+            pointer-events: none;
+        }
+        .controls input:focus ~ .label,
+        .controls input:valid ~ .label {
+            bottom: calc(2rem + 5px);
+            font-size: 16px;
+            color: rgb(255, 227, 105);
+        }
+        .controls .underline {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            height: 2px;
+            width: 100%;
+            background-color: rgb(255, 227, 105);
+            transform: scaleX(0);
+            transition: all 0.3s ease;
+        }
+        .controls input:focus ~ .underline,
+        .controls input:valid ~ .underline {
+            transform: scaleX(1);
+        }
+        
+        .controls button {
+            flex: 1 1 0;
+            font-size: 1rem;
+        }
+        
+        .equal {
+            font-size: 2rem;
+            text-align: center;
+            margin: 0;
+        }
+        
+        .warning {
+            background-color: rgb(212, 190, 88);
+            color: #fff;
+            margin: 0.7em 0;
+            border-radius: 5px;
+            padding: 5px;
+            display: none;
+        }
+        
+        .result {
+            --f-size: 2rem;
+            background-color: #aaa;
+            min-height: 10rem;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: var(--f-size);
+            letter-spacing: 0.1em;
+            text-align: center;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+        .result img {
+            height: 2em;
+            vertical-align: middle;
+            width: auto;
+        }
+        .result .info {
+            font-size: 1rem;
+        }
+        .result sup {
+            font-size: 0.5em;
+        }
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 0.1em;
+            font-size: 0.85em;
+        }
+        .frac > span {
+            display: block;
+            padding: 0.1em;
+        }
+        .frac .frac {
+            font-size: 0.9em
+        }
+        .frac .bottom {
+            border-top: 2px solid #fff;
+        }
+        .frac .symbol {
+            display: none;
+        }
+        .bracket {
+            --h: var(--f-size)
+            box-sizing: border-box;
+            display: inline-block;
+            vertical-align: middle;
+            width: calc(var(--h) / 6);
+            min-width: 8px;
+            height: var(--h);
+            border: 2px solid #fff;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+        .bracket.right {
+            border-left: none;
+            border-right: 2px solid #fff;
+            border-radius: 0 10px 10px 0;
+        }
+        .bracket.s1 { --h: var(--f-size) }
+        .bracket.s2 { --h: calc(1.5 * var(--f-size)) }
+        .bracket.s3 { --h: calc(2.25 * var(--f-size)) }
+        .bracket.s4 { --h: calc(2.5 * var(--f-size)) }
+        .bracket.s5 { --h: calc(3 * var(--f-size)) }
+        .bracket.s6 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s7 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s8 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s9 { --h: calc(3.2 * var(--f-size)) }
+        .bracket.s10 { --h: calc(3.2 * var(--f-size)) }
+        
+        .copy {
+            display: block;
+            width: 100%;
+            margin: 1.3rem 0;
+            font-size: 1.2rem;
+            height: 3rem;
+        }
+        
+        .about {
+            display: block;
+            text-align: center;
+        }
+
+        .overlay {
+            position: fixed;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background-color: rgba(0, 0, 0, 0.6);
+        }
+        .dialog {
+            width: 100%;
+            max-width: 70rem;
+            height: 90%;
+            max-height: 40rem;
+            overflow: auto;
+            background-color: #fff;
+            border-radius: 1rem;
+            padding: 1rem;
+        }
+        @media screen and (min-width: 70rem) {
+            .dialog {
+                padding: 2rem;
+            }
+        }
+
+        .dialog .close {
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3rem;
+            font-size: 1.2rem;
+        }
+        .dialog a {
+            color: rgb(199, 178, 82);
+        }
+        
+        .collapsible {
+            background-color: #777;
+            color: #fff;
+            cursor: pointer;
+            padding: 18px;
+            width: 100%;
+            border: none;
+            text-align: left;
+            outline: none;
+            font-size: 15px;
+        }
+        .active, .collapsible:hover {
+            background-color: #555;
+        }
+        .collapsible:after {
+            content: '\002B';
+            color: white;
+            font-weight: bold;
+            float: right;
+            margin-left: 5px;
+        }
+        .active:after {
+            content: "\2212";
+        }
+        .content {
+            padding: 0 18px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.2s ease-out;
+            background-color: #f1f1f1;
+        }
+        
+        button span{
+            background-color: rgba(239, 211, 83, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            position: absolute;
+            transform: translate(-50%, -50%);
+            animation: animate .7s ease-out infinite;
+        }
+        @keyframes animate {
+            from {
+                width: 0;
+                height: 0;
+                opacity: 0.5;
+            }
+            
+            to {
+                width: 100vmin;
+                height: 100vmin;
+                opacity: 0;
+            }
+        }
+    </style>
+    <script>
+        ['https://vip.123pan.cn/1814216664/image/mamba/calc-v2.js', 'https://vip.123pan.cn/1814216664/image/mamba/index-v1.2.min.js'].forEach(script_url => {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', script_url, false); // false makes the request synchronous
+            xhr.send(null);
+    
+            if (xhr.status === 200) {
+                const calc_js = document.createElement('script');
+                calc_js.type = 'text/javascript';
+                calc_js.innerHTML = xhr.responseText;
+                document.querySelector('head').appendChild(calc_js);
+            } else {
+                alert('Error fetching JS file:', xhr.statusText);
+            }
+        });
+    </script>
+    <!-- <script src="./calc.js"></script>
+    <script src="./math.min.js"></script>
+    <script src="./index.js"></script> -->
+    
+</head>
+<body>
+    <header class="top-app-bar"><a href="/index.html">返回主页 Xiuheng's Blog</a></header>
+    <div class="layout">
+        <div class="page-wrap">
+            <h1>孩子们，我回来了！并且，在每个数中 ...</h1>
+            <div class="controls">
+                <div class="input-container">
+                    <input id="num-input" type="number" id="input" required="">
+                    <label for="input" class="label">输入一个整数...</label>
+                    <div class="underline"></div>
+                </div>
+                
+                <button id="go">分解</button>
+            </div>
+            <h2 class="equal">=</h2>
+            <div class="warning">
+                孩子，过长的整数可不是件好事，它可能造成结果异常 ...
+            </div>
+            <div class="result">
+                <p class="info">初始化中，这将在几秒内完成 ...</p>
+            </div>
+            <i style="text-align: center;display: block;margin-top: 0.2rem;">（长度溢出时，上方内容块可以左右滑动）</i>
+            <button class="copy">复制曼巴表达式</button>
+            <a class="about" href="javascript:void(0)">这是什么原理？</a>
+        </div>
+    </div>
+    <div class="overlay">
+        <div class="dialog">
+            <h1>这是什么原理？</h1>
+            <h2 id='基础曼巴数'>基础曼巴数</h2>
+            <p><strong>由于耗时很长，这一步是在我自己的电脑上完成的</strong></p>
+            <p>我们有4个曼巴数种子，即 2, 4, 8, 24。</p>
+            <ol start='' >
+                <p><li>对这四个种子进行排列组合：定义重复次数 <em>repeat</em> 的初始值为0，并依次将 <em>repeat</em> 的值增加 1。例如，当 <em>repeat=4</em> 时，所有组合 <em>men<sub>3</sub> =(2, 2, 2, 2), (2, 2, 2, 4), (2, 2, 2, 8) ...</em>；当 <em>repeat=5</em> 时，所有组合 <em>men<sub>4</sub> =(2, 2, 2, 2, 2), (2, 2, 2, 2, 4), (2, 2, 2, 2, 8) ...</em>。最后记录全部这些组合。</li></p>
+                <p><li>对每个 <em>men<sub>n</sub></em>，都进行以下操作：在其每个组合的数字之间，添加运算符和括号。例如，对于 <em>men<sub>3</sub></em> 的第一个组合 (2, 2, 2, 2)，添加符号和括号后，将产生这些表达式：<em>group<sub>0</sub>_in_men<sub>3</sub> = (2+2-2*2), (2/2+2+2), (2-2)/(2+2) ...</em>。最后记录所有表达式。</li></p>
+                <p><li>对于 <em>group<sub>n</sub>_in_men<sub>n</sub></em> 的每一个表达式，都计算它的值并存储。若存在两个表达式的计算结果相同，取包含数字最少的的一个。例如，表达式 <em>24-8-2</em> 和表达式 <em>(24+24)/8+8</em> 的值都等于 14，但因前者只包含 3 个数字，所以存储前者。</li></p>
+            </ol>
+            <p>对于 <em>men<sub>3</sub></em>，以上操作需要约 8.0 x 10<sup>4</sup> 步，<em>men<sub>4</sub></em> 需要约 3.6 x 10<sup>6</sup> 步，<em>men<sub>5</sub></em> 则是约 1.7 x 10<sup>8</sup> 步。由于算力限制，我最高只对 <em>men<sub>5</sub></em> 进行了运算，并成功让我的笔记本 <del>浪费了 一个半小时赤石</del> 只用了一个半小时就为复活牢大做出了贡献。</p>
+            <h2 id='将任意有理数幻化成曼巴数'>将任意有理数幻化成曼巴数</h2>
+            <p><strong>这一步是在用户的浏览器中完成的</strong></p>
+            <p>这部分的代码来源于 <a href='https://github.com/itorr/homo'>恶臭数字论证器</a>，该项目基于 <b>MIT 协议</b>。</p>
+            <button class="collapsible">MIT 协议内容</button>
+            <div class="content">
+                <p style="white-space: pre-line;">
+                    MIT License
+
+                    Copyright (c) 2020 https://github.com/itorr/homo
+
+                    Permission is hereby granted, free of charge, to any person obtaining a copy
+                    of this software and associated documentation files (the "Software"), to deal
+                    in the Software without restriction, including without limitation the rights
+                    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+                    copies of the Software, and to permit persons to whom the Software is
+                    furnished to do so, subject to the following conditions:
+
+                    The above copyright notice and this permission notice shall be included in all
+                    copies or substantial portions of the Software.
+
+                    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+                    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+                    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+                    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+                    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+                    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+                    SOFTWARE.
+                </p>
+            </div>
+            <p>具体来说，对于任意有理数 <em>r</em></p>
+            <ul>
+                <p><li>若 <em>r</em> 为自然数。代码寻找最接近 但小于等于 <em>r</em> 的基础曼巴数 <em>mamba</em>。并确定系数 <em>k</em>，使得 <em>k * mamba &lt;= r</em> 且 <em>k / (mamba+1) &gt; r</em>。若系数 <em>k</em> 不等于 1，则根据前述规则，将 <em>k</em> 作为输入数 <em>r</em> 开始分解。接着，再将 <em>(r - k*mamba)</em> 作为输入数 <em>r</em> 分解。（这种步骤在计算机中叫做 <em>递归</em>）。似乎说的有些复杂，举个栗子：假如我们只有两个基础曼巴数 2 和 4，那么可以凑出 42 = 4 x 10 + 2 = 4 x ( 4x2+2 ) +2；</li></p>
+                <p><li>若 <em>r</em> 为负整数。只需要把 <em>|r|</em> 套用正数的规则计算，最后乘上 <em>(2-4 ) / 2</em> 即可。（因为  <em>(2-4 ) / 2 = -1</em>）；</li></p>
+                <p><li style="color: grey;">若 <em>r</em> 为小数（有限或循环小数）。先把小数化为分数，然后分别把分子和分母套用整数的规则计算。（但由于最终拟合成的曼巴表达式会很长，并且有时存在精度丢失问题，我把这个功能删了 😅）。</li></p>
+            </ul>
+            <button class="close">关闭</button>
+        </div>
+    </div>
+</body>
+</html>

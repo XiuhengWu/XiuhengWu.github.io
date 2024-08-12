@@ -1,0 +1,117 @@
+/*
+@font-face {
+	font-family: "import-cascadia_code";  
+	src: url("https://vip.123pan.cn/1814216664/image/font/CascadiaCodePL.ttf") format("truetype");
+}
+*/
+
+* {
+	font-family: 'Cascadia Code', Arial, sans-serif;
+	-webkit-tap-highlight-color: transparent;
+}
+
+html {
+	position: relative;
+	background-image: linear-gradient(to bottom left, #fbe3d7, #b3eaff);
+	height: 100%;
+}
+
+body {
+	position: absolute;
+	top: 0;left: 0;bottom: 0;right: 0;
+}
+
+button,
+.dropdown-content a {
+	overflow: hidden;
+	cursor: pointer;
+	position: relative;
+}
+
+button span,
+.dropdown-content a span {
+	background-color: #fff;
+	border-radius: 50%;
+	pointer-events: none;
+	position: absolute;
+	transform: translate(-50%, -50%);
+	animation: animate 1s ease-out infinite;
+}
+
+div:empty::before {
+    content: attr(data-placeholder);
+    color: grey;
+}
+
+@keyframes animate {
+	from {
+		width: 0;
+		height: 0;
+		opacity: 0.5;
+	}
+
+	to {
+		width: 100vmin;
+		height: 100vmin;
+		opacity: 0;
+	}
+}
+
+.editor {
+	display: grid;
+	grid-template-rows: 10% 90%;
+	height: 80%;
+	margin: 5% 10%;
+	background-color: #f9f9f9 ;
+	border-radius: 15px;
+}
+
+.editor-header{
+	padding: 10px;
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex: 1 1;
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	box-shadow: 0px 5px 10px -5px rgba(0, 0, 0, 0.3);
+}
+
+.set-name {
+	width: 60%;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	font-weight: bold;
+}
+
+.button-save {
+	border: none;
+	width: 35%;
+	height: 100%;
+	background-size: 20px;
+	background-repeat: no-repeat;
+	background-position: 10px;
+}
+
+.editor-content{
+	border: none;outline: none;
+	background-color: transparent;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	resize: none;
+	display: block;
+	overflow: auto;
+	padding: 2ex;
+	font-size: 15px;
+}
+
+.editor-content:focus{
+	outline: none;
+}
+
+.placeholder-text {
+	display: inline;
+	color: gray;
+	font-style: italic;
+}

@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="/src/css/article.css">
+    <script src="/src/js/article.min.js" async></script>
+    <title>TITLE-HERE</title>
+    <style>
+        /* Loading animation */
+        .show-box {
+            background-color: rgb(231, 224, 236);
+            color: rgb(28, 27, 31);
+        }
+        @media (prefers-color-scheme: dark) {
+            .show-box {
+                background-color: rgb(73, 69, 79);
+                color: rgb(230, 225, 229);
+            }
+        }
+        .show-box {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            left: 0;
+            width: 100vw;
+            z-index: 500;
+        }
+        .show-box.hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .loader {
+            position: relative;
+            width: 100px;
+        }
+        .loader::before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+        .circular {
+            animation: rotate 2s linear infinite;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: rgb(103, 80, 164);
+            animation: dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- loading animation -->
+    <div class="show-box">
+        <div class="loader">
+            <svg class="circular" viewBox="25 25 50 50">
+                <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="3" stroke-miterlimit="10"/>
+            </svg>
+        </div>
+        <h1>LOADING...</h1>
+        <i>This might take a few seconds...</i>
+    </div>
+    <script>
+        var loading_animation = setTimeout(() => {
+            document.querySelector('.show-box').style.display = 'flex';
+        }, 200);
+    </script>
+
+   <div class="app">
+        <!-- header -->
+
+        <div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
+        <header class="top-app-bar">
+            <mdui-button-icon icon="arrow_back" href="/index.html#repository"></mdui-button-icon>
+            <a class="title" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
+            <span>
+                <mdui-dropdown>
+                    <mdui-button-icon slot="trigger" icon="translate"></mdui-button-icon>
+                    <mdui-menu id="language-select" selects="single" value="auto" onclick="document.getElementById('language-select-left').value = this.value">
+                        <mdui-menu-item value="en">English</mdui-menu-item>
+                        <mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+                        <mdui-menu-item value="de">Deutsch</mdui-menu-item>
+                        <mdui-divider></mdui-divider>
+                        <mdui-menu-item value="auto" data-translatable>System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+                    </mdui-menu>
+                </mdui-dropdown>
+                <mdui-button-icon class="theme-button" icon="light_mode"></mdui-button-icon>
+                <mdui-button-icon id="open-reader" icon="menu_book"></mdui-button-icon>
+            </span>
+        </header>
+    
+        <header class="navigation-rail">
+            <span style="margin-top: 2rem;margin-bottom: auto">
+                <mdui-button class="material-icons" variant="text" href="/index.html#repository" style="color: rgb(var(--mdui-color-on-surface));">arrow_back</mdui-button>
+                <label data-translatable>Back // 返回 // Zurück</label>
+            </span>
+            
+            <mdui-dropdown slot="bottom" placement="right-end">
+                <mdui-button-icon slot="trigger" icon="translate" style="margin-bottom: 1rem;"></mdui-button-icon>
+                <mdui-menu id="language-select-left" selects="single" value="auto" onclick="document.getElementById('language-select').value = this.value">
+                    <mdui-menu-item value="en">English</mdui-menu-item>
+                    <mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+                    <mdui-menu-item value="de">Deutsch</mdui-menu-item>
+                    <mdui-divider></mdui-divider>
+                    <mdui-menu-item value="auto" data-translatable>System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dropdown>
+            <mdui-fab slot="bottom" class="theme-button" icon="light_mode" style="margin-bottom: 1rem;"></mdui-fab>
+        </header>
+    
+        <mdui-fab id="open-reader-fab" icon="menu_book">Reader</mdui-fab>
+    
+        <aside id="reader" class="toc-button navigation-drawer">
+            <mdui-button id="close-reader" icon="close" variant="text" full-width data-translatable>Close // 关闭 // Schließen</mdui-button>
+            <mdui-collapse>
+                <mdui-collapse-item value="item-1" class="toc-button">
+                    <mdui-list-item slot="header" icon="sort" end-icon="keyboard_arrow_down" data-translatable>
+                        Table of Contents // 目录 // Inhaltsverzeichnis
+                    </mdui-list-item>
+                    <div class="catalog"></div>
+                </mdui-collapse-item>
+                <mdui-collapse-item value="item-2">
+                    <mdui-list-item class="download-pdf" slot="header" icon="download" data-translatable>Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+                </mdui-collapse-item>
+                <mdui-collapse-item value="item-3">
+                    <mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem">
+                        <span data-translatable>Font Size // 文字大小 // Schrift&shy;größe</span>
+                        <mdui-icon slot="icon" name="format_size"></mdui-icon>
+                        <mdui-select slot="end-icon" id="font-size" value="1.15rem" style="width: 6rem;" onchange="document.getElementById('font-size-right').value = this.value">
+                            <mdui-menu-item value="0.85rem" style="line-height: 1rem;" data-translatable>Small // 小的 // Klein</mdui-menu-item>
+                            <mdui-menu-item value="1rem" style="line-height: 1rem;" data-translatable>Smaller // 较小的 // Kleiner</mdui-menu-item>
+                            <mdui-menu-item value="1.15rem" style="line-height: 1rem;" data-translatable>Medium // 中等的 // Mittel</mdui-menu-item>
+                            <mdui-menu-item value="1.3rem" style="line-height: 1rem;" data-translatable>Larger // 较大的 // Größer</mdui-menu-item>
+                            <mdui-menu-item value="1.45rem" style="line-height: 1rem;" data-translatable>Large // 大的 // Groß</mdui-menu-item>
+                        </mdui-select>
+                    </mdui-list-item>
+                </mdui-collapse-item>
+                <mdui-collapse-item value="item-4">
+                    <mdui-list-item slot="header">
+                        <span data-translatable>Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+                        <mdui-icon slot="icon" name="auto_fix_high"></mdui-icon>
+                        <mdui-switch id="animation-switch" slot="end-icon" checked onchange="document.getElementById('animation-switch-right').checked = this.checked;"></mdui-switch>
+                    </mdui-list-item>
+                </mdui-collapse-item>
+            </mdui-collapse>
+        </aside>
+    
+        
+        <!-- page content -->
+    
+        <div class="page-wrap">
+            <div class="post" style="background-image: url(./cover.webp);">
+                <div class="post-info">
+                    <div class="meta-tags"></div>
+                    <h1>TITLE-HERE</h1>
+                    <div class="meta-info">
+                        <div><i class="material-icons">calendar_month</i>&nbsp;<span data-translatable>Created:  // 创建于： // Erstellt: </span><time data-desc="creation" datetime="1970-1-1">1.1.1970</time></div>
+                        <div><i class="material-icons">sync</i>&nbsp;<span data-translatable>Modified:  // 修改于： // Geändert: </span><time data-desc="modification" datetime="1970.1.1">1.1.1970</time></div>
+                    </div>
+                </div>
+                <svg class="waves" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
+                    viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto">
+                    <defs>
+                        <path id="gentle-wave" d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" />
+                    </defs>
+                    <g class="parallax">
+                        <use xlink:href="#gentle-wave" x="48" y="0" fill="rgba(var(--mdui-color-inverse-on-surface),0.7)" />
+                        <use xlink:href="#gentle-wave" x="48" y="3" fill="rgba(var(--mdui-color-inverse-on-surface),0.5)" />
+                        <use xlink:href="#gentle-wave" x="48" y="5" fill="rgba(var(--mdui-color-inverse-on-surface),0.3)" />
+                        <use xlink:href="#gentle-wave" x="48" y="7" fill="rgb(var(--mdui-color-inverse-on-surface))" />
+                    </g>
+                </svg>
+            </div>
+        
+            <article class="article-wrap"></article>
+            
+            <div class="toc-right">
+                <mdui-collapse>
+                    <mdui-collapse-item value="item-1" class="toc-button">
+                        <mdui-list-item slot="header" icon="sort" end-icon="keyboard_arrow_down" data-translatable>
+                            Table of Contents // 目录 // Inhaltsverzeichnis
+                        </mdui-list-item>
+                        <div class="catalog"></div>
+                    </mdui-collapse-item>
+                    <mdui-collapse-item value="item-2">
+                        <mdui-list-item class="download-pdf" slot="header" icon="download" data-translatable>Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+                    </mdui-collapse-item>
+                    <mdui-collapse-item value="item-3">
+                        <mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem;color: rgb(var(--mdui-color-on-background));">
+                            <span data-translatable>Font Size // 文字大小 // Schrift&shy;größe</span>
+                            <mdui-icon slot="icon" name="format_size"></mdui-icon>
+                            <span slot="end-icon" style="width: 6rem;">
+                                <mdui-select id="font-size-right" value="1.15rem" onchange="document.getElementById('font-size').value = this.value">
+                                    <mdui-menu-item value="0.85rem" style="line-height: 1rem;" data-translatable>Small // 小的 // Klein</mdui-menu-item>
+                                    <mdui-menu-item value="1rem" style="line-height: 1rem;" data-translatable>Smaller // 较小的 // Kleiner</mdui-menu-item>
+                                    <mdui-menu-item value="1.15rem" style="line-height: 1rem;" data-translatable>Medium // 中等的 // Mittel</mdui-menu-item>
+                                    <mdui-menu-item value="1.3rem" style="line-height: 1rem;" data-translatable>Larger // 较大的 // Größer</mdui-menu-item>
+                                    <mdui-menu-item value="1.45rem" style="line-height: 1rem;" data-translatable>Large // 大的 // Groß</mdui-menu-item>
+                                </mdui-select>
+                            </span>
+                        </mdui-list-item>
+                    </mdui-collapse-item>
+                    <mdui-collapse-item value="item-4">
+                        <mdui-list-item slot="header">
+                            <span data-translatable>Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+                            <mdui-icon slot="icon" name="auto_fix_high"></mdui-icon>
+                            <mdui-switch id="animation-switch-right" slot="end-icon" checked onchange="document.getElementById('animation-switch').checked = this.checked;"></mdui-switch>
+                        </mdui-list-item>
+                    </mdui-collapse-item>
+                </mdui-collapse>
+            </div>
+        </div>
+    
+        <!-- elements out of the document -->
+    
+        <mdui-snackbar id="snackbar" closeable auto-close-delay="20000" style="background-color: rgb(var(--mdui-color-inverse-surface), 0.7); backdrop-filter: blur(20px);">
+            <span data-translatable>You clicked on an anchor link // 你点击了一个锚点链接 // Sie haben auf einen Ankerlink geklickt</span>
+            <mdui-button slot="action" variant="text" onclick="window.history.back(); document.getElementById('snackbar').open = false;" data-translatable>Back to the previous position // 返回上一个位置 // Zurück zur vorherigen Position</mdui-button>
+        </mdui-snackbar>
+   </div>
+</body>
+
+</html>

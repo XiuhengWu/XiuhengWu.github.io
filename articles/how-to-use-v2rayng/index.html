@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="/src/css/article.css" rel="stylesheet"/>
+<script async="" src="/src/js/article.min.js"></script>
+<title>详细介绍Windows端的免费翻墙方式——v2rayNG</title>
+<style>
+        /* Loading animation */
+        .show-box {
+            background-color: rgb(231, 224, 236);
+            color: rgb(28, 27, 31);
+        }
+        @media (prefers-color-scheme: dark) {
+            .show-box {
+                background-color: rgb(73, 69, 79);
+                color: rgb(230, 225, 229);
+            }
+        }
+        .show-box {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            left: 0;
+            width: 100vw;
+            z-index: 500;
+        }
+        .show-box.hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .loader {
+            position: relative;
+            width: 100px;
+        }
+        .loader::before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+        .circular {
+            animation: rotate 2s linear infinite;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: rgb(103, 80, 164);
+            animation: dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+        .post {
+            color: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+<!-- loading animation -->
+<div class="show-box">
+<div class="loader">
+<svg class="circular" viewbox="25 25 50 50">
+<circle class="path" cx="50" cy="50" fill="none" r="20" stroke-miterlimit="10" stroke-width="3"></circle>
+</svg>
+</div>
+<h1>LOADING...</h1>
+<i>This might take a few seconds...</i>
+</div>
+<script>
+        var loading_animation = setTimeout(() => {
+            document.querySelector('.show-box').style.display = 'flex';
+        }, 200);
+    </script>
+<div class="app">
+<!-- header -->
+<div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
+<header class="top-app-bar">
+<mdui-button-icon href="/index.html#repository" icon="arrow_back"></mdui-button-icon>
+<a class="title" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
+<span>
+<mdui-dropdown>
+<mdui-button-icon icon="translate" slot="trigger"></mdui-button-icon>
+<mdui-menu id="language-select" onclick="document.getElementById('language-select-left').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-button-icon class="theme-button" icon="light_mode"></mdui-button-icon>
+<mdui-button-icon icon="menu_book" id="open-reader"></mdui-button-icon>
+</span>
+</header>
+<header class="navigation-rail">
+<span style="margin-top: 2rem;margin-bottom: auto">
+<mdui-button class="material-icons" href="/index.html#repository" style="color: rgb(var(--mdui-color-on-surface));" variant="text">arrow_back</mdui-button>
+<label data-translatable="">Back // 返回 // Zurück</label>
+</span>
+<mdui-dropdown placement="right-end" slot="bottom">
+<mdui-button-icon icon="translate" slot="trigger" style="margin-bottom: 1rem;"></mdui-button-icon>
+<mdui-menu id="language-select-left" onclick="document.getElementById('language-select').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-fab class="theme-button" icon="light_mode" slot="bottom" style="margin-bottom: 1rem;"></mdui-fab>
+</header>
+<mdui-fab icon="menu_book" id="open-reader-fab">Reader</mdui-fab>
+<aside class="toc-button navigation-drawer" id="reader">
+<mdui-button data-translatable="" full-width="" icon="close" id="close-reader" variant="text">Close // 关闭 // Schließen</mdui-button>
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                        Table of Contents // 目录 // Inhaltsverzeichnis
+                    </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<mdui-select id="font-size" onchange="document.getElementById('font-size-right').value = this.value" slot="end-icon" style="width: 6rem;" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch" onchange="document.getElementById('animation-switch-right').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</aside>
+<!-- page content -->
+<div class="page-wrap">
+<div class="post" style="background-image: url(./cover.webp);">
+<div class="post-info">
+<div class="meta-tags"><span data-translatable>
+       Tutorial // 教程 // Tutorial
+      </span><span data-translatable>
+       Article // 文章 // Artikels
+      </span><span data-translatable>
+       Chinese // 中文 // Chinesisch
+      </span></div>
+<h1>详细介绍Windows端的免费翻墙方式——v2rayNG</h1>
+<div class="meta-info">
+<div><i class="material-icons">calendar_month</i> <span data-translatable="">Created:  // 创建于： // Erstellt: </span><time data-desc="creation" datetime="2023-10-15">15.10.2023</time></div>
+<div><i class="material-icons">sync</i> <span data-translatable="">Modified:  // 修改于： // Geändert: </span><time data-desc="modification" datetime="2023-10-15">15.10.2023</time></div>
+</div>
+</div>
+<svg class="waves" preserveaspectratio="none" shape-rendering="auto" viewbox="0 24 150 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" id="gentle-wave"></path>
+</defs>
+<g class="parallax">
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.7)" x="48" xlink:href="#gentle-wave" y="0"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.5)" x="48" xlink:href="#gentle-wave" y="3"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.3)" x="48" xlink:href="#gentle-wave" y="5"></use>
+<use fill="rgb(var(--mdui-color-inverse-on-surface))" x="48" xlink:href="#gentle-wave" y="7"></use>
+</g>
+</svg>
+</div>
+<article class="article-wrap">
+<h1 id="详细介绍windows端的免费翻墙方式v2rayng">详细介绍Windows端的免费翻墙方式——v2rayNG</h1>
+<h2 id="确保位于正确环境">0. 确保位于正确环境</h2>
+<ol type="1">
+<li>如果你在微信内部打开了该链接，请点击窗口标题栏的
+<strong>···</strong> 按钮，再点击 <strong>在浏览器打开</strong>
+以切换至系统默认浏览器。如果你未发现类似标识，请忽略此步。 <img alt="img" src="./assets/img12.png"/></li>
+</ol>
+<h2 id="基本使用">1. 基本使用</h2>
+<ol type="1">
+<li>你可以使用以下方式来下载软件的安装包：
+访问网址：https://www.123pan.com/s/ArpbVv-nu3xh.html，点击
+<strong>下载文件</strong> ，等待下载完成。（假如链接失效请通知作者）
+<img alt="img" src="./assets/img0.jpg"/></li>
+<li>安装下载的APK，<a href="./assets/servers.txt">前往此处</a>
+复制全部节点配置信息，然后打开桌面上的v2rayNG。 <img alt="img" src="./assets/img1.jpg"/></li>
+<li>点击v2rayNG上方控制栏 <strong>+</strong> 按钮，然后选择
+<strong>从剪贴板导入</strong>。<a href="https://xiuhengwu.github.io/how-to-use-v2rayng/servers.html">（剪贴板未被写入
+或 未导入任何服务器？）</a> <img alt="img" src="./assets/img2.jpg"/>
+<img alt="img" src="./assets/img3.jpg"/></li>
+<li>点击 <strong>⋮</strong> 按钮，选择
+<strong>测试全部配置真连接</strong> 。 <img alt="img" src="./assets/img4.jpg"/> <img alt="img" src="./assets/img5.jpg"/></li>
+<li>再次点击 <strong>⋮</strong> 按钮，选择
+<strong>按测试结果排序</strong> 。 <img alt="img" src="./assets/img6.jpg"/></li>
+<li>滚动到页面顶部，点击最上方的一栏。（-1表示暂时无法连接该服务器）（不一定是图示的一栏，以实际情况为准）
+<img alt="img" src="./assets/img7.jpg"/></li>
+<li>点击应用右下方的 <strong>V</strong> 按钮。（如果弹出类似
+“是否运行v2rayNG创建VPN连接” 的对话框，选择允许） <img alt="img" src="./assets/img8.jpg"/></li>
+<li>恭喜，现在自由互联网的大门才真正向你敞开！ <img alt="img" src="./assets/img9.jpg"/></li>
+</ol>
+<h2 id="其它设置">2. 其它设置</h2>
+<h3 id="断开连接后如何再次连接">2.1 断开连接后如何再次连接</h3>
+<ol type="1">
+<li>你可以直接再次点击应用右下角点击 <strong>V</strong>
+按钮，或者更加规范的做法是：重复 第一部分 步骤4-步骤7。</li>
+</ol>
+<h3 id="如何断开与服务器的连接">2.2 如何断开与服务器的连接</h3>
+<ol type="1">
+<li>打开v2rayNG软件，再次点击应用右下方的 <strong>V</strong>
+按钮，如果其变为灰色，则说明已经断开连接。 <img alt="img" src="./assets/img10.jpg"/></li>
+</ol>
+<h3 id="修复-连接后仍然不起作用的问题">2.3 修复
+连接后仍然不起作用的问题</h3>
+<ol type="1">
+<li>由于我们使用的都是免费节点，所以难免出现连接不稳定的现象，这时可能需要重新切换VPN服务器：打开v2rayNG，重复
+第一部分 步骤4-步骤7 ，来选择最当前最适合的服务器。 <img alt="img" src="./assets/img11.jpg"/></li>
+</ol>
+<h2 id="附录">3. 附录</h2>
+<ul>
+<li>v2rayN是开源软件，其仓库位于https://github.com/2dust/v2rayNG，目前我所提供的版本是截至2023.10.15的最新
+Android 正式版本，<a href="https://github.com/2dust/v2rayNG/releases">你可以参见此处</a>。</li>
+<li>目前我提供的免费节点都来源于互联网，你也可以<a href="https://www.google.com/search?q=v2ray免费节点&amp;newwindow=1&amp;sca_esv=573435106&amp;sxsrf=AM9HkKkiRQspuzMvNTAGT6xmQP7AnqBjoQ%3A1697284699528&amp;ei=W4IqZd_bH8Xn2roPsbad2AQ&amp;ved=0ahUKEwif9eOcvvWBAxXFs1YBHTFbB0sQ4dUDCBA&amp;uact=5&amp;oq=v2ray免费节点&amp;gs_lp=Egxnd3Mtd2l6LXNlcnAiEXYycmF55YWN6LS56IqC54K5MgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHMgQQABhHSIsJUIMHWIMHcAF4ApABAJgBAKABAKoBALgBA8gBAPgBAcICChAAGEcY1gQYsAPiAwQYACBBiAYBkAYK&amp;sclient=gws-wiz-serp">通过谷歌搜索获取更多免费节点</a>，但请注意并非每个来源于互联网的节点都免费、安全、可靠。</li>
+<li>免费的节点可能只在一段时间内可用，如果希望连接更加稳定快速，推荐一个付费的VPN客户端：<a href="https://www.expressvpn.com/">Express VPN</a>。</li>
+</ul>
+</article>
+<div class="toc-right">
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                            Table of Contents // 目录 // Inhaltsverzeichnis
+                        </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem;color: rgb(var(--mdui-color-on-background));">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<span slot="end-icon" style="width: 6rem;">
+<mdui-select id="font-size-right" onchange="document.getElementById('font-size').value = this.value" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</span>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch-right" onchange="document.getElementById('animation-switch').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</div>
+</div>
+<!-- elements out of the document -->
+<mdui-snackbar auto-close-delay="20000" closeable="" id="snackbar" style="background-color: rgb(var(--mdui-color-inverse-surface), 0.7); backdrop-filter: blur(20px);">
+<span data-translatable="">You clicked on an anchor link // 你点击了一个锚点链接 // Sie haben auf einen Ankerlink geklickt</span>
+<mdui-button data-translatable="" onclick="window.history.back(); document.getElementById('snackbar').open = false;" slot="action" variant="text">Back to the previous position // 返回上一个位置 // Zurück zur vorherigen Position</mdui-button>
+</mdui-snackbar>
+</div>
+</body>
+</html>
