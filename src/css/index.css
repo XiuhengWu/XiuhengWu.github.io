@@ -5,10 +5,10 @@ html {
     scroll-padding-top: 5rem;
 }
 *::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--mdui-color-secondary), 0.5);
     border-radius: 5px;
 }
 .app {

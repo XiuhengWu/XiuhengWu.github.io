@@ -9,14 +9,11 @@ html {
     scroll-behavior: smooth;
 }
 *::-webkit-scrollbar {
-    width: 5px;
+    width: 8px;
 }
 *::-webkit-scrollbar-thumb {
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(var(--mdui-color-secondary), 0.5);
     border-radius: 5px;
-}
-*::-webkit-scrollbar:hover {
-    width: 10px;
 }
 body {
     margin: 0;
