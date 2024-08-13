@@ -1,0 +1,10 @@
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+/.vscode/
+# /_articles/
+# /templates/
+# /build-my-site.py
+# /all-files-SHA.json
+# /push-to-main.bat
+# /push-to-dev.bat
