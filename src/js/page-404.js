@@ -5,7 +5,7 @@ const url_mapping_table = {
     '/html5-flashcard-sets': '/pages/html5-flashcard-sets/index.html',
     '/page/mamba': '/pages/mamba/index.html'
 };
-const mapped_url = url_mapping_table[location.pathname] || url_mapping_table[location.pathname + '/'] || url_mapping_table[location.pathname + '/index.html'];
+const mapped_url = url_mapping_table[location.pathname.replace(/index\.html$/, "").replace(/\/$/, "")];
 if (mapped_url) {
     location.replace(mapped_url);
 }
