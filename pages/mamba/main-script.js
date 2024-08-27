@@ -107,7 +107,8 @@ function findAllExponent(str) {
 
 function replaceBrackets(str, max_depths) {
     let current_depth = 0;
-    for (let i = 0; i < str.length; i++) {
+    let i = 0;
+    while (str[i]) {
         if (str[i] == "(") {
             str = str.slice(0, i) + `<div class="bracket s${max_depths-current_depth}"></div>` + str.slice(i + 1);
             current_depth++;
@@ -115,7 +116,8 @@ function replaceBrackets(str, max_depths) {
             current_depth--;
             str = str.slice(0, i) + `<div class="bracket right s${max_depths-current_depth}"></div>` + str.slice(i + 1);
         }
-    }
+        i++;
+    };
     return str;
 }
 
@@ -127,6 +129,7 @@ function render(source, result_elem) {
     let max_depths = getMaxDepths(source);
     for (let i = 0; i < 10; i++) {
         let fractions_obj = findAllFractions(source, i);
+        console.log(fractions_obj)
         var fractions = [];
         fractions_obj.forEach(fraction => {
             let numerator = source.slice(fraction.left_start, fraction.left_end);
@@ -136,7 +139,7 @@ function render(source, result_elem) {
         fractions.forEach(fraction => {
             let fraction_code = `<div class="frac"><span class="top">${fraction.numerator}</span><span class="symbol">/</span><span class="bottom">${fraction.denominator}</span></div>`;
             source = source.replace(fraction.numerator + '/' + fraction.denominator, fraction_code)
-        })
+        });
     }
     const exponents = findAllExponent(source);
     exponents.forEach(exponent => {
@@ -144,11 +147,11 @@ function render(source, result_elem) {
     })
     source = source.replaceAll("*", "×");
     source = replaceBrackets(source, max_depths);
-    source = source.replaceAll('α', '<img src="https://vip.123pan.cn/1814216664/image/mamba/kobe/kobe_a.webp">')
-        .replaceAll('β', '<img src="https://vip.123pan.cn/1814216664/image/mamba/kobe/kobe_b.webp">')
-        .replaceAll('γ', '<img src="https://vip.123pan.cn/1814216664/image/mamba/kobe/kobe_c.webp">')
-        .replaceAll('δ', '<img src="https://vip.123pan.cn/1814216664/image/mamba/kobe/kobe_d.webp">')
-        .replaceAll('ε', '<img src="https://vip.123pan.cn/1814216664/image/mamba/kobe/kobe_d.webp">');
+    source = source.replaceAll('α', '<img src="./kobe/kobe_a.webp">')
+        .replaceAll('β', '<img src="./kobe/kobe_b.webp">')
+        .replaceAll('γ', '<img src="./kobe/kobe_c.webp">')
+        .replaceAll('δ', '<img src="./kobe/kobe_d.webp">')
+        .replaceAll('ε', '<img src="./kobe/kobe_d.webp">');
     result_elem.style.setProperty('--f-size', `${clamp(max_depths*1, 2, 5)}rem`);
     return source;
 }
@@ -213,7 +216,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 simplified_expr = simplified_expr.replace(n, "(" + mamba(n).replaceAll('a', 'α').replaceAll('b', 'β').replaceAll('c', 'γ').replaceAll('d', 'δ').replaceAll('e', 'ε') + ")");
             })
         }
-        // console.log(simplified_expr.replaceAll('α', 2).replaceAll('β', 4).replaceAll('γ', 8).replaceAll('δ', 24).replaceAll('ε', 24).replaceAll('^', '**'))
+        console.log(simplified_expr.replaceAll('α', 2).replaceAll('β', 4).replaceAll('γ', 8).replaceAll('δ', 24).replaceAll('ε', 24).replaceAll('^', '**'))
         result_elem.innerHTML = render(simplified_expr, result_elem);
     });
 

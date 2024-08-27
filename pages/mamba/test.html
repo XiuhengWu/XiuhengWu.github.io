@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .result {
+            --f-size: 2rem;
+            background-color: #aaa;
+            min-height: 10rem;
+            padding: 1rem 2rem;
+            border-radius: 5px;
+            font-size: var(--f-size);
+            letter-spacing: 0.1em;
+            text-align: center;
+            overflow-x: auto;
+            white-space: nowrap;
+        }
+
+        .result img {
+            height: 2em;
+            vertical-align: middle;
+            width: auto;
+        }
+
+        .result .info {
+            font-size: 1rem;
+        }
+
+        .result sup {
+            font-size: 0.5em;
+        }
+
+        .frac {
+            display: inline-block;
+            vertical-align: middle;
+            text-align: center;
+            margin: 0 0.1em;
+            font-size: 0.85em;
+        }
+
+        .frac>span {
+            display: block;
+            padding: 0.1em;
+        }
+
+        .frac .frac {
+            font-size: 0.9em
+        }
+
+        .frac .bottom {
+            border-top: 2px solid #fff;
+        }
+
+        .frac .symbol {
+            display: none;
+        }
+
+        .bracket {
+            --h: var(--f-size) box-sizing: border-box;
+            display: inline-block;
+            vertical-align: middle;
+            width: calc(var(--h) / 6);
+            min-width: 8px;
+            height: var(--h);
+            border: 2px solid #fff;
+            border-right: none;
+            border-radius: 10px 0 0 10px;
+        }
+
+        .bracket.right {
+            border-left: none;
+            border-right: 2px solid #fff;
+            border-radius: 0 10px 10px 0;
+        }
+
+        .bracket.s1 {
+            --h: var(--f-size)
+        }
+
+        .bracket.s2 {
+            --h: calc(1.5 * var(--f-size))
+        }
+
+        .bracket.s3 {
+            --h: calc(2.25 * var(--f-size))
+        }
+
+        .bracket.s4 {
+            --h: calc(2.5 * var(--f-size))
+        }
+
+        .bracket.s5 {
+            --h: calc(3 * var(--f-size))
+        }
+
+        .bracket.s6 {
+            --h: calc(3.2 * var(--f-size))
+        }
+
+        .bracket.s7 {
+            --h: calc(3.2 * var(--f-size))
+        }
+
+        .bracket.s8 {
+            --h: calc(3.2 * var(--f-size))
+        }
+
+        .bracket.s9 {
+            --h: calc(3.2 * var(--f-size))
+        }
+
+        .bracket.s10 {
+            --h: calc(3.2 * var(--f-size))
+        }
+    </style>
+</head>
+
+<body>
+    <div class="result">
+        β×(<div class="frac"><span class="top">((<div class="frac"><span class="top">(β-α)<div class="frac"><span class="top"><</<div class="frac"><span class="top">span><span class="symbol"></span><span class="symbol">/</span><span class="bottom"><</<div class="frac"><span class="top">span><</span><span class="symbol">/</span><span class="bottom">div></span></div>/span><span class="bottom">span><span class="symbol"></span></div>/<div class="frac"><span class="top"><</span><span class="symbol">/</span><span class="bottom">span><span class="bottom">α<</span></div>/span></div>))</span><span class="symbol">/</<div class="frac"><span class="top">span><span class="bottom">α<</span><span class="symbol">/</span><span class="bottom">span><</span></div>/div>+((<div class="frac"><span class="top">(β-α)</span><span class="symbol">/</span><span class="bottom">α</span></div>)))-(((β-α)/α))
+    </div>
+    </body>
+
+</html>

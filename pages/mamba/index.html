@@ -30,7 +30,7 @@
             min-height: 100vh;
             box-sizing: border-box;
             background-color: rgb(254, 214, 28);
-            background: url(https://vip.123pan.cn/1814216664/image/mamba/background.webp) no-repeat;
+            background: url(./background.webp) no-repeat;
             background-size: cover;
             background-position: 50%;
             background-attachment: fixed;
@@ -332,25 +332,6 @@
             }
         }
     </style>
-    <script>
-        ['https://vip.123pan.cn/1814216664/image/mamba/calc-v2.js', 'https://vip.123pan.cn/1814216664/image/mamba/index-v1.2.min.js'].forEach(script_url => {
-            const xhr = new XMLHttpRequest();
-            xhr.open('GET', script_url, false); // false makes the request synchronous
-            xhr.send(null);
-    
-            if (xhr.status === 200) {
-                const calc_js = document.createElement('script');
-                calc_js.type = 'text/javascript';
-                calc_js.innerHTML = xhr.responseText;
-                document.querySelector('head').appendChild(calc_js);
-            } else {
-                alert('Error fetching JS file:', xhr.statusText);
-            }
-        });
-    </script>
-    <!-- <script src="./calc.js"></script>
-    <script src="./math.min.js"></script>
-    <script src="./index.js"></script> -->
     
 </head>
 <body>
@@ -430,4 +411,8 @@
         </div>
     </div>
 </body>
+<!-- <script src="./main-script.min.js"></script> -->
+<script src="./main-script.js"></script>
+<script src="./math.min.js"></script>
+<script src="./calc.js"></script>
 </html>
