@@ -78,7 +78,7 @@ function removeExtraParentheses(str) {
     return str;
 }
 
-function replaceBrackets(str, max_depths) {
+function replaceAllBrackets(str, max_depths) {
     let current_depth = 0;
     let i = 0;
     while (str[i]) {
@@ -103,7 +103,7 @@ function render(source, result_elem) {
     source = replaceAllFractions(source);
     source = replaceAllExponents(source);
     source = source.replaceAll("*", "×");
-    source = replaceBrackets(source, max_depths);
+    source = replaceAllBrackets(source, max_depths);
     source = source.replaceAll(/\b(a)\b/g, '<img src="./kobe/2.webp">')
         .replaceAll(/\b(b)\b/g, '<img src="./kobe/4.webp">')
         .replaceAll(/\b(c)\b/g, '<img src="./kobe/8.webp">')
@@ -115,12 +115,12 @@ function render(source, result_elem) {
 
 function copyExpressionToClickBoard(simplified_expr) {
     if (!navigator.clipboard) {
-        document.querySelector('button.copy').innerText = language_pack['clipboard_err_1'][current_lan];
+        document.querySelector('button.copy > .text-content').innerText = language_pack['clipboard_err_1'][current_lan];
     }
     if (simplified_expr) {
         navigator.clipboard.writeText(simplified_expr.replaceAll('a', 2).replaceAll('b', 4).replaceAll('c', 8).replaceAll('d', 24).replaceAll('e', 24).replaceAll('^', '**'))
-        .then(() => { document.querySelector('button.copy').innerText = language_pack['clipboard_success'][current_lan] })
-        .catch(err => { document.querySelector('button.copy').innerText = language_pack['clipboard_err_2'][current_lan] })
+        .then(() => { document.querySelector('button.copy > .text-content').innerText = language_pack['clipboard_success'][current_lan] })
+        .catch(err => { document.querySelector('button.copy > .text-content').innerText = language_pack['clipboard_err_2'][current_lan] })
     }
 }
 
@@ -129,7 +129,7 @@ var i18n;
 const language_pack = {
     'clipboard_err_1': {'zh': '孩子，你的浏览器不支持Clipboard API', 'de': 'Ihr Browser unterstützt die Clipboard-API nicht.'},
     'clipboard_err_2': {'zh': 'Man！无法访问剪贴板！', 'de': 'Zugriff auf die Clipboard nicht möglich!'},
-    'clipboard_success': {'zh': '已复制', 'de': 'kopiert'},
+    'clipboard_success': {'zh': '已复制', 'de': 'Kopiert'},
     'invalid_input_warn': {'zh': '请输入一个整数！', 'de': 'Bitte geben Sie eine ganze Zahl ein!'},
     'copy': {'zh': '复制曼巴表达式', 'de': 'Mamba-Ausdruck Kopieren'},
     'prepared': {'zh': '孩子，你可以开始输入了', 'de': 'Sie können jetzt ein Zahl eingeben'}
@@ -147,10 +147,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     var result_elem = document.querySelector('.result');
 
     document.querySelectorAll("button").forEach((elem) => {
-        elem.addEventListener("click", (e) => {
+        elem.addEventListener("mousedown", (e) => {
             let x = e.offsetX;
             let y = e.offsetY;
             let ripples = document.createElement("span");
+            ripples.className = 'ripples';
             ripples.style.left = x + "px";
             ripples.style.top = y + "px";
             elem.appendChild(ripples);
@@ -194,7 +195,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
             copyExpressionToClickBoard(simplified_expr);
         } catch { alert('Unknown Error!'); }
         setTimeout(() => {
-            this.innerHTML = language_pack['copy'][current_lan];
+            this.querySelector('.text-content').innerText = language_pack['copy'][current_lan];
         }, 1500);
     });
 
