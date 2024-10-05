@@ -107,7 +107,7 @@
 <div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
 <header class="top-app-bar">
 <mdui-button-icon onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`" icon="arrow_back"></mdui-button-icon>
-<a class="title" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
+<a class="title" style="text-decoration: none ; color: inherit;" onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`">Xiuheng's Blog</a>
 <span>
 <mdui-dropdown>
 <mdui-button-icon icon="translate" slot="trigger"></mdui-button-icon>
