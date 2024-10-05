@@ -1,0 +1,524 @@
+@import url('https://fonts.font.im/css2?family=ZCOOL+XiaoWei&display=swap');
+
+:root {
+	--body-font: 'Arial', 'Helvetica', sans-serif;
+	--caption-font: 'Russo One', 'ZCOOL XiaoWei', sans-serif;
+	--title-font: 'Exo', '幼圆', "Noto Sans SC", sans-serif;
+
+	--text-white-monochrome: 222, 222, 222;
+	--bright-accent: 255, 185, 97;
+	--medium-accent: 86, 23, 23;
+
+    --fade-in-delay: 0.1s;
+}
+
+html:root {
+	--mdui-color-primary-light: 117, 91, 0;
+    --mdui-color-on-primary-light: 255, 255, 255;
+    --mdui-color-primary-container-light: 255, 223, 145;
+    --mdui-color-on-primary-container-light: 36, 26, 0;
+    --mdui-color-secondary-light: 106, 93, 63;
+    --mdui-color-on-secondary-light: 255, 255, 255;
+    --mdui-color-secondary-container-light: 242, 225, 187;
+    --mdui-color-on-secondary-container-light: 35, 27, 4;
+    --mdui-color-tertiary-light: 72, 102, 73;
+    --mdui-color-on-tertiary-light: 255, 255, 255;
+    --mdui-color-tertiary-container-light: 201, 236, 200;
+    --mdui-color-on-tertiary-container-light: 4, 33, 11;
+    --mdui-color-error-light: 186, 26, 26;
+    --mdui-color-on-error-light: 255, 255, 255;
+    --mdui-color-error-container-light: 255, 218, 214;
+    --mdui-color-on-error-container-light: 65, 0, 2;
+    --mdui-color-background-light: 255, 251, 255;
+    --mdui-color-on-background-light: 30, 27, 22;
+    --mdui-color-surface-light: 232, 209, 146;
+    --mdui-color-on-surface-light: 30, 27, 22;
+    --mdui-color-surface-variant-light: 199, 177, 141;
+    --mdui-color-on-surface-variant-light: 76, 70, 57;
+    --mdui-color-outline-light: 126, 118, 103;
+    --mdui-color-outline-variant-light: 207, 197, 180;
+    --mdui-color-shadow-light: 0, 0, 0;
+    --mdui-color-scrim-light: 0, 0, 0;
+    --mdui-color-inverse-surface-light: 51, 48, 42;
+    --mdui-color-inverse-on-surface-light: 247, 240, 231;
+    --mdui-color-inverse-primary-light: 236, 193, 72;
+    --mdui-color-surface-dim-light: 224, 217, 208;
+    --mdui-color-surface-bright-light: 255, 248, 241;
+    --mdui-color-surface-container-lowest-light: 255, 255, 255;
+    --mdui-color-surface-container-low-light: 250, 243, 233;
+    --mdui-color-surface-container-light: 220, 201, 176;
+    --mdui-color-surface-container-high-light: 238, 231, 222;
+    --mdui-color-surface-container-highest-light: 232, 225, 217;
+    --mdui-color-surface-tint-color-light: 117, 91, 0;
+    --mdui-color-primary-dark: 236, 193, 72;
+    --mdui-color-on-primary-dark: 61, 46, 0;
+    --mdui-color-primary-container-dark: 89, 68, 0;
+    --mdui-color-on-primary-container-dark: 255, 223, 145;
+    --mdui-color-secondary-dark: 214, 197, 160;
+    --mdui-color-on-secondary-dark: 57, 47, 21;
+    --mdui-color-secondary-container-dark: 81, 70, 42;
+    --mdui-color-on-secondary-container-dark: 242, 225, 187;
+    --mdui-color-tertiary-dark: 174, 207, 173;
+    --mdui-color-on-tertiary-dark: 26, 54, 30;
+    --mdui-color-tertiary-container-dark: 48, 77, 51;
+    --mdui-color-on-tertiary-container-dark: 201, 236, 200;
+    --mdui-color-error-dark: 255, 180, 171;
+    --mdui-color-on-error-dark: 105, 0, 5;
+    --mdui-color-error-container-dark: 147, 0, 10;
+    --mdui-color-on-error-container-dark: 255, 180, 171;
+    --mdui-color-background-dark: 30, 27, 22;
+    --mdui-color-on-background-dark: 232, 225, 217;
+    --mdui-color-surface-dark: 30, 27, 22;
+    --mdui-color-on-surface-dark: 232, 225, 217;
+    --mdui-color-surface-variant-dark: 76, 70, 57;
+    --mdui-color-on-surface-variant-dark: 207, 197, 180;
+    --mdui-color-outline-dark: 152, 144, 128;
+    --mdui-color-outline-variant-dark: 76, 70, 57;
+    --mdui-color-shadow-dark: 0, 0, 0;
+    --mdui-color-scrim-dark: 0, 0, 0;
+    --mdui-color-inverse-surface-dark: 232, 225, 217;
+    --mdui-color-inverse-on-surface-dark: 51, 48, 42;
+    --mdui-color-inverse-primary-dark: 117, 91, 0;
+    --mdui-color-surface-dim-dark: 21, 19, 14;
+    --mdui-color-surface-bright-dark: 60, 57, 51;
+    --mdui-color-surface-container-lowest-dark: 16, 14, 9;
+    --mdui-color-surface-container-low-dark: 30, 27, 22;
+    --mdui-color-surface-container-dark: 34, 31, 26;
+    --mdui-color-surface-container-high-dark: 45, 42, 36;
+    --mdui-color-surface-container-highest-dark: 56, 52, 46;
+    --mdui-color-surface-tint-color-dark: 236, 193, 72;
+    --mdui-color-primary: var(--mdui-color-primary-light);
+    --mdui-color-on-primary: var(--mdui-color-on-primary-light);
+    --mdui-color-primary-container: var(--mdui-color-primary-container-light);
+    --mdui-color-on-primary-container: var(--mdui-color-on-primary-container-light);
+    --mdui-color-secondary: var(--mdui-color-secondary-light);
+    --mdui-color-on-secondary: var(--mdui-color-on-secondary-light);
+    --mdui-color-secondary-container: var(--mdui-color-secondary-container-light);
+    --mdui-color-on-secondary-container: var(--mdui-color-on-secondary-container-light);
+    --mdui-color-tertiary: var(--mdui-color-tertiary-light);
+    --mdui-color-on-tertiary: var(--mdui-color-on-tertiary-light);
+    --mdui-color-tertiary-container: var(--mdui-color-tertiary-container-light);
+    --mdui-color-on-tertiary-container: var(--mdui-color-on-tertiary-container-light);
+    --mdui-color-error: var(--mdui-color-error-light);
+    --mdui-color-on-error: var(--mdui-color-on-error-light);
+    --mdui-color-error-container: var(--mdui-color-error-container-light);
+    --mdui-color-on-error-container: var(--mdui-color-on-error-container-light);
+    --mdui-color-background: var(--mdui-color-background-light);
+    --mdui-color-on-background: var(--mdui-color-on-background-light);
+    --mdui-color-surface: var(--mdui-color-surface-light);
+    --mdui-color-on-surface: var(--mdui-color-on-surface-light);
+    --mdui-color-surface-variant: var(--mdui-color-surface-variant-light);
+    --mdui-color-on-surface-variant: var(--mdui-color-on-surface-variant-light);
+    --mdui-color-outline: var(--mdui-color-outline-light);
+    --mdui-color-outline-variant: var(--mdui-color-outline-variant-light);
+    --mdui-color-shadow: var(--mdui-color-shadow-light);
+    --mdui-color-scrim: var(--mdui-color-scrim-light);
+    --mdui-color-inverse-surface: var(--mdui-color-inverse-surface-light);
+    --mdui-color-inverse-on-surface: var(--mdui-color-inverse-on-surface-light);
+    --mdui-color-inverse-primary: var(--mdui-color-inverse-primary-light);
+    --mdui-color-surface-dim: var(--mdui-color-surface-dim-light);
+    --mdui-color-surface-bright: var(--mdui-color-surface-bright-light);
+    --mdui-color-surface-container-lowest: var(--mdui-color-surface-container-lowest-light);
+    --mdui-color-surface-container-low: var(--mdui-color-surface-container-low-light);
+    --mdui-color-surface-container: var(--mdui-color-surface-container-light);
+    --mdui-color-surface-container-high: var(--mdui-color-surface-container-high-light);
+    --mdui-color-surface-container-highest: var(--mdui-color-surface-container-highest-light);
+    --mdui-color-surface-tint-color: var(--mdui-color-surface-tint-color-light);
+    color: rgb(var(--mdui-color-on-background));
+    background-color: rgb(var(--mdui-color-background));
+}
+
+html.mdui-theme-dark:root {
+	--mdui-color-primary: var(--mdui-color-primary-dark);
+    --mdui-color-on-primary: var(--mdui-color-on-primary-dark);
+    --mdui-color-primary-container: var(--mdui-color-primary-container-dark);
+    --mdui-color-on-primary-container: var(--mdui-color-on-primary-container-dark);
+    --mdui-color-secondary: var(--mdui-color-secondary-dark);
+    --mdui-color-on-secondary: var(--mdui-color-on-secondary-dark);
+    --mdui-color-secondary-container: var(--mdui-color-secondary-container-dark);
+    --mdui-color-on-secondary-container: var(--mdui-color-on-secondary-container-dark);
+    --mdui-color-tertiary: var(--mdui-color-tertiary-dark);
+    --mdui-color-on-tertiary: var(--mdui-color-on-tertiary-dark);
+    --mdui-color-tertiary-container: var(--mdui-color-tertiary-container-dark);
+    --mdui-color-on-tertiary-container: var(--mdui-color-on-tertiary-container-dark);
+    --mdui-color-error: var(--mdui-color-error-dark);
+    --mdui-color-on-error: var(--mdui-color-on-error-dark);
+    --mdui-color-error-container: var(--mdui-color-error-container-dark);
+    --mdui-color-on-error-container: var(--mdui-color-on-error-container-dark);
+    --mdui-color-background: var(--mdui-color-background-dark);
+    --mdui-color-on-background: var(--mdui-color-on-background-dark);
+    --mdui-color-surface: var(--mdui-color-surface-dark);
+    --mdui-color-on-surface: var(--mdui-color-on-surface-dark);
+    --mdui-color-surface-variant: var(--mdui-color-surface-variant-dark);
+    --mdui-color-on-surface-variant: var(--mdui-color-on-surface-variant-dark);
+    --mdui-color-outline: var(--mdui-color-outline-dark);
+    --mdui-color-outline-variant: var(--mdui-color-outline-variant-dark);
+    --mdui-color-shadow: var(--mdui-color-shadow-dark);
+    --mdui-color-scrim: var(--mdui-color-scrim-dark);
+    --mdui-color-inverse-surface: var(--mdui-color-inverse-surface-dark);
+    --mdui-color-inverse-on-surface: var(--mdui-color-inverse-on-surface-dark);
+    --mdui-color-inverse-primary: var(--mdui-color-inverse-primary-dark);
+    --mdui-color-surface-dim: var(--mdui-color-surface-dim-dark);
+    --mdui-color-surface-bright: var(--mdui-color-surface-bright-dark);
+    --mdui-color-surface-container-lowest: var(--mdui-color-surface-container-lowest-dark);
+    --mdui-color-surface-container-low: var(--mdui-color-surface-container-low-dark);
+    --mdui-color-surface-container: var(--mdui-color-surface-container-dark);
+    --mdui-color-surface-container-high: var(--mdui-color-surface-container-high-dark);
+    --mdui-color-surface-container-highest: var(--mdui-color-surface-container-highest-dark);
+    --mdui-color-surface-tint-color: var(--mdui-color-surface-tint-color-dark);
+}
+
+.article-wrap img {
+    border-radius: unset;
+}
+
+.borderblock {
+    background-color: rgb(90, 20, 20);
+    color: rgb(255, 255, 255);
+    padding: 0.01rem 1rem;
+    margin: 0.5rem 0 0.5rem 0.25rem;
+    box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
+    border: solid 0.3rem rgb(255, 185, 97);
+}
+
+body.red-phenomenon {
+	background: unset;
+	background: url('./assets/red-phenomenon-background.webp') center/90%;
+	color: red;
+	--text-white-monochrome: red;
+	--bright-accent: red;
+	--medium-accent: opacity;
+}
+body.red-phenomenon .navigation-rail,
+body.red-phenomenon .post,
+body.red-phenomenon .top-app-bar,
+body.red-phenomenon .toc-right,
+body.red-phenomenon .waves {
+	display: none;
+}
+body.red-phenomenon .page-wrap {
+	display: block;
+	margin: 0;
+}
+body.red-phenomenon .article-wrap {
+	border-radius: unset;
+}
+
+.help {
+	background: grey;
+	font-size: 20px;
+	font-weight: bold;
+}
+
+.top-box {
+	background-color: rgb(245, 156, 0);
+	background-image: linear-gradient(to right, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 40%);
+	color: rgba(var(--text-white-monochrome));
+	font-family: var(--body-font);
+	margin-top: 2rem;
+	border-left: 4.6px solid rgb(72, 69, 60);
+	border-right: 4.6px solid rgb(72, 69, 60);
+	border-top: 10px solid rgb(72, 69, 60);
+	border-bottom: 10px solid rgb(72, 69, 60);
+	position: relative;
+	z-index: 1;
+}
+.top-box::after {
+	content: "";
+	background-image: url('./assets/tiles.webp');
+	opacity: 0.15;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.image-block {
+	float: right;
+	clear: right;
+	width: 200px;
+	margin: 0 0 0.5em 1em;
+}
+.image-block.left {
+	float: left;
+	clear: left;
+	width: 200px;
+	margin: 0 1em 0.5em 0;
+}
+.image-block img {
+	width: 100%;
+	height: auto;
+	margin: 0;
+}
+.image-block .caption {
+	background-color: rgb(var(--bright-accent));
+	padding: 5px;
+	margin-top: -0.2rem;
+	box-shadow: inset -0.125rem 0 0 0 rgb(31, 28, 20, 0.16), inset 0 -0.125rem 0 0 rgb(31, 28, 20, 0.16), inset 0.125rem 0 0 0 rgb(31, 28, 20, 0.16);
+}
+.image-block .caption p {
+	font-family: var(--caption-font);
+	color: black;
+	margin: 0;
+	font-size: small;
+}
+
+.modal {
+	display: none;
+	position: fixed;
+	z-index: 100;
+	padding-top: 100px;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	overflow: auto;
+	background-color: rgb(0, 0, 0);
+}
+.modal-content {
+	margin: auto;
+	display: block;
+	width: 95%;
+	max-width: 700px;
+}
+#caption {
+	margin: auto;
+	display: block;
+	width: 80%;
+	max-width: 700px;
+	text-align: center;
+	color: #ccc;
+	padding: 10px 0;
+	height: 150px;
+	font-family: var(--caption-font);
+}
+.modal-content,
+#caption {
+	-webkit-animation-name: zoom;
+	-webkit-animation-duration: 0.6s;
+	animation-name: zoom;
+	animation-duration: 0.6s;
+}
+@-webkit-keyframes zoom {
+	from {
+		-webkit-transform: scale(0)
+	}
+	to {
+		-webkit-transform: scale(1)
+	}
+}
+@keyframes zoom {
+	from {
+		transform: scale(0)
+	}
+	to {
+		transform: scale(1)
+	}
+}
+.close {
+	position: absolute;
+	top: 15px;
+	right: 35px;
+	color: #f1f1f1;
+	font-size: 40px;
+	font-weight: bold;
+	transition: 0.3s;
+}
+
+h1,
+h2,
+h3,
+h4 {
+	font-family: var(--title-font);
+}
+
+.audio-block {
+	padding: 10px;
+	border: 2px solid rgb(var(--medium-accent));
+	background-color: rgb(var(--bright-accent), 0.3);
+	text-align: center;
+}
+
+.audio-block p {
+	font-weight: bold;
+	font-family: var(--caption-font);
+	font-size: larger;
+	margin: 5px;
+}
+
+code {
+	background-color: #d3d3d3;
+	color: #000;
+	border-radius: 0.5em;
+	font-family: 'SimSun', 'STSong', 'STFangsong', serif;
+	padding: 0 1em;
+}
+
+.difficulty-ranking {
+	color: rgba(var(--mdui-color-on-background), 0.8);
+	font-size: 25px;
+	margin: 0 1em;
+}
+
+.quote-block {
+	background-color: rgb(239, 219, 166);
+	color: #000;
+	padding: 0.5rem;
+	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.5);
+	border: solid rgb(206, 187, 135) 2px;
+}
+.quote-mark-left,
+.quote-mark-right {
+	display: table-cell;
+	font-size: 3em;
+	font-family: Times, serif;
+	font-weight: bold;
+	color: rgb(137, 112, 42);
+}
+.quote-mark-right {
+	vertical-align: bottom;
+}
+.quote-content {
+	display: table-cell;
+	padding: 1em;
+	vertical-align: middle;
+}
+.quote-source {
+	display: table-caption;
+	caption-side: bottom;
+	text-align: right;
+}
+
+.tab-panel .tab {
+	color: #000;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	padding: 1px;
+}
+.tab-panel .tab button {
+	flex: 1 1 auto;
+	text-align: center;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	box-sizing: border-box;
+	background-color: rgb(var(--bright-accent));
+	border: 2px solid rgb(var(--medium-accent));
+	float: left;
+	margin: -1px;
+	cursor: pointer;
+	padding: 7px 16px;
+	transition: background-color 0.3s, color 0.7s;
+}
+.tab-panel .tab .links.active {
+	background-color: rgb(var(--medium-accent));
+	color: rgb(var(--bright-accent));
+}
+.tab-panel .content {
+	display: none;
+	padding: 10px 12px 6px;
+	border: 2px solid rgb(var(--medium-accent));
+	border-top: 4px solid rgb(var(--medium-accent));
+	background-color: rgb(var(--bright-accent), 0.3);
+}
+.tab-panel.food .content {
+	text-shadow: 0 0 10px rgb(60, 122, 24);
+}
+.tab-panel >:nth-child(2) {
+	display: block;
+}
+
+.styled-quote {
+	background-color: rgb(var(--bright-accent));
+	border-left: 0.5rem solid rgba(var(--medium-accent));
+	padding: 0.1rem 1rem;
+	margin: 0.5rem 0 0.5rem 0.25rem;
+	box-shadow: 0.05rem 0.1rem 0.3rem rgba(0, 0, 0, 0.25);
+}
+
+.lightblock {
+	background-color: rgb(215, 207, 137);
+	color: #000;
+	padding: 0.01rem 1rem;
+	margin: 1rem 0;
+	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
+}
+
+#human-hydrant {
+	padding: 0.01rem 1rem;
+	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
+	color: rgb(var(--bright-accent));
+	margin: 0.5rem 0 0.5rem 0.25rem;
+	display: block;
+	position: relative;
+	background-color: grey;
+	border: solid 0.3rem rgb(var(--bright-accent));
+	font-weight: bold;
+	z-index: 1;
+}
+
+#human-hydrant::after {
+	content: "";
+	float: center;
+	border: solid 2px #0000;
+	background: url('./assets/human-hydrant.webp') center no-repeat;
+	background-size: auto 95%;
+	opacity: 0.9;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: -1;
+}
+
+.logoblock {
+	padding: 0.01rem 1rem;
+	color: rgb(255, 255, 255);
+	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.25);
+	margin: 0.5rem 0 0.5rem 0.25rem;
+	display: block;
+	position: relative;
+	background-color: rgb(var(--medium-accent));
+}
+
+.logoblock::after {
+	content: "";
+	float: center;
+	border: solid 2px #0000;
+	background: var(--logo-image) center / 70% no-repeat;
+	opacity: 0.4;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	position: absolute;
+	z-index: 1;
+}
+
+.titleblock {
+	background-color: rgb(var(--medium-accent));
+	color: rgb(var(--text-white-monochrome));
+	padding: 0.5rem 1rem 0.10rem;
+	margin: 1.5rem 0 0.5rem;
+	box-shadow: 0 0.2rem 0.3rem rgba(0, 0, 0, 0.5);
+	border: solid rgb(var(--bright-accent)) 2px;
+}
+
+.titlebox {
+	color: black;
+	position: relative;
+	top: -1.6rem;
+	background-color: rgb(var(--bright-accent));
+	padding: 0.25rem 1rem;
+	line-height: 0.1rem;
+}
+.newsbox {
+	padding: 1px 1rem;
+	margin: 1rem 0;
+	background: linear-gradient(90deg, rgba(199,192,137,1) 0%, rgba(214,206,146,0) 100%);
+	border-radius: 0.8rem;
+}

@@ -434,3 +434,17 @@ blockquote *:last-child {
     }
     .app > mdui-fab[icon="menu_book"] { display: none; }
 }
+
+/* printer friendly layout*/
+@media print {
+    .navigation-rail { display: none; }
+    .post { display: none; }
+    .page-wrap { display: block; }
+    .post h1 {
+        font-size: var(--mdui-typescale-display-medium-size);
+    }
+    .article-wrap {
+        border-radius: unset;
+    }
+    .top-app-bar { display: none; }
+}

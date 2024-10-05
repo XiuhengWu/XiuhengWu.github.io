@@ -104,7 +104,7 @@
 
         <div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
         <header class="top-app-bar">
-            <mdui-button-icon icon="arrow_back" href="/index.html#repository"></mdui-button-icon>
+            <mdui-button-icon icon="arrow_back" onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`"></mdui-button-icon>
             <a class="title" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
             <span>
                 <mdui-dropdown>
@@ -123,8 +123,8 @@
         </header>
     
         <header class="navigation-rail">
-            <span style="margin-top: 2rem;margin-bottom: auto">
-                <mdui-button class="material-icons" variant="text" href="/index.html#repository" style="color: rgb(var(--mdui-color-on-surface));">arrow_back</mdui-button>
+            <span style="margin-top: 2rem;margin-bottom: auto" onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`">
+                <mdui-button class="material-icons" variant="text" style="color: rgb(var(--mdui-color-on-surface));">arrow_back</mdui-button>
                 <label data-translatable>Back // 返回 // Zurück</label>
             </span>
             

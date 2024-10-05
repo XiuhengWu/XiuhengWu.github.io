@@ -10,7 +10,7 @@ import uuid
 import json
 import hashlib
 
-resubmit_all = True
+resubmit_all = False
 
 class File:
     def __init__(self, path, title, data_id, creation_time = None, modification_time = None):
