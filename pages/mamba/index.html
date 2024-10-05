@@ -18,6 +18,12 @@
             background-color: rgb(254, 214, 28);
             font-weight: bold;
             box-sizing: border-box;
+            display: flex;
+            flex-wrap: wrap;
+        }
+        .top-app-bar > *{
+            flex: 1 1 0;
+            margin: 0.3rem 0;
         }
         .top-app-bar a {
             color: #000;
@@ -58,7 +64,7 @@
             grid-row: 2;
             max-width: 70rem;
             width: 100%;
-            background-color: rgba(127, 122, 113, 0.95);
+            background-color: rgb(127, 122, 113);
             color: #fff;
             border-radius: 2rem 2rem 0 0;
             box-sizing: border-box;
@@ -335,47 +341,71 @@
     
 </head>
 <body>
-    <header class="top-app-bar"><a href="/index.html">返回主页 Xiuheng's Blog</a></header>
+    <header class="top-app-bar">
+        <a href="/index.html" data-translatable>返回主页 Xiuheng's Blog // Zurück zur Homepage</a>
+        <span style="min-width: 20rem;">
+            <i data-translatable="">语言： // Sprache: </i>
+            <select class="language-selector" onchange="i18n.changeLanguage(this.value); current_lan = this.value">
+                <option value="zh">简体中文</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </span>
+    </header>
     <div class="layout">
         <div class="page-wrap">
-            <h1>孩子们，我回来了！并且，在每个数中 ...</h1>
+            <h1 data-translatable="">孩子们，我回来了！并且，在每个数中 ... // Kinder, ich bin wieder da! Und, in jeder Nummer ...</h1>
             <div class="controls">
                 <div class="input-container">
                     <input id="num-input" type="number" id="input" required="">
-                    <label for="input" class="label">输入一个整数...</label>
+                    <label for="input" class="label" data-translatable="">输入一个整数... // Eingabe einer ganzen Zahl...</label>
                     <div class="underline"></div>
                 </div>
                 
-                <button id="go">分解</button>
+                <button id="go" data-translatable="">分解 // Zerlegen</button>
             </div>
             <h2 class="equal">=</h2>
-            <div class="warning">
-                孩子，过长的整数可不是件好事，它可能造成结果异常 ...
+            <div class="warning" data-translatable="">
+                孩子，过长的整数可不是件好事，它可能造成结果异常 ... // Zu lange Zahle kann zu anomalen Ergebnissen führen !
             </div>
             <div class="result">
-                <p class="info">初始化中，这将在几秒内完成 ...</p>
+                <p class="info">初始化中，这将在几秒内完成 ... // Initialisieren... Dies wird in wenigen Sekunden erledigt sein...</p>
             </div>
-            <i style="text-align: center;display: block;margin-top: 0.2rem;">（长度溢出时，上方内容块可以左右滑动）</i>
-            <button class="copy">复制曼巴表达式</button>
-            <a class="about" href="javascript:void(0)">这是什么原理？</a>
+            <i style="text-align: center;display: block;margin-top: 0.2rem;" data-translatable="">（长度溢出时，上方内容块可以左右滑动） // (Der obere Inhaltsblock kann nach links oder rechts gleiten, wenn die Länge overflow ist)</i>
+            <button class="copy" data-translatable="">复制曼巴表达式 // Kopieren der Mamba-Ausdrücken</button>
+            <a class="about" href="javascript:void(0)" data-translatable="">这是什么原理？ // Wie funktioniert es?</a>
         </div>
     </div>
     <div class="overlay">
         <div class="dialog">
-            <h1>这是什么原理？</h1>
-            <h2 id='基础曼巴数'>基础曼巴数</h2>
-            <p><strong>由于耗时很长，这一步是在我自己的电脑上完成的</strong></p>
-            <p>我们有4个曼巴数种子，即 2, 4, 8, 24。</p>
-            <ol start='' >
-                <p><li>对这四个种子进行排列组合：定义重复次数 <em>repeat</em> 的初始值为0，并依次将 <em>repeat</em> 的值增加 1。例如，当 <em>repeat=4</em> 时，所有组合 <em>men<sub>3</sub> =(2, 2, 2, 2), (2, 2, 2, 4), (2, 2, 2, 8) ...</em>；当 <em>repeat=5</em> 时，所有组合 <em>men<sub>4</sub> =(2, 2, 2, 2, 2), (2, 2, 2, 2, 4), (2, 2, 2, 2, 8) ...</em>。最后记录全部这些组合。</li></p>
-                <p><li>对每个 <em>men<sub>n</sub></em>，都进行以下操作：在其每个组合的数字之间，添加运算符和括号。例如，对于 <em>men<sub>3</sub></em> 的第一个组合 (2, 2, 2, 2)，添加符号和括号后，将产生这些表达式：<em>group<sub>0</sub>_in_men<sub>3</sub> = (2+2-2*2), (2/2+2+2), (2-2)/(2+2) ...</em>。最后记录所有表达式。</li></p>
-                <p><li>对于 <em>group<sub>n</sub>_in_men<sub>n</sub></em> 的每一个表达式，都计算它的值并存储。若存在两个表达式的计算结果相同，取包含数字最少的的一个。例如，表达式 <em>24-8-2</em> 和表达式 <em>(24+24)/8+8</em> 的值都等于 14，但因前者只包含 3 个数字，所以存储前者。</li></p>
+            <h1 data-translatable="">这是什么原理？ // Wie funktioniert es?</h1>
+            <h2 id='基础曼巴数' data-translatable="">基础曼巴数 // Basis-Mamba</h2>
+            <p><strong data-translatable="">由于耗时很长，这一步是在我自己的电脑上完成的 // Dieser Schritt wurde auf meinem eigenen Computer durchgeführt, weil er sehr lange dauerte</strong></p>
+            <p data-translatable="">我们有4个曼巴数种子，即 2, 4, 8, 24。 // Wir haben 4 Zahlen: 2, 4, 8 und 24.</p>
+            <ol>
+                <p><li data-translatable="">
+                        <span>对这四个种子进行排列组合：定义重复次数 <em>repeat</em> 的初始值为0，并依次将 <em>repeat</em> 的值增加 1。例如，当 <em>repeat=4</em> 时，所有组合 <em>men<sub>3</sub> =(2, 2, 2, 2), (2, 2, 2, 4), (2, 2, 2, 8) ...</em>；当 <em>repeat=5</em> 时，所有组合 <em>men<sub>4</sub> =(2, 2, 2, 2, 2), (2, 2, 2, 2, 4), (2, 2, 2, 2, 8) ...</em>。最后记录全部这些组合。</span>
+                        <span>Ich permutierte und kombinierte diese vier Zahlen: Der Anfangswert der Anzahl <em>repeat</em> ist 0, und den Wert immer um 1 erhöht. Wie z.B., Wenn <em>repeat=4</em> gilt, sind alle Kombinationen <em>men<sub>3</sub> = (2, 2, 2, 2), (2, 2, 2, 4), (2, 2, 2, 8) ... </em>; wenn <em>repeat=5</em>, alle Kombinationen <em>men<sub>4</sub> = (2, 2, 2 , 2, 2), (2, 2, 2, 2, 4), (2, 2, 2, 2, 8) ...</em>. Ich speicherte schließlich alle diese Kombinationen. </span>
+                </li></p>
+                <p><li data-translatable="">
+                        <span>对每个 <em>men<sub>n</sub></em>，都进行以下操作：在其每个组合的数字之间，添加运算符和括号。例如，对于 <em>men<sub>3</sub></em> 的第一个组合 (2, 2, 2, 2)，添加符号和括号后，将产生这些表达式：<em>group<sub>0</sub>_in_men<sub>3</sub> = (2+2-2*2), (2/2+2+2), (2-2)/(2+2) ...</em>。最后记录所有表达式。</span>
+                        <span>Ich fügte Operatoren und Klammern zwischen jeder Kombination von <em>men<sub>n</sub></em>. Beispielsweise, nach das Hinzufügen von Symbolen und Klammern, ist die erste Kombination (2, 2, 2, 2) von <em>men<sub>3</sub></em> zu den folgenden Ausdrücken: <em>group<sub>0</sub>_in_men<sub>3</sub> = (2+2-2*2), (2/2+2+2), (2-2)/(2+2) ..</em>. Notieren Sie abschließend alle Ausdrücke. </span>
+                    </li></p>
+                <p><li data-translatable="">
+                        <span>对于 <em>group<sub>n</sub>_in_men<sub>n</sub></em> 的每一个表达式，都计算它的值并存储。若存在两个表达式的计算结果相同，取包含数字最少的的一个。例如，表达式 <em>24-8-2</em> 和表达式 <em>(24+24)/8+8</em> 的值都等于 14，但因前者只包含 3 个数字，所以存储前者。</span>
+                        <span>Für jeden Ausdruck von <em>group<sub>n</sub>_in_men<sub>n</sub></em> wird sein Wert berechnet und gespeichert. Wenn es zwei Ausdrücke gibt, die zum gleichen Ergebnis führen, wird derjenige mit den wenigsten Ziffern gespeichert. Wie z.B., die Ausdrucks <em>24-8-2</em> und <em>(24+24)/8+8</em> beide gleich 14 sind, aber die erstes Ausdruck enthält nur 3 Zahlen, deshalb speicherte ich das erstes. </span>
+                </li></p>
             </ol>
-            <p>对于 <em>men<sub>3</sub></em>，以上操作需要约 8.0 x 10<sup>4</sup> 步，<em>men<sub>4</sub></em> 需要约 3.6 x 10<sup>6</sup> 步，<em>men<sub>5</sub></em> 则是约 1.7 x 10<sup>8</sup> 步。由于算力限制，我最高只对 <em>men<sub>5</sub></em> 进行了运算，并成功让我的笔记本 <del>浪费了 一个半小时赤石</del> 只用了一个半小时就为复活牢大做出了贡献。</p>
-            <h2 id='将任意有理数幻化成曼巴数'>将任意有理数幻化成曼巴数</h2>
-            <p><strong>这一步是在用户的浏览器中完成的</strong></p>
-            <p>这部分的代码来源于 <a href='https://github.com/itorr/homo'>恶臭数字论证器</a>，该项目基于 <b>MIT 协议</b>。</p>
-            <button class="collapsible">MIT 协议内容</button>
+            <p data-translatable="">
+                <span>对于 <em>men<sub>3</sub></em>，以上操作需要约 8.0 x 10<sup>4</sup> 步，<em>men<sub>4</sub></em> 需要约 3.6 x 10<sup>6</sup> 步，<em>men<sub>5</sub></em> 则是约 1.7 x 10<sup>8</sup> 步。由于算力限制，我最高只对 <em>men<sub>5</sub></em> 进行了运算，并成功让我的笔记本 <del>浪费了 一个半小时赤石</del> 只用了一个半小时就为复活牢大做出了贡献。</span>
+                <span>Für <em>men<sub>3</sub></em> erfordert der obige Vorgang etwa 8,0 x 10<sup>4</sup> Schritte, für <em>men<sub>4</sub></em > etwa 3,6 x 10<sup>6</sup> Schritte und <em>men<sub>5</sub></em> etwa 1,7 x 10<sup>8</sup> Schritte . Aufgrund der Einschränkungen bei der Rechenleistung, habe ich höchstens nur für <em>men<sub>5</sub></em> berechnet.</span>
+            </p>
+            <h2 id='将任意有理数幻化成曼巴数' data-translatable="">将任意有理数幻化成曼巴数 // Konvertierung einer beliebigen rationalen Zahl in eine Mamba</h2>
+            <p><strong data-translatable="">这一步是在用户的浏览器中完成的 // Dieser Schritt wird im Browser des Benutzers durchgeführt</strong></p>
+            <p data-translatable="">
+                <span>这部分的代码来源于 <a href='https://github.com/itorr/homo'>恶臭数字论证器</a>，该项目基于 <b>MIT 协议</b>。</span>
+                <span>Dieser Teil des Codes stammt von <a href='https://github.com/itorr/homo'>恶臭数字论证器</a>, der auf der <b>MIT-Lizenz</b> basiert.</span>
+            </p>
+            <button class="collapsible" data-translatable="">MIT 协议内容 // MIT-Lizenz</button>
             <div class="content">
                 <p style="white-space: pre-line;">
                     MIT License
@@ -401,18 +431,31 @@
                     SOFTWARE.
                 </p>
             </div>
-            <p>具体来说，对于任意有理数 <em>r</em></p>
+            <p data-translatable="">
+                <span>具体来说，对于任意有理数 <em>r</em></span>
+                <span>Genauer gesagt, für jede rationale Zahl <em>r</em></span>
+            </p>
             <ul>
-                <p><li>若 <em>r</em> 为自然数。代码寻找最接近 但小于等于 <em>r</em> 的基础曼巴数 <em>mamba</em>。并确定系数 <em>k</em>，使得 <em>k * mamba &lt;= r</em> 且 <em>k / (mamba+1) &gt; r</em>。若系数 <em>k</em> 不等于 1，则根据前述规则，将 <em>k</em> 作为输入数 <em>r</em> 开始分解。接着，再将 <em>(r - k*mamba)</em> 作为输入数 <em>r</em> 分解。（这种步骤在计算机中叫做 <em>递归</em>）。似乎说的有些复杂，举个栗子：假如我们只有两个基础曼巴数 2 和 4，那么可以凑出 42 = 4 x 10 + 2 = 4 x ( 4x2+2 ) +2；</li></p>
-                <p><li>若 <em>r</em> 为负整数。只需要把 <em>|r|</em> 套用正数的规则计算，最后乘上 <em>(2-4 ) / 2</em> 即可。（因为  <em>(2-4 ) / 2 = -1</em>）；</li></p>
-                <p><li style="color: grey;">若 <em>r</em> 为小数（有限或循环小数）。先把小数化为分数，然后分别把分子和分母套用整数的规则计算。（但由于最终拟合成的曼巴表达式会很长，并且有时存在精度丢失问题，我把这个功能删了 😅）。</li></p>
+                <p><li data-translatable="">
+                    <span>若 <em>r</em> 为自然数。代码寻找最接近 但小于等于 <em>r</em> 的基础曼巴数 <em>mamba</em>。并确定系数 <em>k</em>，使得 <em>k * mamba &lt;= r</em> 且 <em>k / (mamba+1) &gt; r</em>。若系数 <em>k</em> 不等于 1，则根据前述规则，将 <em>k</em> 作为输入数 <em>r</em> 开始分解。接着，再将 <em>(r - k*mamba)</em> 作为输入数 <em>r</em> 分解。（这种步骤在计算机中叫做 <em>递归</em>）。似乎说的有些复杂，举个栗子：假如我们只有两个基础曼巴数 2 和 4，那么可以凑出 42 = 4 x 10 + 2 = 4 x ( 4x2+2 ) +2；</span>
+                    <span>Wenn <em>r</em> eine natürliche Zahl ist. Der Code sucht nach der Basis-Mamba <em>mamba</em>, die <em>r</em> am nächsten, aber kleiner oder gleich <em>r</em> ist. Dann bestimmt es den Koeffizienten <em>k</em>, sodass <em>k * mamba &lt;= r</em> und <em>k / (mamba+1) &gt; . Wenn der Koeffizient <em>k</em> nicht gleich 1 ist, verwenden der Code gemäß den oben genannten Regeln <em>k</em> als Eingabezahl <em>r</em>, um die Zerlegung zu starten. Dann wird <em>(r - k*mamba)</em> als Eingabezahl <em>r</em> zum Zerlegen verwendet. (Dieser Schritt wird bei Computerprogrammierung als Rekursion genannt). Hier ist ein Beispiel: Wenn wir nur zwei grundlegende Mamba-Zahlen 2 und 4 haben, dann können wir 42 = 4 x 10 + 2 = 4 x (4x2+2) +2 machen;</span>
+                </li></p>
+                <p><li data-translatable="">
+                    <span>若 <em>r</em> 为负整数。只需要把 <em>|r|</em> 套用正数的规则计算，最后乘上 <em>(2-4 ) / 2</em> 即可。（因为  <em>(2-4 ) / 2 = -1</em>）；</span>
+                    <span>Wenn <em>r</em> eine negative ganze Zahl ist. Berechnet der Code <em>|r|</em> einfach mithilfe der Regeln von positive Zahlen, dannach multipliziert es mit <em>(2-4) / 2</em>. (Weil <em>(2-4 ) / 2 = -1</em> ist);</span>
+                </li></p>
+                <p><li style="color: grey;" data-translatable="">
+                    <span>若 <em>r</em> 为小数（有限或循环小数）。先把小数化为分数，然后分别把分子和分母套用整数的规则计算。（但由于最终拟合成的曼巴表达式会很长，并且有时存在精度丢失问题，我把这个功能删了 😅）。</span>
+                    <span>Wenn <em>r</em> ein Dezimalzahl ist. Wandelt der Code zunächst den Dezimalzahl in einen Bruch um, dann können wir die Regeln für ganze Zahlen auf den Zähler bzw. Nenner benutzen. (Da aber der endgültige Mamba-Ausdruck sehr lang sein und manchmal unter Präzisionsverlusten leiden kann, habe ich diese Funktion entfernt 😅).</span>
+                </li></p>
             </ul>
-            <button class="close">关闭</button>
+            <button class="close" data-translatable="">关闭 // Schließen</button>
         </div>
     </div>
 </body>
 <!-- <script src="./main-script.min.js"></script> -->
-<script src="./main-script.js"></script>
-<script src="./math.min.js"></script>
-<script src="./calc.js"></script>
+<script src="main-script.js"></script>
+<script src="calc.js"></script>
+<script src="math.min.js"></script>
+<script src="dom-i18n.min.js"></script>
 </html>

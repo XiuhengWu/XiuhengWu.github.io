@@ -27,82 +27,55 @@ function getMaxDepths(str) {
     return max_depths;
 }
 
-function findAllFractions(str, depths) {
-    let indices = [];
-    let index = str.indexOf('/');
-    while (index !== -1) {
-        indices.push(index);
-        index = str.indexOf('/', index + 1);
+function replaceAllFractions(str) {
+    let fractions = [];
+
+    function extractFractions(expr) {
+        const fractionRegex = /([a-z\u0370-\u03FF0-9]\/[a-z\u0370-\u03FF0-9]|[a-z\u0370-\u03FF0-9]+|\((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*\))\/([a-z\u0370-\u03FF0-9]\/[a-z\u0370-\u03FF0-9]|[a-z\u0370-\u03FF0-9]+|\((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*\))/g;
+        let match;
+        while ((match = fractionRegex.exec(expr)) !== null) {
+            // Recursively extract fractions from the numerator and denominator
+            fractions.push({'numerator': match[1], 'denominator': match[2]});
+            let newFraction = `
+            <div class="frac">
+                <span class="top">
+                    ${extractFractions(match[1])}
+                </span>
+                <span class="symbol">/</span>
+                <span class="bottom">
+                    ${extractFractions(match[2])}
+                </span>
+            </div>
+            `;
+            expr = expr.substring(0, match.index) + newFraction + expr.substring(fractionRegex.lastIndex);
+        }
+        return expr;
     }
-    var fractions = []
-    indices = indices.filter(i => getOperatorsDepths(str, i) == depths);
-    indices.forEach(index => {
-        var left_start; var right_end; 
-        if (str[index-1] == ")") {
-            let open_count = 0
-            for (let i = index-1; i >= 0; i--) {
-                if (str[i] == ")") {
-                    open_count++;
-                } else if (str[i] == "(") {
-                    open_count--;
-                }
-                if (open_count == 0) {
-                    left_start = i;
-                    break;
-                }
-            }
-        } else if (str[index-1] != ")") {
-            for (let i = index-1; i >= 0; i--) {
-                if (["(", ")", "+", "-", "*", "/"].includes(str[i])) {
-                    left_start = i + 1;
-                    break;
-                }
-            }
-        }
-        if (str[index+1] == "(") {
-            let open_count = 0
-            for (let i = index+1; i <= str.length; i++) {
-                if (str[i] == "(") {
-                    open_count++;
-                } else if (str[i] == ")") {
-                    open_count--;
-                }
-                if (open_count == 0) {
-                    right_end = i + 1;
-                    break;
-                }
-            }
-        } else if (str[index+1] != "(") {
-            for (let i = index+1; i <= str.length; i++) {
-                if (["(", ")", "+", "-", "*", "/"].includes(str[i])) {
-                    right_end = i;
-                    break;
-                }
-            }
-        }
-        fractions.push({"left_start": left_start, "left_end": index, "right_start": index+1, "right_end": right_end})
-    });
-    return fractions;
+
+    let newExpr = extractFractions(str);
+    return newExpr;
 }
 
-function findAllExponent(str) {
-    let indices = [];
-    let index = str.indexOf('^');
-    while (index !== -1) {
-        indices.push(index);
-        index = str.indexOf('^', index + 1);
+function replaceAllExponents(str) {
+    const exponentsRegex = /\^([a-z0-9]+|\((?:[^)(]|\((?:[^)(]|\((?:[^)(]|\([^)(]*\))*\))*\))*\))/g;
+    let exponents = [];
+    let match;
+    while ((match = exponentsRegex.exec(str)) !== null) {
+        str = str.replace(match[0], `<sup>${match[1]}</sup>`);
+        exponents.push(match);
     }
-    let exponents = []
-    indices.forEach(index => {
-        for (let i = index+1; i < str.length; i++) {
-            if (["(", ")", "<", ">", "+", "-", "*", "/"].includes(str[i])) {
-                exponents.push(str.slice(index, i));
-                break;
-            }
-        }
-        exponents.push(str.slice(index, str.length));
-    });
-    return exponents;
+    // console.log(exponents);
+    return str;
+}
+
+function removeExtraParentheses(str) {
+    function removeExtraParentheses(expression) {
+        let node = math.parse(expression);
+        let simplifiedExpression = node.toString({parenthesis: 'auto'});
+        return simplifiedExpression;
+    }
+    str = removeExtraParentheses(str);
+    return str;
 }
 
 function replaceBrackets(str, max_depths) {
@@ -121,55 +94,56 @@ function replaceBrackets(str, max_depths) {
     return str;
 }
 
-function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-}
-
 function render(source, result_elem) {
-    let max_depths = getMaxDepths(source);
-    for (let i = 0; i < 10; i++) {
-        let fractions_obj = findAllFractions(source, i);
-        console.log(fractions_obj)
-        var fractions = [];
-        fractions_obj.forEach(fraction => {
-            let numerator = source.slice(fraction.left_start, fraction.left_end);
-            let denominator = source.slice(fraction.right_start, fraction.right_end);
-            fractions.push({'numerator': numerator, 'denominator': denominator});
-        });
-        fractions.forEach(fraction => {
-            let fraction_code = `<div class="frac"><span class="top">${fraction.numerator}</span><span class="symbol">/</span><span class="bottom">${fraction.denominator}</span></div>`;
-            source = source.replace(fraction.numerator + '/' + fraction.denominator, fraction_code)
-        });
+    function clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
     }
-    const exponents = findAllExponent(source);
-    exponents.forEach(exponent => {
-        source = source.replace(exponent, `<sup>${exponent.slice(1)}</sup>`)
-    })
+
+    let max_depths = getMaxDepths(source);
+    source = replaceAllFractions(source);
+    source = replaceAllExponents(source);
     source = source.replaceAll("*", "×");
     source = replaceBrackets(source, max_depths);
-    source = source.replaceAll('α', '<img src="./kobe/kobe_a.webp">')
-        .replaceAll('β', '<img src="./kobe/kobe_b.webp">')
-        .replaceAll('γ', '<img src="./kobe/kobe_c.webp">')
-        .replaceAll('δ', '<img src="./kobe/kobe_d.webp">')
-        .replaceAll('ε', '<img src="./kobe/kobe_d.webp">');
+    source = source.replaceAll(/\b(a)\b/g, '<img src="./kobe/2.webp">')
+        .replaceAll(/\b(b)\b/g, '<img src="./kobe/4.webp">')
+        .replaceAll(/\b(c)\b/g, '<img src="./kobe/8.webp">')
+        .replaceAll(/\b(d)\b/g, '<img src="./kobe/24.webp">')
+        .replaceAll(/\b(e)\b/g, '<img src="./kobe/24.webp">');
     result_elem.style.setProperty('--f-size', `${clamp(max_depths*1, 2, 5)}rem`);
     return source;
 }
 
-function copyExpressionToClickBoard() {
+function copyExpressionToClickBoard(simplified_expr) {
     if (!navigator.clipboard) {
-        document.querySelector('button.copy').innerHTML = '孩子，你的浏览器不支持Clipboard API'
-      }
+        document.querySelector('button.copy').innerText = language_pack['clipboard_err_1'][current_lan];
+    }
     if (simplified_expr) {
-        navigator.clipboard.writeText(simplified_expr.replaceAll('α', 2).replaceAll('β', 4).replaceAll('γ', 8).replaceAll('δ', 24).replaceAll('ε', 24).replaceAll('^', '**'))
-        .then(() => { document.querySelector('button.copy').innerHTML = '已复制' })
-        .catch(err => { document.querySelector('button.copy').innerHTML = 'Man！无法访问剪贴板！' })
+        navigator.clipboard.writeText(simplified_expr.replaceAll('a', 2).replaceAll('b', 4).replaceAll('c', 8).replaceAll('d', 24).replaceAll('e', 24).replaceAll('^', '**'))
+        .then(() => { document.querySelector('button.copy').innerText = language_pack['clipboard_success'][current_lan] })
+        .catch(err => { document.querySelector('button.copy').innerText = language_pack['clipboard_err_2'][current_lan] })
     }
 }
 
-var simplified_expr;
+var current_lan = ['zh', 'de'].includes(navigator.language) ? navigator.language : 'de';
+var i18n;
+const language_pack = {
+    'clipboard_err_1': {'zh': '孩子，你的浏览器不支持Clipboard API', 'de': 'Ihr Browser unterstützt die Clipboard-API nicht.'},
+    'clipboard_err_2': {'zh': 'Man！无法访问剪贴板！', 'de': 'Zugriff auf die Clipboard nicht möglich!'},
+    'clipboard_success': {'zh': '已复制', 'de': 'kopiert'},
+    'invalid_input_warn': {'zh': '请输入一个整数！', 'de': 'Bitte geben Sie eine ganze Zahl ein!'},
+    'copy': {'zh': '复制曼巴表达式', 'de': 'Mamba-Ausdruck Kopieren'},
+    'prepared': {'zh': '孩子，你可以开始输入了', 'de': 'Sie können jetzt ein Zahl eingeben'}
+}
 
 document.addEventListener('DOMContentLoaded', (event) => {
+    i18n = domI18n({
+        selector: '[data-translatable]',
+        languages: ['zh', 'de'],
+        defaultLanguage: current_lan,
+        enableLog: false
+    });
+    document.querySelector('.language-selector').value = current_lan;
+    var simplified_expr;
     var result_elem = document.querySelector('.result');
 
     document.querySelectorAll("button").forEach((elem) => {
@@ -191,7 +165,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
         if (input_value == '' || input_value.includes('.')) {
             result_elem.innerHTML = `
             <h2 style="margin: 0">Man!</h2><br>
-            <p>请输入一个整数！</p>
+            <p>${language_pack['invalid_input_warn'][current_lan]}</p>
             `
             return;
         }
@@ -201,33 +175,26 @@ document.addEventListener('DOMContentLoaded', (event) => {
             document.querySelector('.warning').style.display = 'none';
         }
         let expr = mamba(input_value);
-        // console.log(expr.replaceAll('a', 2).replaceAll('b', 4).replaceAll('c', 8).replaceAll('d', 24).replaceAll('e', 24).replaceAll('^', '**'))
-        let simplified = math.simplify(expr);
-        simplified_expr = simplified.toString()
-            .replaceAll(" ", "")
-            .replaceAll('a', 'α')
-            .replaceAll('b', 'β')
-            .replaceAll('c', 'γ')
-            .replaceAll('d', 'δ')
-            .replaceAll('e', 'ε');
+        console.log(expr.replaceAll('a', 2).replaceAll('b', 4).replaceAll('c', 8).replaceAll('d', 24).replaceAll('e', 24).replaceAll('^', '**'));
+        simplified_expr = math.simplify(expr).toString();
         let unsolved_numbers = simplified_expr.match(/(?<!\^)\d+/g);
         if (unsolved_numbers) {
             unsolved_numbers.forEach(n => {
-                simplified_expr = simplified_expr.replace(n, "(" + mamba(n).replaceAll('a', 'α').replaceAll('b', 'β').replaceAll('c', 'γ').replaceAll('d', 'δ').replaceAll('e', 'ε') + ")");
-            })
+                simplified_expr = simplified_expr.replace(n, "(" + mamba(n) + ")");
+            });
         }
-        console.log(simplified_expr.replaceAll('α', 2).replaceAll('β', 4).replaceAll('γ', 8).replaceAll('δ', 24).replaceAll('ε', 24).replaceAll('^', '**'))
+        simplified_expr = removeExtraParentheses(simplified_expr);
+        simplified_expr = simplified_expr.replaceAll(" ", "");
+        console.log(simplified_expr.replaceAll('a', 2).replaceAll('b', 4).replaceAll('c', 8).replaceAll('d', 24).replaceAll('e', 24).replaceAll('^', '**'));
         result_elem.innerHTML = render(simplified_expr, result_elem);
     });
 
     document.querySelector('button.copy').addEventListener('click', function() {
         try {
-            copyExpressionToClickBoard();
-        } catch {
-
-        }
+            copyExpressionToClickBoard(simplified_expr);
+        } catch { alert('Unknown Error!'); }
         setTimeout(() => {
-            this.innerHTML = '复制曼巴表达式';
+            this.innerHTML = language_pack['copy'][current_lan];
         }, 1500);
     });
 
@@ -251,5 +218,5 @@ document.addEventListener('DOMContentLoaded', (event) => {
         document.querySelector('.overlay').style.display = 'flex';
     });
     
-    result_elem.innerHTML = '<p class="info">孩子，你可以开始输入了</p>'
+    result_elem.innerHTML = `<p class="info">${language_pack['prepared'][current_lan]}</p>`
 });
