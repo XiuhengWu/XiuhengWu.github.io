@@ -69,8 +69,8 @@ function playSpinAnimation(x, y) {
     }, 2000);
 }
 
-function playBellDing() {
-    var audio = new Audio('https://xiuhengwu.github.io/src/file-stored/copper-bell-ding.mp3');
+function playBellDing(name) {
+    var audio = new Audio('https://xiuhengwu.github.io/src/file-stored/' + name);
     audio.play();
 }
 
@@ -112,7 +112,7 @@ async function processGuids(guid_list) {
         top: 0;
         background-image: url(https://xiuhengwu.github.io/src/file-stored/magic-stick.webp);
         background-size: cover;
-        transition: transform 1s;
+        transition: transform 0.7s;
     }
     body > span.ripples {
         background-color: yellow;
@@ -182,10 +182,14 @@ async function processGuids(guid_list) {
         checkMark.style.opacity = '1';
         item['elem'].parentNode.classList.remove('disabledCard');
         item['elem']['style']['animation-play-state'] = 'running';
-        playBellDing();
+        playBellDing('copper-bell-ding.mp3');
         playSpinAnimation(x_end, y_end);
         x_start = x_end; y_start = y_end;
     }
+    await sleep(500);
+    document.querySelector('#magic-stick').style.display = 'none';
+    playBellDing('ship-bell-two-chimes.mp3');
+    playSpinAnimation(window.innerWidth / 2, window.innerHeight / 2);
 }
 
 processGuids(guid_list);
