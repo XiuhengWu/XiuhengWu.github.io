@@ -182,6 +182,7 @@ async function processGuids(guid_list) {
         checkMark.style.opacity = '1';
         item['elem'].parentNode.classList.remove('disabledCard');
         item['elem']['style']['animation-play-state'] = 'running';
+        playBellDing();
         playSpinAnimation(x_end, y_end);
         x_start = x_end; y_start = y_end;
     }
