@@ -5,7 +5,7 @@ cards.forEach(card => {
     guid_list.push({'elem': card, 'guid': card.getAttribute('onclick').match(regex)[1]});
 });
 
-const t = new URL(location.href).searchParams.get('v');
+const c = new URL(location.href).searchParams.get('v');
 const time = 5;
 const userName = document.querySelector('iframe[src^="https://learningapps.org/show.php"]').contentDocument.querySelector('#usernameDisplay').innerText;
 
@@ -69,9 +69,21 @@ function playSpinAnimation(x, y) {
 }
 
 function playBellDing(name, volume = 1.0) {
-    var audio = new Audio('https://xiuhengwu.github.io/src/file-stored/' + name);
-    audio.volume = volume;
-    audio.play();
+    if (name) {
+        var audio = new Audio('https://xiuhengwu.github.io/src/file-stored/' + name);
+        audio.volume = volume;
+        audio.play();
+    }
+}
+
+function showMessage(msg) {
+    let blackboard = document.querySelector('.blackboard');
+    if (!blackboard) {
+        blackboard = document.createElement('div');
+        blackboard.className = 'blackboard'
+        document.body.append(blackboard);
+    }
+    blackboard.innerHTML = msg;
 }
 
 
@@ -128,46 +140,78 @@ async function processGuids(guid_list) {
             height: 0;
             opacity: 0.5;
         }
-
         to {
             width: 100vmin;
             height: 100vmin;
             opacity: 0;
         }
     }
+    @font-face {
+        font-family: "blackletter";
+        src: url("https://xiuhengwu.github.io/src/file-stored/blackletter.ttf");
+    }
+    .blackboard {
+        font-family: blackletter;
+        font-size: 20px;
+        position: fixed;
+        width: 80%;
+        background: black;
+        color: white;
+        bottom: 7%;
+        left: 10%;
+        min-height: 150px;
+        box-shadow: 15px 15px 15px -3px rgba(0,0,0,0.8);
+        padding: 10px;
+        animation: fade-in 1s;
+        transition: opacity 1s;
+    }
+    @keyframes fade-in {
+        from {
+            opacity: 0;
+        }
+        to {
+            opacity: 1;
+        }
+    }
     `
 
     document.querySelector('iframe[src^="https://learningapps.org/show.php"]').contentDocument.head.append(style_in_iframe);
     document.head.append(style_in_head);
+    ['copper-bell-ding.mp3', 'ship-bell-two-chimes.mp3'].forEach(url => {
+        var audio = new Audio();
+        audio.src = url;
+        audio.preload = 'auto';
+        audio.load();
+    });
     for (const item of guid_list) {
-        console.log(item['guid']);
+        showMessage(`PRECESSING ... <br>BASE: ${c}, GUID: ${item['guid']}`);
+
+        // await fetch("https://learningapps.org/setAppSolved.php", {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: `guid=${item['guid']}&value=100&time=${time}&user=0`
+        // })
+        // .then(response => response.json())
+        // .then(data => console.log(data))
+        // .catch(error => console.error('Error:', error));
         
-        await fetch("https://learningapps.org/setAppSolved.php", {
-            method: "POST",
-            headers: headers,
-            body: `guid=${item['guid']}&value=100&time=${time}&user=0`
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
+        // await fetch("https://learningapps.org/collection.php", {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: `u=${userName}&c=${c}`
+        // })
+        // .then(response => response.json())
+        // .then(data => console.log(data))
+        // .catch(error => console.error('Error:', error));
         
-        await fetch("https://learningapps.org/collection.php", {
-            method: "POST",
-            headers: headers,
-            body: `u=${userName}&c=${t}`
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
-        
-        await fetch("https://learningapps.org/collection.php", {
-            method: "POST",
-            headers: headers,
-            body: `u=${userName}&a=${item['guid']}&c=${t}&t=${time}`
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(error => console.error('Error:', error));
+        // await fetch("https://learningapps.org/collection.php", {
+        //     method: "POST",
+        //     headers: headers,
+        //     body: `u=${userName}&a=${item['guid']}&c=${c}&t=${time}`
+        // })
+        // .then(response => response.json())
+        // .then(data => console.log(data))
+        // .catch(error => console.error('Error:', error));
 
         
         let checkMark = document.createElement('div');
@@ -186,8 +230,10 @@ async function processGuids(guid_list) {
         playSpinAnimation(x_end, y_end);
         x_start = x_end; y_start = y_end;
     }
+    showMessage('FINISHED !')
     await sleep(2000);
-    document.querySelector('#magic-stick').style.display = 'none';
+    document.querySelector('#magic-stick').remove();
+    document.querySelector('.blackboard').style.opacity = '0';
     playBellDing('ship-bell-two-chimes.mp3');
     playSpinAnimation(window.innerWidth / 2, window.innerHeight / 2);
 }
