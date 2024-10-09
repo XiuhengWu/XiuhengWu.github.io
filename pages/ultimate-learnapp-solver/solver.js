@@ -41,7 +41,6 @@ async function moveMagicStick(x_start, y_start, x_end, y_end) {
             // Force a reflow to ensure the initial position is applied
             div.getBoundingClientRect();
             
-            div.style.transition = 'transform 2s ease-in-out'; // 添加 transition 属性
             div.style.transform = `translate(${x_end}px, ${y_end}px)`;
             
             // Listen for the end of the transition
@@ -69,8 +68,9 @@ function playSpinAnimation(x, y) {
     }, 2000);
 }
 
-function playBellDing(name) {
+function playBellDing(name, volume = 1.0) {
     var audio = new Audio('https://xiuhengwu.github.io/src/file-stored/' + name);
+    audio.volume = volume;
     audio.play();
 }
 
@@ -112,7 +112,7 @@ async function processGuids(guid_list) {
         top: 0;
         background-image: url(https://xiuhengwu.github.io/src/file-stored/magic-stick.webp);
         background-size: cover;
-        transition: transform 0.7s;
+        transition: transform 1s;
     }
     body > span.ripples {
         background-color: yellow;
@@ -142,32 +142,32 @@ async function processGuids(guid_list) {
     for (const item of guid_list) {
         console.log(item['guid']);
         
-        // await fetch("https://learningapps.org/setAppSolved.php", {
-        //     method: "POST",
-        //     headers: headers,
-        //     body: `guid=${item['guid']}&value=100&time=${time}&user=0`
-        // })
-        // .then(response => response.json())
-        // .then(data => console.log(data))
-        // .catch(error => console.error('Error:', error));
+        await fetch("https://learningapps.org/setAppSolved.php", {
+            method: "POST",
+            headers: headers,
+            body: `guid=${item['guid']}&value=100&time=${time}&user=0`
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
         
-        // await fetch("https://learningapps.org/collection.php", {
-        //     method: "POST",
-        //     headers: headers,
-        //     body: `u=${userName}&c=${t}`
-        // })
-        // .then(response => response.json())
-        // .then(data => console.log(data))
-        // .catch(error => console.error('Error:', error));
+        await fetch("https://learningapps.org/collection.php", {
+            method: "POST",
+            headers: headers,
+            body: `u=${userName}&c=${t}`
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
         
-        // await fetch("https://learningapps.org/collection.php", {
-        //     method: "POST",
-        //     headers: headers,
-        //     body: `u=${userName}&a=${item['guid']}&c=${t}&t=${time}`
-        // })
-        // .then(response => response.json())
-        // .then(data => console.log(data))
-        // .catch(error => console.error('Error:', error));
+        await fetch("https://learningapps.org/collection.php", {
+            method: "POST",
+            headers: headers,
+            body: `u=${userName}&a=${item['guid']}&c=${t}&t=${time}`
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
 
         
         let checkMark = document.createElement('div');
@@ -182,11 +182,11 @@ async function processGuids(guid_list) {
         checkMark.style.opacity = '1';
         item['elem'].parentNode.classList.remove('disabledCard');
         item['elem']['style']['animation-play-state'] = 'running';
-        playBellDing('copper-bell-ding.mp3');
+        playBellDing('copper-bell-ding.mp3', 0.4);
         playSpinAnimation(x_end, y_end);
         x_start = x_end; y_start = y_end;
     }
-    await sleep(500);
+    await sleep(2000);
     document.querySelector('#magic-stick').style.display = 'none';
     playBellDing('ship-bell-two-chimes.mp3');
     playSpinAnimation(window.innerWidth / 2, window.innerHeight / 2);
