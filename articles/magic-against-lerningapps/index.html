@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="/src/css/article.css" rel="stylesheet"/>
+<script async="" src="/src/js/article.min.js"></script>
+<title>A Little Magic against Learningapps</title>
+<style>
+        /* Loading animation */
+        .show-box {
+            background-color: rgb(231, 224, 236);
+            color: rgb(28, 27, 31);
+        }
+        @media (prefers-color-scheme: dark) {
+            .show-box {
+                background-color: rgb(73, 69, 79);
+                color: rgb(230, 225, 229);
+            }
+        }
+        .show-box {
+            position: fixed;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            top: 0;
+            height: 100vh;
+            left: 0;
+            width: 100vw;
+            z-index: 500;
+        }
+        .show-box.hidden {
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+        .loader {
+            position: relative;
+            width: 100px;
+        }
+        .loader::before {
+            content: '';
+            display: block;
+            padding-top: 100%;
+        }
+        .circular {
+            animation: rotate 2s linear infinite;
+            height: 100%;
+            width: 100%;
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            left: 0;
+            right: 0;
+        }
+        .path {
+            stroke-dasharray: 1, 200;
+            stroke-dashoffset: 0;
+            stroke: rgb(103, 80, 164);
+            animation: dash 1.5s ease-in-out infinite;
+            stroke-linecap: round;
+        }
+        @keyframes rotate {
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        @keyframes dash {
+            0% {
+                stroke-dasharray: 1, 200;
+                stroke-dashoffset: 0;
+            }
+            50% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -35px;
+            }
+            100% {
+                stroke-dasharray: 89, 200;
+                stroke-dashoffset: -124px;
+            }
+        }
+        .post {
+            color: rgba(0, 0, 0, 0.7);
+        }
+        #script-box {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1em 2em;
+            border: none !important;
+            box-shadow: var(--mdui-elevation-level1);
+            border-radius: var(--mdui-shape-corner-medium);
+            background-color: rgb(var(--mdui-color-surface-container-highest));
+        }
+    </style>
+</head>
+<body>
+<!-- loading animation -->
+<div class="show-box">
+<div class="loader">
+<svg class="circular" viewbox="25 25 50 50">
+<circle class="path" cx="50" cy="50" fill="none" r="20" stroke-miterlimit="10" stroke-width="3"></circle>
+</svg>
+</div>
+<h1>LOADING...</h1>
+<i>This might take a few seconds...</i>
+</div>
+<script>
+        var loading_animation = setTimeout(() => {
+            document.querySelector('.show-box').style.display = 'flex';
+        }, 200);
+    </script>
+<div class="app">
+<!-- header -->
+<div class="dynamic-background-wrap"><canvas class="background"></canvas></div>
+<header class="top-app-bar">
+<mdui-button-icon icon="arrow_back" onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`"></mdui-button-icon>
+<a class="title" onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`" style="text-decoration: none ; color: inherit;">Xiuheng's Blog</a>
+<span>
+<mdui-dropdown>
+<mdui-button-icon icon="translate" slot="trigger"></mdui-button-icon>
+<mdui-menu id="language-select" onclick="document.getElementById('language-select-left').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-button-icon class="theme-button" icon="light_mode"></mdui-button-icon>
+<mdui-button-icon icon="menu_book" id="open-reader"></mdui-button-icon>
+</span>
+</header>
+<header class="navigation-rail">
+<span onclick="location.href = `/index.html#${new URLSearchParams(location.search).get('from') === 'r' ? 'repository' : 'timeline'}`" style="margin-top: 2rem;margin-bottom: auto">
+<mdui-button class="material-icons" style="color: rgb(var(--mdui-color-on-surface));" variant="text">arrow_back</mdui-button>
+<label data-translatable="">Back // 返回 // Zurück</label>
+</span>
+<mdui-dropdown placement="right-end" slot="bottom">
+<mdui-button-icon icon="translate" slot="trigger" style="margin-bottom: 1rem;"></mdui-button-icon>
+<mdui-menu id="language-select-left" onclick="document.getElementById('language-select').value = this.value" selects="single" value="auto">
+<mdui-menu-item value="en">English</mdui-menu-item>
+<mdui-menu-item value="zh-CN">简体中文</mdui-menu-item>
+<mdui-menu-item value="de">Deutsch</mdui-menu-item>
+<mdui-divider></mdui-divider>
+<mdui-menu-item data-translatable="" value="auto">System Standard // 跟随系统 // Systemstandard</mdui-menu-item>
+</mdui-menu>
+</mdui-dropdown>
+<mdui-fab class="theme-button" icon="light_mode" slot="bottom" style="margin-bottom: 1rem;"></mdui-fab>
+</header>
+<mdui-fab icon="menu_book" id="open-reader-fab">Reader</mdui-fab>
+<aside class="toc-button navigation-drawer" id="reader">
+<mdui-button data-translatable="" full-width="" icon="close" id="close-reader" variant="text">Close // 关闭 // Schließen</mdui-button>
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                        Table of Contents // 目录 // Inhaltsverzeichnis
+                    </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<mdui-select id="font-size" onchange="document.getElementById('font-size-right').value = this.value" slot="end-icon" style="width: 6rem;" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch" onchange="document.getElementById('animation-switch-right').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</aside>
+<!-- page content -->
+<div class="page-wrap">
+<div class="post" style="background-image: url(./cover.webp);">
+<div class="post-info">
+<div class="meta-tags"><span data-translatable>
+       Tutorial // 教程 // Tutorial
+      </span><span data-translatable>
+       Article // 文章 // Artikels
+      </span><span data-translatable>
+       English // 英文 // Englisch
+      </span></div>
+<h1>A Little Magic against Learningapps</h1>
+<div class="meta-info">
+<div><i class="material-icons">calendar_month</i> <span data-translatable="">Created:  // 创建于： // Erstellt: </span><time data-desc="creation" datetime="2024-11-10">10.11.2024</time></div>
+<div><i class="material-icons">sync</i> <span data-translatable="">Modified:  // 修改于： // Geändert: </span><time data-desc="modification" datetime="2024-11-10">10.11.2024</time></div>
+</div>
+</div>
+<svg class="waves" preserveaspectratio="none" shape-rendering="auto" viewbox="0 24 150 28" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<defs>
+<path d="M-160 44c30 0 58-18 88-18s 58 18 88 18 58-18 88-18 58 18 88 18 v44h-352z" id="gentle-wave"></path>
+</defs>
+<g class="parallax">
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.7)" x="48" xlink:href="#gentle-wave" y="0"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.5)" x="48" xlink:href="#gentle-wave" y="3"></use>
+<use fill="rgba(var(--mdui-color-inverse-on-surface),0.3)" x="48" xlink:href="#gentle-wave" y="5"></use>
+<use fill="rgb(var(--mdui-color-inverse-on-surface))" x="48" xlink:href="#gentle-wave" y="7"></use>
+</g>
+</svg>
+</div>
+<article class="article-wrap">
+<h1 id="a-little-magic-against-learningapps">A Little Magic against
+Learningapps</h1>
+<blockquote>
+    <b>PLEASE NOTICE: This program is only a piece of art, don't actually rely on it to complete your works</b>
+</blockquote>
+<ol type="1">
+<li><p>Drag the rectangle below to the bookmarks bar of your
+browser</p>
+<a id="script-box">Magic</a>
+<img src="step-1.webp" alt="Drag and Drop"></li>
+<li><p>Open a learningapps page (make sure you have logged in), then click the bookmark you’ve
+pined</p>
+<img src="step-2.webp" alt="Open Learningapps"></li>
+<li><p>See the magic happens …</p>
+<video controls="" src="step-3.mp4"></video></li>
+</ol>
+<blockquote><i>See the source code <a href="https://github.com/XiuhengWu/XiuhengWu.github.io/tree/main/articles/magic-against-lerningapps/learningapps-ultimate-bot.js">here</a></i></blockquote>
+</article>
+<div class="toc-right">
+<mdui-collapse>
+<mdui-collapse-item class="toc-button" value="item-1">
+<mdui-list-item data-translatable="" end-icon="keyboard_arrow_down" icon="sort" slot="header">
+                            Table of Contents // 目录 // Inhaltsverzeichnis
+                        </mdui-list-item>
+<div class="catalog"></div>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-2">
+<mdui-list-item class="download-pdf" data-translatable="" icon="download" slot="header">Download this article as PDF // 下载这个文档为 PDF // Diesen Artikel als PDF herunterladen</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-3">
+<mdui-list-item id="font-size-button" slot="header" style="font-size: 1rem;color: rgb(var(--mdui-color-on-background));">
+<span data-translatable="">Font Size // 文字大小 // Schrift­größe</span>
+<mdui-icon name="format_size" slot="icon"></mdui-icon>
+<span slot="end-icon" style="width: 6rem;">
+<mdui-select id="font-size-right" onchange="document.getElementById('font-size').value = this.value" value="1.15rem">
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="0.85rem">Small // 小的 // Klein</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1rem">Smaller // 较小的 // Kleiner</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.15rem">Medium // 中等的 // Mittel</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.3rem">Larger // 较大的 // Größer</mdui-menu-item>
+<mdui-menu-item data-translatable="" style="line-height: 1rem;" value="1.45rem">Large // 大的 // Groß</mdui-menu-item>
+</mdui-select>
+</span>
+</mdui-list-item>
+</mdui-collapse-item>
+<mdui-collapse-item value="item-4">
+<mdui-list-item slot="header">
+<span data-translatable="">Dynamic background // 动态背景 // Dynamischer Hintergrund</span>
+<mdui-icon name="auto_fix_high" slot="icon"></mdui-icon>
+<mdui-switch checked="" id="animation-switch-right" onchange="document.getElementById('animation-switch').checked = this.checked;" slot="end-icon"></mdui-switch>
+</mdui-list-item>
+</mdui-collapse-item>
+</mdui-collapse>
+</div>
+</div>
+<!-- elements out of the document -->
+<mdui-snackbar auto-close-delay="20000" closeable="" id="snackbar" style="background-color: rgb(var(--mdui-color-inverse-surface), 0.7); backdrop-filter: blur(20px);">
+<span data-translatable="">You clicked on an anchor link // 你点击了一个锚点链接 // Sie haben auf einen Ankerlink geklickt</span>
+<mdui-button data-translatable="" onclick="window.history.back(); document.getElementById('snackbar').open = false;" slot="action" variant="text">Back to the previous position // 返回上一个位置 // Zurück zur vorherigen Position</mdui-button>
+</mdui-snackbar>
+</div>
+<script>
+    fetch ('./learningapps-ultimate-bot.min.js')
+        .then(response => response.text())
+        .then(data => {
+            console.log(data)
+            document.querySelector('#script-box').setAttribute('href', 'javascript:' + data);
+        })
+</script>
+</body>
+</html>

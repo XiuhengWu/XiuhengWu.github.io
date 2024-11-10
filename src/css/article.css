@@ -248,6 +248,11 @@ a {
     margin: 1em 0;
     cursor: pointer;
 }
+.article-wrap video {
+    width: 100%;
+    width: 90%;
+    border-radius: var(--mdui-shape-corner-small);
+}
 blockquote {
     border-left: 0.3rem solid #d1d1d1;
     color: #989898;
