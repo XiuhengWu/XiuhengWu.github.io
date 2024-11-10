@@ -111,7 +111,8 @@ def formatListOutput(lst : list, start_index : int = 0):
 def exceptSpecificListItem(lst : list, cmd : str):
     if cmd:
         excepted_items_index = cmd.replace(" ", "").split(",")
-        for i in excepted_items_index: lst.pop(int(i))
+        for i in sorted(excepted_items_index, reverse=True):
+            lst.pop(int(i))
     return lst
 
 
@@ -249,8 +250,11 @@ for article in modified_articles:
     modification_time_tag.string = time.strftime("%d.%m.%Y", article.getModificationTime())
 
     # fill in the tags
-    tag_contents = [e.text for e in article_content.p.find_all(recursive=False)]
-    article_content.p.decompose()
+    tags_line = article_content.find(lambda tag: tag.name == "blockquote" and tag.text.strip().startswith(("Tag:", "tag:")))
+    if not tags_line:
+        tags_line = "Tags: " + input(f'Please input the tags of {article.title} (e.g. a, b, c): ')
+    tag_contents = [tag_content.strip() for tag_content in tags_line.replace("Tags:", "").replace("tags:", "").split(',')]
+    tags_line.decompose()
     tags_wrapper = article_template.select(".page-wrap .post-info > .meta-tags")[0]
     for tag_content in tag_contents:
         tag = article_template.new_tag("span")
@@ -303,7 +307,12 @@ for page in modified_pages:
     with open(f"{page.path}", "r", encoding="utf-8") as f:
         page_content = BeautifulSoup(f.read(), "html.parser")
     
-    tag_contents = page_content.find(string=lambda text: isinstance(text, Comment)).replace("Tags: ", "").split(" ")
+    for comment in page_content.find_all(string=lambda text: isinstance(text, Comment)):
+        if comment.strip().startswith("Tag:") or comment.strip().startswith("tag:"):
+            tags_line = comment
+    if not tags_line:
+        tags_line = "Tags: " + input(f'Please input the tags of {article.title} (e.g. a, b, c): ')
+    tag_contents = [tag_content.strip() for tag_content in tags_line.replace("Tags:", "").replace("tags:", "").split(',')]
 
     # add to repository page
     index_page = addToRepositoryPage(index_page, page._id, " ".join(tag_contents), f"{page_dir}", page.title, page.getModificationTime())

@@ -1,6 +1,6 @@
-**tutorial** **article** **english**
-
 # A Little Magic against Learningapps
+
+> Tags: tutorial, article, english
 
 > **PLEASE NOTICE: This program is only a piece of art, don't actually rely on it to complete your works**
 

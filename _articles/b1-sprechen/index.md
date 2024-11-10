@@ -1,6 +1,6 @@
-**document** **article** **german**
-
 # Pro- und Kontra-Aussagen der 27 Themen
+
+> Tags: document, article, german
 
 > Insgesamt 27 themenspezifische Vorteile-Nachteile-Statements, zur Vorbereitung auf die Goethe B1-Prüfung Sprechen. *(Dieses Dokument wird von der AI erstellt)*
 

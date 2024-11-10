@@ -1,6 +1,6 @@
-**tutorial** **article** **chinese**
-
 # 在网络监狱中自救——v2rayNG
+
+> Tags: tutorial, article, chinese
 
 > *很不幸, 你生在了一所信息上的监狱。*
 > 这是一个没有谷歌, 没有维基百科, 没有OpenAI, 没有Github, 网络资源不到全体5%的荒原。如同太平洋中心的尼莫点, 与世隔绝。

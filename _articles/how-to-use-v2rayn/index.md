@@ -1,6 +1,6 @@
-**tutorial** **article** **chinese**
-
 # 详细介绍Windows端的免费翻墙方式——v2rayN
+
+Tag: tutorial, article, chinese
 
 ## 0. 确保位于正确环境
 
