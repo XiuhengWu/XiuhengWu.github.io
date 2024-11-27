@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: lightblue;
+        }
+
+        .overview {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .thumbnail {
+            width: 200px;
+            height: 150px;
+            background: #f0f0f0;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            position: relative;
+        }
+
+        .detail {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 0;
+            background: white;
+            z-index: 10;
+            opacity: 0;
+            transform-origin: top left;
+            transform: scaleX(0);
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .detail.active {
+            pointer-events: unset;
+        }
+
+        .detail #close {
+            margin-top: 20px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overview">
+        <div class="thumbnail" id="note1">
+            <h3>笔记标题</h3>
+            <p>简要内容...</p>
+        </div>
+    </div>
+
+    <div class="detail" id="detail1">
+        <h1>笔记详情</h1>
+        <p>完整的笔记内容展示在这里。</p>
+        <button id="close">关闭</button>
+    </div>
+
+</body>
+
+<script>
+    const thumbnail = document.getElementById("note1");
+    const detail = document.getElementById("detail1");
+    const closeButton = document.getElementById("close");
+    const animationDuration = 1;
+
+    thumbnail.addEventListener("click", () => {
+        const rect = thumbnail.getBoundingClientRect();
+        const scale = rect.width / window.innerWidth;
+        const translateX = rect.left;
+        const translateY = rect.top;
+
+        detail.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        detail.style.height = `${rect.height / scale}px`;
+        detail.style.opacity = '0';
+
+        void detail.offsetHeight;
+        detail.style.transition = `transform ${animationDuration}s ease, height ${animationDuration}s ease, opacity ${animationDuration}s ease-out`;
+
+        requestAnimationFrame(() => {
+            detail.classList.add("active");
+            detail.style.transform = "translate(0, 0) scaleX(1)";
+            detail.style.height = "100vh";
+            detail.style.opacity = '1';
+        });
+    });
+
+
+    closeButton.addEventListener("click", () => {
+        const rect = thumbnail.getBoundingClientRect();
+        const scale = rect.width / window.innerWidth;
+        const translateX = rect.left;
+        const translateY = rect.top;
+
+        detail.style.transform = `translate(${translateX}px, ${translateY}px) scale(${scale})`;
+        detail.style.height = `${rect.height / scale}px`;
+        detail.style.opacity = '0';
+
+        detail.addEventListener(
+            "transitionend",
+            () => {
+                detail.classList.remove("active");
+                detail.style.transition = `unset`;
+            },
+            { once: true }
+        );
+    });
+
+</script>
+
+</html>

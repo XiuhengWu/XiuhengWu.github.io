@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="css/mdui.css">
+    <script src="js/mdui.global.js"></script>
+    <script src="js/index.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Outlined" rel="stylesheet">
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body class="full-size">
+    <div id="tasks" class="full-size page">
+        <h1 class="page-title">
+            <span style="margin-right: auto;">Tasks</span>
+            <mdui-button-icon id="switch-view" icon="view_agenda--outlined"></mdui-button-icon>
+            <mdui-dropdown>
+                <mdui-button-icon icon="more_vert" slot="trigger"></mdui-button-icon>
+                <mdui-menu>
+                    <mdui-menu-item id="open-calendar-view" icon="calendar_month">Calendar View</mdui-menu-item>
+                    <mdui-menu-item id="open-tasks-view" icon="format_list_bulleted">All Tasks</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dropdown>
+           
+        </h1>
+        <div class="task-blocks-wrap single-column">
+            <mdui-card class="tasks-block" variant="outlined" data-date="2024-11-24" clickable>
+                aaa
+            </mdui-card>
+        </div>
+    </div>
+    <div id="settings" class="full-size page">
+        <h1 class="page-title">Settings</h1>
+        <div class="settings-sections-wrap">
+            <mdui-card class="settings-section">
+                <h3 class="settings-section-title">Lessons</h3>
+                <mdui-collapse>
+                    <mdui-collapse-item value="item-1">
+                        <mdui-list-item slot="header" icon="subject--outlined" end-icon="keyboard_arrow_down">
+                            Subjects
+                        </mdui-list-item>
+                        <div class="collapse-content">
+                            <div class="bottom-controls-1">
+                                <mdui-button id="deselect-all-subjects" variant="text" icon="deselect">Deselect All</mdui-button>
+                                <mdui-button id="invert-subjects-selection" variant="text" icon="swap_horiz">Invert Selection</mdui-button>
+                                <mdui-button id="select-all-subjects" variant="text" icon="select_all">Select All</mdui-button>
+                            </div>
+                            <mdui-list id="subject-list">
+                                <mdui-list-item id="add-subject">
+                                    <div class="add-subject-button">
+                                        <mdui-icon name="add" style="vertical-align: middle;"></mdui-icon>
+                                        <span style="vertical-align: middle;">Add Subject</span>
+                                    </div>
+                                </mdui-list-item>
+                            </mdui-list>
+                            <div class="bottom-controls-1">
+                                <mdui-button id="add-preset" icon="add" variant="tonal">Add Preset</mdui-button>
+                                <mdui-button id="delete-subject" icon="delete--outlined" variant="tonal" disabled="">Delete Subject</mdui-button>
+                            </div>
+                        </div>
+                    </mdui-collapse-item>
+                    <mdui-collapse-item value="item-2">
+                        <mdui-list-item slot="header" icon="table_chart--outlined" end-icon="keyboard_arrow_down">
+                            Timetable
+                        </mdui-list-item>
+                        <div class="collapse-content">
+                            <mdui-dropdown id="anchor-wrap" value="(None)" trigger="manual">
+                                <span id="anchor" slot="trigger">(None)</span>
+                                <mdui-menu onchange="console.log(1)" dense="">
+                                    <mdui-menu-item value="English">English</mdui-menu-item>
+                                    <mdui-menu-item value="(None)"></mdui-menu-item>
+                                </mdui-menu>
+                            </mdui-dropdown>
+                            <div id="time-table" class="mdui-table">
+                                <table>
+                                    <thead>
+                                      <tr>
+                                        <th></th>
+                                        <th class="column-title">Mon.</th>
+                                        <th class="column-title">Tue.</th>
+                                        <th class="column-title">Wed.</th>
+                                        <th class="column-title">Tur.</th>
+                                        <th class="column-title">Fri.</th>
+                                      </tr>
+                                    </thead>
+                                    <tbody id="timetable-body">
+                                      <!-- <tr>
+                                        <td class="row-title">
+                                            <mdui-button-icon icon="delete--outlined"></mdui-button-icon><input type="time"><span>-</span><input type="time">
+                                        </td>
+                                        <td>
+                                            <span class="lesson">(None)</span>
+                                        </td>
+                                        <td>
+                                            <span class="lesson">(None)</span>
+                                        </td>
+                                        <td>
+                                            <span class="lesson">(None)</span>
+                                        </td>
+                                        <td>
+                                            <span class="lesson">(None)</span>
+                                        </td>
+                                        <td>
+                                            <span class="lesson">(None)</span>
+                                        </td>
+                                      </tr> -->
+                                    </tbody>
+                                  </table>
+                            </div>
+                            <div class="bottom-controls-1">
+                                <mdui-button icon="add" variant="text" id="add-timetable-row">Add Row</mdui-button>
+                                <mdui-button id="confirm-timetable" icon="check">OK</mdui-button>
+                            </div>
+                        </div>
+                    </mdui-collapse-item>
+                </mdui-collapse>
+            </mdui-card>
+            <mdui-card class="settings-section">
+                <h3 class="settings-section-title">App</h3>
+                <mdui-list>
+                    <mdui-list-item icon="notifications">
+                        Notifications
+                        <mdui-switch slot="end-icon"></mdui-switch>
+                    </mdui-list-item>
+                </mdui-list>
+            </mdui-card>
+        </div>
+    </div>
+
+    <mdui-navigation-bar value="tasks">
+        <mdui-navigation-bar-item icon="task_alt" value="tasks" href="#tasks">Tasks</mdui-navigation-bar-item>
+        <mdui-navigation-bar-item icon="settings" value="settings" href="#settings">Settings</mdui-navigation-bar-item>
+    </mdui-navigation-bar>
+
+    <div id="tasks-editor">
+        <mdui-top-app-bar>
+            <mdui-button-icon id="quit-tasks-editor" icon="arrow_back"></mdui-button-icon>
+            <mdui-top-app-bar-title>01.01.1970</mdui-top-app-bar-title>
+            <mdui-button-icon icon="more_vert"></mdui-button-icon>
+        </mdui-top-app-bar>
+        <div id="tasks-wrap">
+            <p class="task">
+                <mdui-checkbox class="task-check"></mdui-checkbox><span class="task-content">abcd</span>
+            </p>
+            <p class="task">
+                <mdui-checkbox class="task-check"></mdui-checkbox><span class="task-content">abcd</span>
+            </p>
+            <p class="task">
+                <mdui-checkbox class="task-check"></mdui-checkbox><span class="task-content">abcd</span>
+            </p>
+            <p class="button-container">
+                <mdui-button icon="add" variant="text" id="open-new-task-window">New Task</mdui-button>
+            </p>
+        </div>
+    </div>
+
+    <div class="new-task-window full-size-fixed hidden">
+        <h2 style="margin-bottom: 0;">New Homework</h2>
+        <mdui-menu id="autocomplete" class="hidden">
+            <mdui-menu-item>aaa</mdui-menu-item>
+        </mdui-menu>
+        <mdui-text-field label="Subject" id="subject-field" clearable clear-icon="close"></mdui-text-field>
+        <mdui-text-field label="Title" id="title-field" clearable clear-icon="close"></mdui-text-field>
+        <mdui-text-field rows="3" label="Detail" id="detail-field" class="no-autocomplete" clearable clear-icon="close"></mdui-text-field>
+        <div class="bottom-controls-0">
+            <mdui-dropdown placement="top-end">
+                <mdui-button icon="event" variant="text" slot="trigger">Due Date</mdui-button>
+                <mdui-menu>
+                    <mdui-menu-item>Next Lesson</mdui-menu-item>
+                    <mdui-menu-item>Custom</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dropdown>
+            <mdui-dropdown placement="top-end">
+                <mdui-button icon="notifications_none" variant="text" slot="trigger">Reminder</mdui-button>
+                <mdui-menu>
+                    <mdui-menu-item>Today</mdui-menu-item>
+                    <mdui-menu-item>Custom</mdui-menu-item>
+                </mdui-menu>
+            </mdui-dropdown>
+        </div>
+        <div class="bottom-controls-1">
+            <mdui-button id="close-new-task-window" variant="outlined">Cancle</mdui-button>
+            <mdui-button id="confirm-new-task">OK</mdui-button>
+        </div>
+    </div>
+    <div class="overlay full-size-fixed hidden"></div>
+
+    <mdui-dialog id="calendar-view" close-on-overlay-click>
+        <div class="calendar"></div>
+        <mdui-button id="close-calendar-view">OK</mdui-button>
+    </mdui-dialog>
+    <mdui-dialog id="all-tasks-view" close-on-overlay-click>
+        <h2>All Tasks</h2>
+        <mdui-button id="close-tasks-view">OK</mdui-button>
+    </mdui-dialog>
+    <script src="js/calendar.js"></script>
+</body>
+</html>
