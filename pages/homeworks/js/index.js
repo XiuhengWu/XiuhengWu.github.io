@@ -191,6 +191,7 @@ window.addEventListener('load', () => {
     function updateMenuPosition() {
         const rect = this.getBoundingClientRect();
         const scrollY = window.scrollY || document.documentElement.scrollTop;
+        console.log(rect)
         
         autocompleteMenu.style.position = 'fixed';
         autocompleteMenu.style.top = (rect.bottom + scrollY) + 'px';
@@ -208,7 +209,6 @@ window.addEventListener('load', () => {
         return newList
     }
     function refreshMenu(inputField, optionList) {
-        console.log(optionList)
         autocompleteMenu.innerHTML = ''
         for (option of generateOptionList(inputField.value, optionList)) {
             autocompleteMenu.innerHTML += `<mdui-menu-item>${option}</mdui-menu-item>`

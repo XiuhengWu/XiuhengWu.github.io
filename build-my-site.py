@@ -254,7 +254,7 @@ for article in modified_articles:
     if not tags_line:
         tags_line = "Tags: " + input(f'Please input the tags of {article.title} (e.g. a, b, c): ')
     tag_contents = [tag_content.strip() for tag_content in tags_line.replace("Tags:", "").replace("tags:", "").split(',')]
-    tags_line.decompose()
+    # tags_line.decompose()
     tags_wrapper = article_template.select(".page-wrap .post-info > .meta-tags")[0]
     for tag_content in tag_contents:
         tag = article_template.new_tag("span")
