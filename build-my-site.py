@@ -306,12 +306,14 @@ for page in modified_pages:
     # read html
     with open(f"{page.path}", "r", encoding="utf-8") as f:
         page_content = BeautifulSoup(f.read(), "html.parser")
+
+    tags_line = None
     
     for comment in page_content.find_all(string=lambda text: isinstance(text, Comment)):
         if comment.strip().startswith("Tag:") or comment.strip().startswith("tag:"):
             tags_line = comment
     if not tags_line:
-        tags_line = "Tags: " + input(f'Please input the tags of {article.title} (e.g. a, b, c): ')
+        tags_line = "Tags: " + input(f'Please input the tags of {page.title} (e.g. a, b, c): ')
     tag_contents = [tag_content.strip() for tag_content in tags_line.replace("Tags:", "").replace("tags:", "").split(',')]
 
     # add to repository page
