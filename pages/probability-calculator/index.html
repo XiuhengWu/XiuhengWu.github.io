@@ -232,8 +232,8 @@
                 description: "Calculate the probability of a binomial distribution and plot the distribution.",
                 pLabel: "Probability (p):",
                 nLabel: "Trials (n):",
-                k0Label: "k0:",
-                k1Label: "k1:",
+                k0Label: "k<sub>0<sub>:",
+                k1Label: "k<sub>1<sub>:",
                 calcBtn: "Calculate",
                 plotBtn: "Plot Distribution",
                 invalid: "Invalid input values!",
@@ -245,8 +245,8 @@
                 description: "计算二项分布的概率并绘制分布图。",
                 pLabel: "概率 (p):",
                 nLabel: "试验次数 (n):",
-                k0Label: "k0:",
-                k1Label: "k1:",
+                k0Label: "k<sub>0<sub>:",
+                k1Label: "k<sub>1<sub>:",
                 calcBtn: "计算",
                 plotBtn: "绘制分布图",
                 invalid: "输入值无效！",
@@ -258,8 +258,8 @@
                 description: "Dieser Rechner ist ein Tool, um die Wahrscheinlichkeit einer Binomialverteilung zu rechnen und die Verteilung zu zeichnen.",
                 pLabel: "Wahrscheinlichkeit (p):",
                 nLabel: "Versuche (n):",
-                k0Label: "k0:",
-                k1Label: "k1:",
+                k0Label: "k<sub>0<sub>:",
+                k1Label: "k<sub>1<sub>:",
                 calcBtn: "Berechnen",
                 plotBtn: "Verteilung zeichnen",
                 invalid: "Ungültige Eingabewerte!",
@@ -275,23 +275,23 @@
 
         // 更新页面文本
         function updateLanguage() {
-            document.getElementById('title').innerText = texts[currentLang].title;
-            document.getElementById('description').innerText = texts[currentLang].description;
-            document.getElementById('p-label').innerText = texts[currentLang].pLabel;
-            document.getElementById('n-label').innerText = texts[currentLang].nLabel;
-            document.getElementById('k0-label').innerText = texts[currentLang].k0Label;
-            document.getElementById('k1-label').innerText = texts[currentLang].k1Label;
-            document.getElementById('calcBtn').innerText = texts[currentLang].calcBtn;
-            document.getElementById('plotBtn').innerText = texts[currentLang].plotBtn;
+            document.getElementById('title').innerHTML = texts[currentLang].title;
+            document.getElementById('description').innerHTML = texts[currentLang].description;
+            document.getElementById('p-label').innerHTML = texts[currentLang].pLabel;
+            document.getElementById('n-label').innerHTML = texts[currentLang].nLabel;
+            document.getElementById('k0-label').innerHTML = texts[currentLang].k0Label;
+            document.getElementById('k1-label').innerHTML = texts[currentLang].k1Label;
+            document.getElementById('calcBtn').innerHTML = texts[currentLang].calcBtn;
+            document.getElementById('plotBtn').innerHTML = texts[currentLang].plotBtn;
 
             // 更新结果区域中公式前缀
             const resultDiv = document.getElementById('result');
-            if (resultDiv.innerText.includes("Invalid") || resultDiv.innerText.includes("输入") || resultDiv.innerText.includes("Ungültig")) {
-                resultDiv.innerText = texts[currentLang].invalid;
-            } else if (resultDiv.innerText.trim() !== "") {
-                const parts = resultDiv.innerText.split(":");
+            if (resultDiv.innerHTML.includes("Invalid") || resultDiv.innerHTML.includes("输入") || resultDiv.innerHTML.includes("Ungültig")) {
+                resultDiv.innerHTML = texts[currentLang].invalid;
+            } else if (resultDiv.innerHTML.trim() !== "") {
+                const parts = resultDiv.innerHTML.split(":");
                 if (parts.length > 1) {
-                    resultDiv.innerText = texts[currentLang].result + parts[1];
+                    resultDiv.innerHTML = texts[currentLang].result + parts[1];
                 }
             }
         }
