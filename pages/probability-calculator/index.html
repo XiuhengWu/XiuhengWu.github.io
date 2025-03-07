@@ -181,9 +181,9 @@
         </div>
 
         <div id="result"></div>
-        <div class="chart-container">
+        <div class="chart-container" style="display: none;">
             <canvas id="probabilityChart"></canvas>
-        </div>
+        </div>        
     </div>
 
     <script>
@@ -448,6 +448,9 @@
                     }
                 }]
             });
+
+            // 显示 canvas 所在的容器
+            document.querySelector('.chart-container').style.display = 'block';
         }
 
         document.addEventListener('DOMContentLoaded', validateKValues);
