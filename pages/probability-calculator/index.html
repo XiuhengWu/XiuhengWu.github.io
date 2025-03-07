@@ -2,12 +2,12 @@
 <html lang="en">
 
 <head>
-    <!-- Tags: tool, html-page, english-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Probability Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <!-- 引入 MathJax 用于 LaTeX 渲染 -->
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
     <style>
@@ -52,6 +52,36 @@
             border-radius: 15px;
             box-shadow: 0 10px 30px var(--shadow-color);
             transition: background 0.3s, box-shadow 0.3s;
+        }
+
+        /* 使用下拉框切换语言，并美化 */
+        .lang-switch {
+            display: flex;
+            justify-content: flex-end;
+            margin-bottom: 15px;
+        }
+
+        .lang-switch select {
+            padding: 8px 12px;
+            font-size: 16px;
+            border: 2px solid var(--input-border);
+            border-radius: 8px;
+            background: var(--input-bg);
+            color: var(--text-color);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .lang-switch select:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 8px var(--shadow-color);
+        }
+
+        /* 针对长标题做换行处理，避免溢出 */
+        h1#title {
+            word-wrap: break-word;
+            white-space: normal;
         }
 
         .input-group {
@@ -124,7 +154,7 @@
             margin-top: 30px;
             position: relative;
             height: 500px;
-            /* 调整canvas高度 */
+            display: none;
         }
 
         @media (max-width: 600px) {
@@ -152,43 +182,133 @@
 
 <body>
     <div class="container">
-        <h1 style="text-align: center;">Binomial Probability Calculator</h1>
-        <p style="text-align: center;">Calculate the probability of a binomial distribution and plot the distribution.
-        </p>
+        <!-- 语言切换下拉框 -->
+        <div class="lang-switch">
+            <select id="languageSelect">
+                <option value="en">English</option>
+                <option value="zh">中文</option>
+                <option value="de">Deutsch</option>
+            </select>
+        </div>
+        <h1 id="title" style="text-align: center;">Binomial Probability Calculator</h1>
+        <p id="description" style="text-align: center;">Calculate the probability of a binomial distribution and plot
+            the distribution.</p>
         <div class="input-group">
             <div class="input-field">
-                <label for="p">Probability (p):</label>
+                <label for="p" id="p-label">Probability (p):</label>
                 <input type="number" id="p" step="0.01" min="0" max="1" value="0.5" oninput="validateKValues()">
             </div>
             <div class="input-field">
-                <label for="n">Trials (n):</label>
+                <label for="n" id="n-label">Trials (n):</label>
                 <input type="number" id="n" min="1" value="10" oninput="validateKValues()">
             </div>
             <div class="input-field">
-                <label for="k0">k<sub>0</sub>:</label>
+                <label for="k0" id="k0-label">k0:</label>
                 <input type="number" id="k0" min="0" value="3" oninput="validateKValues()">
             </div>
             <div class="input-field">
-                <label for="k1">k<sub>1</sub>:</label>
+                <label for="k1" id="k1-label">k1:</label>
                 <input type="number" id="k1" min="0" value="5" oninput="validateKValues()">
             </div>
         </div>
 
         <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-            <button onclick="calculate()">Calculate</button>
-            <button id="plotBtn" onclick="plotDistribution()" disabled style="opacity: 0.5; cursor: not-allowed;">Plot
-                Distribution</button>
+            <button id="calcBtn" onclick="calculate()"></button>
+            <button id="plotBtn" onclick="plotDistribution()" disabled
+                style="opacity: 0.5; cursor: not-allowed;"></button>
         </div>
 
         <div id="result"></div>
-        <div class="chart-container" style="display: none;">
+        <div class="chart-container">
             <canvas id="probabilityChart"></canvas>
-        </div>        
+        </div>
     </div>
 
     <script>
+        // 多语言文本配置
+        const texts = {
+            en: {
+                title: "Binomial Probability Calculator",
+                description: "Calculate the probability of a binomial distribution and plot the distribution.",
+                pLabel: "Probability (p):",
+                nLabel: "Trials (n):",
+                k0Label: "k0:",
+                k1Label: "k1:",
+                calcBtn: "Calculate",
+                plotBtn: "Plot Distribution",
+                invalid: "Invalid input values!",
+                result: "Probability: ",
+                formula: "Using formula:"
+            },
+            zh: {
+                title: "二项分布概率计算器",
+                description: "计算二项分布的概率并绘制分布图。",
+                pLabel: "概率 (p):",
+                nLabel: "试验次数 (n):",
+                k0Label: "k0:",
+                k1Label: "k1:",
+                calcBtn: "计算",
+                plotBtn: "绘制分布图",
+                invalid: "输入值无效！",
+                result: "概率：",
+                formula: "使用公式："
+            },
+            de: {
+                title: "Binomialwahrscheinlichkeitsrechner",
+                description: "Dieser Rechner ist ein Tool, um die Wahrscheinlichkeit einer Binomialverteilung zu rechnen und die Verteilung zu zeichnen.",
+                pLabel: "Wahrscheinlichkeit (p):",
+                nLabel: "Versuche (n):",
+                k0Label: "k0:",
+                k1Label: "k1:",
+                calcBtn: "Berechnen",
+                plotBtn: "Verteilung zeichnen",
+                invalid: "Ungültige Eingabewerte!",
+                result: "Wahrscheinlichkeit: ",
+                formula: "Verwendete Formel:"
+            }
+        };
+
+        // 当前语言，初始根据系统语言判断
+        let currentLang = navigator.language.startsWith('zh')
+            ? 'zh'
+            : (navigator.language.startsWith('de') ? 'de' : 'en');
+
+        // 更新页面文本
+        function updateLanguage() {
+            document.getElementById('title').innerText = texts[currentLang].title;
+            document.getElementById('description').innerText = texts[currentLang].description;
+            document.getElementById('p-label').innerText = texts[currentLang].pLabel;
+            document.getElementById('n-label').innerText = texts[currentLang].nLabel;
+            document.getElementById('k0-label').innerText = texts[currentLang].k0Label;
+            document.getElementById('k1-label').innerText = texts[currentLang].k1Label;
+            document.getElementById('calcBtn').innerText = texts[currentLang].calcBtn;
+            document.getElementById('plotBtn').innerText = texts[currentLang].plotBtn;
+
+            // 更新结果区域中公式前缀
+            const resultDiv = document.getElementById('result');
+            if (resultDiv.innerText.includes("Invalid") || resultDiv.innerText.includes("输入") || resultDiv.innerText.includes("Ungültig")) {
+                resultDiv.innerText = texts[currentLang].invalid;
+            } else if (resultDiv.innerText.trim() !== "") {
+                const parts = resultDiv.innerText.split(":");
+                if (parts.length > 1) {
+                    resultDiv.innerText = texts[currentLang].result + parts[1];
+                }
+            }
+        }
+
+        // 初始化语言选择控件（使用下拉框）
+        function initLanguageSwitch() {
+            const languageSelect = document.getElementById("languageSelect");
+            languageSelect.value = currentLang;
+            languageSelect.addEventListener('change', function () {
+                currentLang = this.value;
+                updateLanguage();
+            });
+            updateLanguage();
+        }
+
         let probabilityChart = null;
-        let hasCalculated = false;  // 记录是否已计算
+        let hasCalculated = false;
 
         function combination(n, k) {
             if (k < 0 || k > n) return 0;
@@ -205,7 +325,6 @@
             return combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
         }
 
-        // 修改 validateKValues 同时检查 k0 与 k1 是否相等以及是否在 n 的范围内
         function validateKValues() {
             const n = parseInt(document.getElementById('n').value);
             const k0 = parseInt(document.getElementById('k0').value);
@@ -230,7 +349,6 @@
             }
         }
 
-        // 计算概率并根据运算量选择直接计算或采用对立事件计算，同时显示计算公式（使用 LaTeX 渲染）
         function calculate() {
             const p = parseFloat(document.getElementById('p').value);
             const n = parseInt(document.getElementById('n').value);
@@ -259,7 +377,7 @@
             }
 
             if (!isValid) {
-                document.getElementById('result').innerHTML = 'Invalid input values!';
+                document.getElementById('result').innerHTML = texts[currentLang].invalid;
                 document.getElementById('plotBtn').disabled = true;
                 document.getElementById('plotBtn').style.opacity = '0.5';
                 document.getElementById('plotBtn').style.cursor = 'not-allowed';
@@ -267,19 +385,16 @@
                 return null;
             }
 
-            // 判断直接计算和采用对立事件的计算量
             const directCount = k1 - k0 + 1;
             let complementCount = 0;
             let useComplement = false;
             let formula = "";
             let prob = 0;
 
-            // 如果 k0 为 0 或 k1 为 n，则只有一侧
             if (k0 === 0) {
                 complementCount = n - k1;
                 if (complementCount < directCount) {
                     useComplement = true;
-                    // 计算对立事件：P = 1 - \sum_{k=k1+1}^{n} \binom{n}{k} p^k (1-p)^{n-k}
                     let sumComplement = 0;
                     for (let k = k1 + 1; k <= n; k++) {
                         sumComplement += binomialProbability(n, k, p);
@@ -293,7 +408,6 @@
                 complementCount = k0;
                 if (complementCount < directCount) {
                     useComplement = true;
-                    // 计算对立事件：P = 1 - \sum_{k=0}^{k0-1} \binom{n}{k} p^k (1-p)^{n-k}
                     let sumComplement = 0;
                     for (let k = 0; k < k0; k++) {
                         sumComplement += binomialProbability(n, k, p);
@@ -304,11 +418,9 @@
                     useComplement = false;
                 }
             } else {
-                // 当两侧都有时，对立事件的项数为 k0 + (n - k1)
                 complementCount = k0 + (n - k1);
                 if (complementCount < directCount) {
                     useComplement = true;
-                    // P = 1 - ( \sum_{k=0}^{k0-1} (...) + \sum_{k=k1+1}^{n} (...) )
                     let sumLower = 0, sumUpper = 0;
                     for (let k = 0; k < k0; k++) {
                         sumLower += binomialProbability(n, k, p);
@@ -321,7 +433,6 @@
                 }
             }
 
-            // 如果没有采用对立事件，则直接计算目标概率：P = \sum_{k=k0}^{k1} ...
             if (!useComplement) {
                 let sumDirect = 0;
                 for (let k = k0; k <= k1; k++) {
@@ -331,12 +442,10 @@
                 formula = `$$P = \\sum_{k=${k0}}^{${k1}} \\binom{${n}}{k} (${p})^k (1-${p})^{${n}-k}$$`;
             }
 
-            // 显示结果和计算公式（MathJax 渲染 LaTeX）
             const resultDiv = document.getElementById('result');
-            resultDiv.innerHTML = `<div>Probability: ${prob.toFixed(6)}</div>
-      <div style="margin-top:15px;">Using formula: ${formula}</div>`;
+            resultDiv.innerHTML = `<div>${texts[currentLang].result}${prob.toFixed(6)}</div>
+      <div style="margin-top:15px;">${texts[currentLang].formula} ${formula}</div>`;
 
-            // 重新渲染 MathJax 公式
             if (window.MathJax) {
                 MathJax.typeset();
             }
@@ -346,7 +455,6 @@
         }
 
         function plotDistribution() {
-            // 每次点击 Plot Distribution 时重新验证输入
             const result = calculate();
             if (!result) {
                 return;
@@ -354,7 +462,7 @@
 
             const p = result.p;
             const n = result.n;
-            const k = result.k0;  // 根据需求 k0 === k1
+            const k = result.k0;
 
             const labels = Array.from({ length: n + 1 }, (_, i) => i);
             const data = labels.map(kVal => binomialProbability(n, kVal, p));
@@ -380,9 +488,7 @@
                     responsive: true,
                     maintainAspectRatio: false,
                     layout: {
-                        padding: {
-                            top: 70  // 增加顶部内边距，确保 marker 和文本不会被截断
-                        }
+                        padding: { top: 70 }
                     },
                     scales: {
                         y: {
@@ -405,17 +511,11 @@
                                 text: 'Number of Successes (k)',
                                 color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
                             },
-                            grid: {
-                                display: false
-                            },
-                            ticks: {
-                                color: getComputedStyle(document.documentElement).getPropertyValue('--text-color')
-                            }
+                            grid: { display: false },
+                            ticks: { color: getComputedStyle(document.documentElement).getPropertyValue('--text-color') }
                         }
                     },
-                    plugins: {
-                        legend: { display: false }
-                    }
+                    plugins: { legend: { display: false } }
                 },
                 plugins: [{
                     id: 'markerPlugin',
@@ -448,12 +548,13 @@
                     }
                 }]
             });
-
-            // 显示 canvas 所在的容器
             document.querySelector('.chart-container').style.display = 'block';
         }
 
-        document.addEventListener('DOMContentLoaded', validateKValues);
+        document.addEventListener('DOMContentLoaded', () => {
+            initLanguageSwitch();
+            validateKValues();
+        });
     </script>
 </body>
 
