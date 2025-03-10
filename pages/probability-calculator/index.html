@@ -6,8 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Probability Calculator</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/12.2.0/math.js"></script>
     <!-- 引入 MathJax 用于 LaTeX 渲染 -->
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
     </script>
     <style>
@@ -55,13 +55,13 @@
         }
 
         /* 使用下拉框切换语言，并美化 */
-        .lang-switch {
+        select {
             display: flex;
             justify-content: flex-end;
             margin-bottom: 15px;
         }
 
-        .lang-switch select {
+        select {
             padding: 8px 12px;
             font-size: 16px;
             border: 2px solid var(--input-border);
@@ -72,7 +72,7 @@
             transition: all 0.3s ease;
         }
 
-        .lang-switch select:focus {
+        select:focus {
             outline: none;
             border-color: var(--primary-color);
             box-shadow: 0 0 8px var(--shadow-color);
@@ -148,6 +148,7 @@
             text-align: center;
             font-size: 1.1em;
             transition: background 0.3s;
+            overflow-x: auto;
         }
 
         .chart-container {
@@ -155,6 +156,11 @@
             position: relative;
             height: 500px;
             display: none;
+        }
+
+        /* 新增卡片间距样式 */
+        .container+.container {
+            margin-top: 30px;
         }
 
         @media (max-width: 600px) {
@@ -224,6 +230,48 @@
         </div>
     </div>
 
+    <!-- 新增统计计算容器 -->
+    <div class="container">
+        <h1 id="statsTitle" style="text-align: center;">Binomial Statistics Calculator</h1>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="calcType" id="calcTypeLabel">Calculation Type:</label>
+                <select id="calcType">
+                    <option value="expectation">Expectation</option>
+                    <option value="variance">Variance</option>
+                    <option value="std">Standard Deviation</option>
+                </select>
+            </div>
+            <div class="input-field">
+                <label for="statsP" id="statsPLabel">Probability (p):</label>
+                <input type="number" id="statsP" step="0.01" min="0" max="1" value="0.5">
+            </div>
+            <div class="input-field">
+                <label for="statsN" id="statsNLabel">Trials (n):</label>
+                <input type="number" id="statsN" min="1" value="10">
+            </div>
+        </div>
+        <button id="statsCalcBtn" onclick="calculateStats()"></button>
+        <div id="statsResult" class="result"></div>
+    </div>
+
+    <!-- 新增导数计算容器 -->
+    <div class="container">
+        <h1 id="derivativeTitle" style="text-align: center;">Derivative Calculator</h1>
+        <div class="input-group">
+            <div class="input-field">
+                <label for="functionInput" id="functionLabel">Function f(x):</label>
+                <input type="text" id="functionInput" value="x^2">
+            </div>
+            <div class="input-field">
+                <label for="derivativeOrder" id="derivativeOrderLabel">Derivative Order (n):</label>
+                <input type="number" id="derivativeOrder" min="1" value="1">
+            </div>
+        </div>
+        <button id="derivativeCalcBtn" onclick="calculateDerivative()"></button>
+        <div id="derivativeResult" class="result"></div>
+    </div>
+
     <script>
         // 多语言文本配置
         const texts = {
@@ -238,7 +286,26 @@
                 plotBtn: "Plot Distribution",
                 invalid: "Invalid input values!",
                 result: "Probability: ",
-                formula: "Using formula:"
+                formula: "Using formula:",
+
+                statsTitle: "Binomial Statistics Calculator",
+                calcTypeLabel: "Calculation Type:",
+                statsPLabel: "Probability (p):",
+                statsNLabel: "Trials (n):",
+                expectation: "Expectation",
+                variance: "Variance",
+                std: "Standard Deviation",
+                statsCalcBtn: "Calculate",
+                expectationFormula: "$$E(X) = n \\times p$$",
+                varianceFormula: "$$\\text{Var}(X) = n \\times p \\times (1 - p)$$",
+                stdFormula: "$$\\sigma(X) = \\sqrt{n \\times p \\times (1 - p)}$$",
+
+                derivativeTitle: "Derivative Calculator",
+                functionLabel: "Function f(x):",
+                derivativeOrderLabel: "Derivative Order (n):",
+                derivativeCalcBtn: "Calculate",
+                derivativeResultJS: "Derivative (JS):",
+                derivativeResultLatex: "Derivative (LaTeX):"
             },
             zh: {
                 title: "二项分布概率计算器",
@@ -251,7 +318,26 @@
                 plotBtn: "绘制分布图",
                 invalid: "输入值无效！",
                 result: "概率：",
-                formula: "使用公式："
+                formula: "使用公式：",
+
+                statsTitle: "二项分布统计计算器",
+                calcTypeLabel: "计算类型：",
+                statsPLabel: "概率 (p):",
+                statsNLabel: "试验次数 (n):",
+                expectation: "期望值",
+                variance: "方差",
+                std: "标准差",
+                statsCalcBtn: "计算",
+                expectationFormula: "$$E(X) = n \\times p$$",
+                varianceFormula: "$$\\text{Var}(X) = n \\times p \\times (1 - p)$$",
+                stdFormula: "$$\\sigma(X) = \\sqrt{n \\times p \\times (1 - p)}$$",
+
+                derivativeTitle: "导数计算器",
+                functionLabel: "函数 f(x):",
+                derivativeOrderLabel: "导数阶数 (n):",
+                derivativeCalcBtn: "计算",
+                derivativeResultJS: "导数 (JS):",
+                derivativeResultLatex: "导数 (LaTeX):"
             },
             de: {
                 title: "Binomialwahrscheinlichkeitsrechner",
@@ -264,7 +350,26 @@
                 plotBtn: "Verteilung zeichnen",
                 invalid: "Ungültige Eingabewerte!",
                 result: "Wahrscheinlichkeit: ",
-                formula: "Verwendete Formel:"
+                formula: "Verwendete Formel:",
+
+                statsTitle: "Binomialstatistik Rechner",
+                calcTypeLabel: "Berechnungstyp:",
+                statsPLabel: "Wahrscheinlichkeit (p):",
+                statsNLabel: "Versuche (n):",
+                expectation: "Erwartungswert",
+                variance: "Varianz",
+                std: "Standardabweichung",
+                statsCalcBtn: "Berechnen",
+                expectationFormula: "$$E(X) = n \\times p$$",
+                varianceFormula: "$$\\text{Var}(X) = n \\times p \\times (1 - p)$$",
+                stdFormula: "$$\\sigma(X) = \\sqrt{n \\times p \\times (1 - p)}$$",
+
+                derivativeTitle: "Ableitungsrechner",
+                functionLabel: "Funktion f(x):",
+                derivativeOrderLabel: "Ableitungsordnung (n):",
+                derivativeCalcBtn: "Berechnen",
+                derivativeResultJS: "Ableitung (JS):",
+                derivativeResultLatex: "Ableitung (LaTeX):"
             }
         };
 
@@ -283,6 +388,19 @@
             document.getElementById('k1-label').innerHTML = texts[currentLang].k1Label;
             document.getElementById('calcBtn').innerHTML = texts[currentLang].calcBtn;
             document.getElementById('plotBtn').innerHTML = texts[currentLang].plotBtn;
+
+            // 统计计算部分
+            document.getElementById('statsTitle').textContent = texts[currentLang].statsTitle;
+            document.getElementById('calcTypeLabel').textContent = texts[currentLang].calcTypeLabel;
+            document.getElementById('statsPLabel').textContent = texts[currentLang].statsPLabel;
+            document.getElementById('statsNLabel').textContent = texts[currentLang].statsNLabel;
+            document.getElementById('statsCalcBtn').textContent = texts[currentLang].statsCalcBtn;
+
+            // 导数计算部分
+            document.getElementById('derivativeTitle').textContent = texts[currentLang].derivativeTitle;
+            document.getElementById('functionLabel').textContent = texts[currentLang].functionLabel;
+            document.getElementById('derivativeOrderLabel').textContent = texts[currentLang].derivativeOrderLabel;
+            document.getElementById('derivativeCalcBtn').textContent = texts[currentLang].derivativeCalcBtn;
 
             // 更新结果区域中公式前缀
             const resultDiv = document.getElementById('result');
@@ -352,8 +470,21 @@
         function calculate() {
             const p = parseFloat(document.getElementById('p').value);
             const n = parseInt(document.getElementById('n').value);
-            const k0 = parseInt(document.getElementById('k0').value);
-            const k1 = parseInt(document.getElementById('k1').value);
+            let k0 = parseFloat(document.getElementById('k0').value);
+            let k1 = parseFloat(document.getElementById('k1').value);
+
+            // 处理 k0 和 k1 的值
+            if (isNaN(k0) || k0 < 0) {
+                k0 = 0;
+            } else if (!Number.isInteger(k0)) {
+                k0 = Math.ceil(k0);
+            }
+
+            if (isNaN(k1) || k1 < 0) {
+                k1 = 0;
+            } else if (!Number.isInteger(k1)) {
+                k1 = Math.floor(k1);
+            }
 
             let isValid = true;
             const inputs = ['p', 'n', 'k0', 'k1'];
@@ -549,6 +680,79 @@
                 }]
             });
             document.querySelector('.chart-container').style.display = 'block';
+        }
+
+        // 统计计算函数
+        function calculateStats() {
+            const p = parseFloat(document.getElementById('statsP').value);
+            const n = parseInt(document.getElementById('statsN').value);
+            const calcType = document.getElementById('calcType').value;
+
+            // 验证输入
+            let isValid = true;
+            document.querySelectorAll('#statsP, #statsN').forEach(el => el.classList.remove('error'));
+
+            if (isNaN(p) || p < 0 || p > 1) {
+                document.getElementById('statsP').classList.add('error');
+                isValid = false;
+            }
+            if (isNaN(n) || n <= 0) {
+                document.getElementById('statsN').classList.add('error');
+                isValid = false;
+            }
+
+            if (!isValid) {
+                document.getElementById('statsResult').innerHTML = texts[currentLang].invalid;
+                return;
+            }
+
+            let result, formula;
+            switch (calcType) {
+                case 'expectation':
+                    result = n * p;
+                    formula = texts[currentLang].expectationFormula;
+                    break;
+                case 'variance':
+                    result = n * p * (1 - p);
+                    formula = texts[currentLang].varianceFormula;
+                    break;
+                case 'std':
+                    result = Math.sqrt(n * p * (1 - p));
+                    formula = texts[currentLang].stdFormula;
+                    break;
+                default: result = NaN;
+            }
+
+            const resultDiv = document.getElementById('statsResult');
+            resultDiv.innerHTML = `
+                <div>${texts[currentLang][calcType]}: ${result.toFixed(6)}</div>
+                <div style="margin-top:15px;">${texts[currentLang].formula} ${formula}</div>
+            `;
+            MathJax.typeset();
+        }
+
+        // 导数计算函数（使用 math.js）
+        function calculateDerivative() {
+            try {
+                const f = document.getElementById('functionInput').value;
+                const order = parseInt(document.getElementById('derivativeOrder').value);
+
+                let expr = math.parse(f);
+                for (let i = 0; i < order; i++) {
+                    expr = math.derivative(expr, 'x');
+                }
+
+                const jsResult = expr.toString();
+                const latexResult = expr.toTex();
+
+                document.getElementById('derivativeResult').innerHTML = `
+                    <div>${texts[currentLang].derivativeResultJS} <code>${jsResult}</code></div>
+                    <div>${texts[currentLang].derivativeResultLatex} $${latexResult}$</div>
+                `;
+                MathJax.typeset();
+            } catch (e) {
+                document.getElementById('derivativeResult').innerHTML = texts[currentLang].invalid;
+            }
         }
 
         document.addEventListener('DOMContentLoaded', () => {
