@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="auto">
+<head>
+  <meta charset="UTF-8">
+  <title>Universal Media Player mit Mehrfach-Untertitelunterstützung</title>
+  <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+  <style>
+    :root {
+      --bg-light: #f8f9fa;
+      --bg-dark: #1a1a1a;
+      --primary: #2196F3;
+      --secondary: #4CAF50;
+      --error: #f44336;
+      --border: 2px dashed #ced4da;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    body {
+      background: var(--bg-light);
+      color: #212529;
+      transition: var(--transition);
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+      font-family: system-ui, -apple-system, sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      body {
+        background: var(--bg-dark);
+        color: #e9ecef;
+      }
+    }
+    .drag-zone {
+      background: rgba(255, 255, 255, 0.05);
+      border: var(--border);
+      border-radius: 12px;
+      padding: 3rem;
+      margin: 20px auto;
+      max-width: 800px;
+      transition: var(--transition);
+      text-align: center;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .drag-zone::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 60px;
+      height: 60px;
+      background: rgba(33, 150, 243, 0.1);
+      border-radius: 50%;
+      opacity: 0;
+      transition: var(--transition);
+    }
+    .drag-zone.active {
+      border-color: var(--primary);
+      background: rgba(33, 150, 243, 0.05);
+      box-shadow: 0 4px 20px rgba(33, 150, 243, 0.15);
+    }
+    .drag-zone.active::before {
+      opacity: 1;
+      width: 120%;
+      height: 120%;
+    }
+    #player-container {
+      background: rgba(0, 0, 0, 0.95);
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.25);
+      margin: 30px auto;
+      max-width: 800px;
+      /* 始终显示播放器 */
+      display: block;
+    }
+    .status-container {
+      text-align: center;
+      margin: 20px 0;
+    }
+    .status-message {
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 10px auto;
+      max-width: 600px;
+      opacity: 0;
+      transform: translateY(-10px);
+      transition: var(--transition);
+    }
+    .status-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .hidden {
+      display: none;
+    }
+    /* 删除 subtitle-controls 样式 */
+  </style>
+</head>
+<body>
+  <div class="drag-zone" id="dropZone">
+    <label id="uploadLabel">
+      🎬 Medien hier ablegen oder klicken<br>
+      <small>(Video + Untertitel in VTT, SRT, ASS, TXT)</small>
+      <input type="file" id="fileInput" accept="video/*,.vtt,.srt,.ass,.txt" multiple class="hidden" />
+    </label>
+  </div>
+  <div class="status-container">
+    <div class="status-message" id="statusMessage"></div>
+    <!-- Die Untertitel-Auswahl wurde entfernt -->
+    <div id="subtitleInfo" class="status-message"></div>
+  </div>
+  <!-- Spielercontainer wird nun immer angezeigt (auch ohne Medien) -->
+  <div id="player-container">
+    <video id="player" playsinline controls></video>
+  </div>
+  <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+  <script>
+    const SUBTITLE_TYPES = {
+      vtt: { pattern: /\.vtt$/i, mime: 'text/vtt' },
+      srt: { pattern: /\.srt$/i, mime: 'text/plain' },
+      ass: { pattern: /\.(ass|ssa)$/i, mime: 'text/plain' },
+      txt: { pattern: /\.txt$/i, mime: 'text/plain' }
+    };
+
+    const player = new Plyr('#player', {
+      captions: { active: true, update: true, language: 'de' },
+      controls: [
+        'play-large', 'play', 'progress', 'current-time',
+        'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
+      ],
+      keyboard: { focused: true, global: true }
+    });
+
+    const state = {
+      mediaFiles: {
+        video: null,
+        subtitles: [],
+        blobUrls: [] // Für späteren URL-Recycling
+      }
+    };
+
+    // 初始化文件处理，不再每次清空已有状态，而是累加处理
+    const initFileHandling = () => {
+      const dropZone = document.getElementById('dropZone');
+      const fileInput = document.getElementById('fileInput');
+
+      dropZone.addEventListener('click', () => fileInput.click());
+
+      const handleDrag = (e) => {
+        e.preventDefault();
+        dropZone.classList.toggle('active', e.type === 'dragover');
+      };
+
+      ['dragover', 'dragleave', 'drop'].forEach(evt =>
+        dropZone.addEventListener(evt, handleDrag)
+      );
+
+      fileInput.addEventListener('change', e => handleFiles(e.target.files));
+      dropZone.addEventListener('drop', e => handleFiles(e.dataTransfer.files));
+    };
+
+    // 主处理函数：累加上传的文件
+    const handleFiles = async (files) => {
+      try {
+        showStatus('Dateien werden analysiert...', 'info');
+        await classifyFiles(files);
+        // 不再检查“video”，允许只上传字幕或单个视频
+        showStatus('Initialisiere Player...', 'info');
+        await initializePlayer();
+        showStatus('Bereit zur Wiedergabe', 'success');
+      } catch (error) {
+        showStatus(error.message, 'error');
+        console.error('Fehler:', error);
+      }
+    };
+
+    // 文件分类：如果已存在视频，则新视频文件会被忽略；字幕累加
+    const classifyFiles = async (files) => {
+      return new Promise((resolve, reject) => {
+        Array.from(files).forEach(file => {
+          if (file.type.startsWith('video/')) {
+            if (!state.mediaFiles.video) {
+              state.mediaFiles.video = file;
+            } else {
+              console.warn('Video bereits vorhanden. Überspringe:', file.name);
+            }
+          } else {
+            const subtype = detectSubtitleType(file);
+            if (subtype) {
+              state.mediaFiles.subtitles.push(file);
+            } else {
+              console.warn('Nicht unterstütztes Format:', file.name);
+            }
+          }
+        });
+        resolve();
+      });
+    };
+
+    // Untertiteltyp-Erkennung
+    const detectSubtitleType = (file) => {
+      return Object.keys(SUBTITLE_TYPES).find(key =>
+        SUBTITLE_TYPES[key].pattern.test(file.name)
+      );
+    };
+
+    // 根据上传的情况初始化播放器
+    const initializePlayer = async () => {
+      try {
+        let sources = [];
+        if (state.mediaFiles.video) {
+          const videoUrl = URL.createObjectURL(state.mediaFiles.video);
+          state.mediaFiles.blobUrls.push(videoUrl);
+          sources.push({
+            src: videoUrl,
+            type: state.mediaFiles.video.type
+          });
+        }
+        // 处理字幕文件并转换为 VTT 格式
+        const tracks = await Promise.all(
+          state.mediaFiles.subtitles.map(file =>
+            createSubtitleTrack(file).catch(error => {
+              console.error('Subtitle error:', error);
+              return null;
+            })
+          )
+        );
+        // 设置播放器资源：如果没有视频文件，则不设置视频 source，但依然展示播放器
+        player.source = {
+          type: 'video',
+          sources: sources,
+          tracks: tracks.filter(track => track !== null)
+        };
+
+      } catch (error) {
+        throw new Error(`Player-Initialisierung fehlgeschlagen: ${error.message}`);
+      }
+    };
+
+    // 创建字幕轨，并转换成 VTT 格式
+    const createSubtitleTrack = async (file) => {
+      try {
+        const content = await file.text();
+        const subtype = detectSubtitleType(file);
+        const convertedContent = convertToVTT(content, subtype);
+        const blob = new Blob([convertedContent], { type: 'text/vtt' });
+        const blobUrl = URL.createObjectURL(blob);
+        state.mediaFiles.blobUrls.push(blobUrl);
+        return {
+          kind: 'captions',
+          label: file.name.replace(/\.[^.]+$/, '') + ' (' + subtype.toUpperCase() + ')',
+          srclang: 'de',
+          src: blobUrl
+        };
+      } catch (error) {
+        throw new Error(`Untertitelkonvertierung fehlgeschlagen: ${error.message}`);
+      }
+    };
+
+    // 根据文件类型转换为 VTT
+    const convertToVTT = (content, type) => {
+      const converters = {
+        srt: content => convertSRT(content),
+        ass: content => convertASS(content),
+        txt: content => convertTXT(content),
+        vtt: content => content
+      };
+      return converters[type](content);
+    };
+
+    // SRT 转换
+    const convertSRT = content => {
+      return 'WEBVTT\n\n' + content
+        .replace(/\r\n/g, '\n')
+        .replace(/(\d{2}:\d{2}:\d{2}),(\d{3})/g, '$1.$2')
+        .replace(/^\d+\n/gm, '')
+        .replace(/(\d{2}:\d{2}:\d{2}\.\d{3}) --> (\d{2}:\d{2}:\d{2}\.\d{3})/g, '$1 --> $2')
+        .replace(/(^.*)\n(?!\d{2}:\d{2}:\d{2})/gm, '$1');
+    };
+
+    // ASS 转换
+    const convertASS = content => {
+      return 'WEBVTT\n\n' + content
+        .split('\n')
+        .filter(line => line.startsWith('Dialogue:'))
+        .map(line => {
+          const parts = line.split(',');
+          const start = parts[1].replace('.', ',');
+          const end = parts[2].replace('.', ',');
+          const text = parts.slice(9).join(',').replace(/\\N/g, '\n');
+          return `${start} --> ${end}\n${text}`;
+        })
+        .join('\n\n');
+    };
+
+    // TXT 转换：简单将每个文本块转换为固定时长
+    const convertTXT = content => {
+      return 'WEBVTT\n\n' + content
+        .split('\n\n')
+        .map((block, index) => {
+          const lines = block.split('\n');
+          return `00:00:${(index * 5).toString().padStart(2, '0')}.000 --> 00:00:${((index + 1) * 5).toString().padStart(2, '0')}.000\n${lines.join('\n')}`;
+        })
+        .join('\n\n');
+    };
+
+    // 状态消息显示
+    const showStatus = (message, type = 'info') => {
+      const element = document.getElementById('statusMessage');
+      element.textContent = message;
+      element.className = 'status-message status-visible';
+      element.style.backgroundColor = {
+        info: 'rgba(33, 150, 243, 0.1)',
+        success: 'rgba(76, 175, 80, 0.1)',
+        error: 'rgba(244, 67, 54, 0.1)'
+      }[type];
+      element.style.color = {
+        info: 'var(--primary)',
+        success: 'var(--secondary)',
+        error: 'var(--error)'
+      }[type];
+    };
+
+    // 在页面卸载或新上传时，回收之前创建的 URL
+    const resetBlobUrls = () => {
+      if (state.mediaFiles.blobUrls?.length) {
+        state.mediaFiles.blobUrls.forEach(url => URL.revokeObjectURL(url));
+      }
+      state.mediaFiles.blobUrls = [];
+    };
+
+    // 初始化
+    initFileHandling();
+  </script>
+</body>
+</html>
