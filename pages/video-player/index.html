@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="de" data-theme="auto">
+
 <head>
   <meta charset="UTF-8">
   <title>Universal Media Player mit Mehrfach-Untertitelunterstützung</title>
@@ -14,6 +15,7 @@
       --border: 2px dashed #ced4da;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     body {
       background: var(--bg-light);
       color: #212529;
@@ -23,12 +25,14 @@
       padding: 20px;
       font-family: system-ui, -apple-system, sans-serif;
     }
+
     @media (prefers-color-scheme: dark) {
       body {
         background: var(--bg-dark);
         color: #e9ecef;
       }
     }
+
     .drag-zone {
       background: rgba(255, 255, 255, 0.05);
       border: var(--border);
@@ -42,6 +46,7 @@
       position: relative;
       overflow: hidden;
     }
+
     .drag-zone::before {
       content: '';
       position: absolute;
@@ -55,16 +60,19 @@
       opacity: 0;
       transition: var(--transition);
     }
+
     .drag-zone.active {
       border-color: var(--primary);
       background: rgba(33, 150, 243, 0.05);
       box-shadow: 0 4px 20px rgba(33, 150, 243, 0.15);
     }
+
     .drag-zone.active::before {
       opacity: 1;
       width: 120%;
       height: 120%;
     }
+
     #player-container {
       background: rgba(0, 0, 0, 0.95);
       border-radius: 16px;
@@ -75,10 +83,12 @@
       /* 始终显示播放器 */
       display: block;
     }
+
     .status-container {
       text-align: center;
       margin: 20px 0;
     }
+
     .status-message {
       padding: 1rem;
       border-radius: 8px;
@@ -88,16 +98,20 @@
       transform: translateY(-10px);
       transition: var(--transition);
     }
+
     .status-visible {
       opacity: 1;
       transform: translateY(0);
     }
+
     .hidden {
       display: none;
     }
+
     /* 删除 subtitle-controls 样式 */
   </style>
 </head>
+
 <body>
   <div class="drag-zone" id="dropZone">
     <label id="uploadLabel">
@@ -126,11 +140,11 @@
 
     const player = new Plyr('#player', {
       captions: { active: true, update: true, language: 'de' },
-      controls: [
-        'play-large', 'play', 'progress', 'current-time',
-        'mute', 'volume', 'captions', 'settings', 'pip', 'fullscreen'
-      ],
-      keyboard: { focused: true, global: true }
+      controls: ['play-large', 'play', 'progress', 'current-time', 'mute', 'volume', 'captions', 'settings', 'pip', 'airplay', 'fullscreen'],
+      keyboard: { focused: true, global: true },
+      settings: ['captions', 'quality', 'speed', 'loop'],
+      seekTime: 5,
+      previewThumbnails: {src: 'thumbnails.vtt'}
     });
 
     const state = {
@@ -270,6 +284,8 @@
       return converters[type](content);
     };
 
+    alert('sadg')
+
     // SRT 转换
     const convertSRT = content => {
       return 'WEBVTT\n\n' + content
@@ -335,4 +351,5 @@
     initFileHandling();
   </script>
 </body>
+
 </html>
