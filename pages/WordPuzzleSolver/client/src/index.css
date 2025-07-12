@@ -1,0 +1,102 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+      --background: 0 0% 100%;
+--foreground: 20 14.3% 4.1%;
+--muted: 60 4.8% 95.9%;
+--muted-foreground: 25 5.3% 44.7%;
+--popover: 0 0% 100%;
+--popover-foreground: 20 14.3% 4.1%;
+--card: 0 0% 100%;
+--card-foreground: 20 14.3% 4.1%;
+--border: 20 5.9% 90%;
+--input: 20 5.9% 90%;
+--primary: 238 62% 47%;
+--primary-foreground: 211 100% 99%;
+--secondary: 60 4.8% 95.9%;
+--secondary-foreground: 24 9.8% 10%;
+--accent: 60 4.8% 95.9%;
+--accent-foreground: 24 9.8% 10%;
+--destructive: 0 84.2% 60.2%;
+--destructive-foreground: 60 9.1% 97.8%;
+--ring: 20 14.3% 4.1%;
+--radius: 0.5rem;
+  }
+  .dark {
+      --background: 240 10% 3.9%;
+--foreground: 0 0% 98%;
+--muted: 240 3.7% 15.9%;
+--muted-foreground: 240 5% 64.9%;
+--popover: 240 10% 3.9%;
+--popover-foreground: 0 0% 98%;
+--card: 240 10% 3.9%;
+--card-foreground: 0 0% 98%;
+--border: 240 3.7% 15.9%;
+--input: 240 3.7% 15.9%;
+--primary: 238 62% 47%;
+--primary-foreground: 211 100% 99%;
+--secondary: 240 3.7% 15.9%;
+--secondary-foreground: 0 0% 98%;
+--accent: 240 3.7% 15.9%;
+--accent-foreground: 0 0% 98%;
+--destructive: 0 62.8% 30.6%;
+--destructive-foreground: 0 0% 98%;
+--ring: 240 4.9% 83.9%;
+--radius: 0.5rem;
+  }
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply font-sans antialiased bg-gray-50 dark:bg-gray-900 text-foreground;
+  }
+}
+
+.letter-grid {
+  @apply grid gap-0.5 md:gap-1;
+}
+
+.letter-cell {
+  @apply w-7 h-7 md:w-8 md:h-8 flex items-center justify-center font-medium border border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 text-foreground text-xs md:text-sm transition-all duration-200;
+}
+
+@media (max-width: 640px) {
+  .letter-cell {
+    @apply w-6 h-6 text-xs;
+  }
+}
+
+@media (max-width: 375px) {
+  .letter-cell {
+    @apply w-5 h-5 text-xs;
+  }
+}
+
+.highlight-red {
+  @apply bg-red-300 dark:bg-red-700 text-gray-900 dark:text-gray-50;
+}
+
+.highlight-orange {
+  @apply bg-amber-300 dark:bg-amber-700 text-gray-900 dark:text-gray-50;
+}
+
+.highlight-green {
+  @apply bg-green-300 dark:bg-green-700 text-gray-900 dark:text-gray-50;
+}
+
+.highlight-blue {
+  @apply bg-blue-300 dark:bg-blue-700 text-gray-900 dark:text-gray-50;
+}
+
+.highlight-purple {
+  @apply bg-purple-300 dark:bg-purple-700 text-gray-900 dark:text-gray-50;
+}
+
+.highlight-teal {
+  @apply bg-teal-300 dark:bg-teal-700 text-gray-900 dark:text-gray-50;
+}
