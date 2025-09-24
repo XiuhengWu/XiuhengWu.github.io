@@ -2,9 +2,36 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Am I at Home?</title>
+    <title>我在家吗？</title>
+
+    <!-- minimale Änderungen: body zuerst verstecken, dann Passwort prüfen -->
+    <style>body{display:none;}</style>
+
+    <script>
+      // Setze hier das gewünschte Passwort:
+      const PASSWORD = 'binichzuhause';
+
+      (function() {
+        // Prompt sofort anzeigen (sperrt das Rendering bis zur Eingabe)
+        const p = prompt('Bitte Passwort eingeben:');
+        if (p === PASSWORD) {
+          // bei korrektem Passwort Seite anzeigen
+          document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.display = '';
+          });
+        } else {
+          // bei falschem Passwort Meldung anzeigen
+          // document.write ist hier in Ordnung, weil body noch versteckt ist
+          document.open();
+          document.write('<!DOCTYPE html><html><head><meta charset="utf-8"><title>Zugriff verweigert</title></head><body><h1>Zugriff verweigert ⛔</h1><p>Falsches Passwort.</p></body></html>');
+          document.close();
+        }
+      })();
+    </script>
 </head>
 <body>
-    <h1>Ja, du bist zu Hause ✅</h1>
+    <h1>是的 ✅</h1>
+    <p>刷新于 2025-09-24 18:38:50 UTC</p>
 </body>
 </html>
+
