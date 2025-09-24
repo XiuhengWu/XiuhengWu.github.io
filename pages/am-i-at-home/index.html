@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="zh">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bin ich zu Hause?</title>
+  <style>
+    :root{
+      --bg:#0f1724;
+      --card:#0b1220;
+      --accent:#60a5fa;
+      --muted:#94a3b8;
+      --glass: rgba(255,255,255,0.03);
+    }
+    html,body{
+      height:100%;
+      margin:0;
+      font-family: "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans SC", sans-serif;
+      background: linear-gradient(180deg,#071028 0%, #0b1220 60%);
+      color:#e6eef8;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:40px 20px;
+      box-sizing:border-box;
+    }
+    .card{
+      width:100%;
+      max-width:720px;
+      background:linear-gradient(180deg,var(--card), rgba(11,18,32,0.9));
+      border-radius:12px;
+      padding:28px;
+      box-shadow: 0 10px 30px rgba(2,6,23,0.7);
+      border: 1px solid rgba(255,255,255,0.03);
+    }
+    header h1{
+      margin:0 0 6px 0;
+      font-size:28px;
+      letter-spacing:0.2px;
+    }
+    header p.subtitle{
+      margin:0 0 18px 0;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .big-text{
+      font-size:48px;
+      font-weight:700;
+      color:var(--accent);
+      margin:8px 0 22px 0;
+      line-height:1;
+      word-break:break-word;
+    }
+
+    .time-row{
+      display:flex;
+      gap:16px;
+      align-items:baseline;
+      flex-wrap:wrap;
+    }
+    .time-block{
+      background:var(--glass);
+      padding:12px 16px;
+      border-radius:10px;
+      border:1px solid rgba(255,255,255,0.02);
+      min-width:200px;
+    }
+    .time-label{
+      font-size:13px;
+      color:var(--muted);
+      margin:0 0 6px 0;
+    }
+    .time-value{
+      font-family: "Roboto Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, "Noto Sans Mono", monospace;
+      font-size:20px;
+      color:#eaf2ff;
+    }
+
+    footer{
+      margin-top:22px;
+      color:var(--muted);
+      font-size:13px;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:12px;
+      flex-wrap:wrap;
+    }
+    .small{
+      font-size:12px;
+      color:var(--muted);
+    }
+
+    @media (max-width:520px){
+      .big-text{ font-size:36px; }
+      .time-block{ min-width:unset; width:100%; }
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <main class="card" role="main" aria-labelledby="main-title">
+      <header>
+        <!-- 页面语言为中文，标题使用用户指定的德语文本 -->
+        <h1 id="main-title">我在家吗？</h1>
+      </header>
+
+      <!-- 用户要求直接显示 "zu Hause" -->
+      <div class="big-text" id="status" aria-hidden="false">zu Hause</div>
+
+      <!-- 显示维也纳本地时间（动态更新） -->
+      <section class="time-row" aria-live="polite">
+        <div class="time-block" title="当前维也纳时间">
+          <div class="time-label">维也纳本地时间（Europe/Vienna）:</div>
+          <div id="vienna-time" class="time-value">--:--:--</div>
+        </div>
+
+        <div class="time-block" title="维也纳当前日期（本地时区表示）">
+          <div class="time-label">维也纳日期:</div>
+          <div id="vienna-date" class="time-value">---- / -- / --</div>
+        </div>
+      </section>
+
+      <!-- 页脚：显示最后更新时间（页面加载时的时间） -->
+      <footer>
+        <div class="small">最后更新（页面加载时）：<strong id="last-updated">正在加载…</strong></div>
+      </footer>
+    </main>
+  </div>
+
+  <script>
+    // 页面语言与显示使用 zh-CN，本脚本使用 Intl 支持 "Europe/Vienna"
+    (function(){
+      // 当页面加载时记录“最后更新”时间（维也纳时区）
+      const lastUpdatedEl = document.getElementById('last-updated');
+      const viennaTimeEl  = document.getElementById('vienna-time');
+      const viennaDateEl  = document.getElementById('vienna-date');
+
+      // 格式化器（中文显示）
+      const timeFmt = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Europe/Vienna',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+      const dateFmt = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Europe/Vienna',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit'
+      });
+      const lastFmt = new Intl.DateTimeFormat('zh-CN', {
+        timeZone: 'Europe/Vienna',
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: false
+      });
+
+      // 每秒更新显示的维也纳时间/日期
+      function tick(){
+        const now = new Date();
+        viennaTimeEl.textContent = timeFmt.format(now);
+        viennaDateEl.textContent = dateFmt.format(now);
+      }
+
+      // 初次执行并启动计时器
+      tick();
+      setInterval(tick, 1000);
+
+      // 如果浏览器不支持指定时区（极少数），提供备用提示
+      try {
+        // 验证时区是否被 Intl 支持
+        new Intl.DateTimeFormat('zh-CN', { timeZone: 'Europe/Vienna' }).format();
+      } catch (e){
+        viennaTimeEl.textContent = '不支持指定时区的 Intl';
+        viennaDateEl.textContent = '请使用现代浏览器（Chrome/Firefox/Edge/Safari）';
+      }
+    })();
+  </script>
+</body>
+</html>
